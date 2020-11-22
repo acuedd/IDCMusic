@@ -1,0 +1,65 @@
+name: church_of_christ
+description: application for Acapella music
+
+version: 3.0.0+14
+
+environment:
+  sdk: ">=2.2.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  #core
+  dio: ^3.0.1
+  http: ^0.12.2
+  equatable: ^1.2.5
+  flutter_bloc: ^6.1.1
+  shared_preferences: ^0.5.8
+  device_info: ^0.4.2+4
+  package_info: ^0.4.1
+  firebase_messaging: ^6.0.16
+  pull_to_refresh: ^1.6.2
+  localstorage: ^3.0.0
+
+  #Online
+  flutter_web_browser: ^0.12.0
+  flutter_mailer: ^1.0.0
+
+  #Icons
+  cupertino_icons: ^0.1.3
+  typicons_flutter: ^0.3.1
+  flutter_vector_icons: ^0.2.1
+
+  #Audio
+  assets_audio_player: ^2.0.13+1
+
+  #Images
+  cached_network_image: ^2.2.0+1
+
+  #Widgets
+  row_collection: ^0.2.4
+  flutter_markdown: ^0.4.4
+
+  #UI
+  shimmer: ^1.1.2
+  bubble_bottom_bar: ^1.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  #assets:
+
+  fonts:
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Regular.ttf
+
+  assets:
+    - assets/icons/
+    - assets/images/

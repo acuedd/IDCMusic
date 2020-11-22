@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7c0eb00c-ae09-4964-b3fd-8a25fc0b8be6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/idcmusic/CHANGELOG.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/fonts/Lato-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/fonts/otf/HelveticaNeue-Medium.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/fonts/otf/Montserrat-Regular.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/fonts/otf/Quicksand-Regular.otf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/fonts/otf/Roboto-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/fonts/ttf/Lato-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/fonts/ttf/Nunito-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/icons/capsule.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/images/blue.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/images/orange.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/images/pink.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/images/place_holder.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/images/place_holder_2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/images/place_holder_3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/images/venue.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/assets/images/yellow.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/bloc/bloc/idc_bloc.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/bloc/provider/push_notification_provider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/bloc/repository/idc_api.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/generals/ui/screens/about.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/generals/ui/screens/changelog.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/generals/ui/screens/main_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/generals/ui/screens/menu_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/generals/ui/screens/settings_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/main.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/player/screens/principal_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/utils/colors.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/utils/functions.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/utils/routes.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/utils/url.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/utils/widgets/custom_page.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/utils/widgets/dialog_presentation.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/utils/widgets/dialog_round.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/utils/widgets/header_text.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/utils/widgets/list_cell.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/utils/widgets/radio_cell.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/idcmusic/lib/utils/widgets/row_item.dart" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1jnifnYK0JbMPMj3bFnBPkG2au3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/idcmusic/lib" />
+    <property name="settings.editor.selected.configurable" value="flutter.settings" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/idcmusic/lib" />
+      <recent name="$PROJECT_DIR$/idcmusic/assets" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7c0eb00c-ae09-4964-b3fd-8a25fc0b8be6" name="Default Changelist" comment="" />
+      <created>1604446361811</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1604446361811</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2114" y="400" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1604714376376">
+      <screen x="1792" y="63" width="2560" height="1057" />
+    </state>
+    <state x="2114" y="400" key="#com.intellij.fileTypes.FileTypeChooser/1792.63.2560.1057/0.23.1792.1097@1792.63.2560.1057" timestamp="1604714376376" />
+    <state x="1872" y="239" key="SettingsEditor" timestamp="1604715970555">
+      <screen x="1792" y="63" width="2560" height="1057" />
+    </state>
+    <state x="1872" y="239" key="SettingsEditor/1792.63.2560.1057/0.23.1792.1097@1792.63.2560.1057" timestamp="1604715970555" />
+  </component>
+</project>
