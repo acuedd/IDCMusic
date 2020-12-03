@@ -1,5 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:church_of_christ/player/models/collections_model.dart';
+import 'package:church_of_christ/player/ui/widgets/item_collection.dart';
+import 'package:church_of_christ/utils/anims/page_route_anim.dart';
+import 'package:church_of_christ/utils/functions.dart';
+import 'package:church_of_christ/utils/routes.dart';
 import 'package:flutter/material.dart';
 
 
@@ -22,22 +26,14 @@ class _AlbumsCarouselState extends State<AlbumsCarousel> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text("Albums",
-              style: TextStyle(
-                fontSize: 22.0,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.2
-              ),
+              style: GetTextStyle.XL(context),
             ),
             GestureDetector(
-              onTap: ()=>{
-                print("View all"),
+              onTap: (){
+                Navigator.of(context).pushNamed(RouteName.allCollections);
               },
               child: Text("Ver todos",
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.bold
-                ),
+                style: GetTextStyle.SM(context),
               ),
             )
           ],
@@ -53,56 +49,7 @@ class _AlbumsCarouselState extends State<AlbumsCarousel> {
               itemCount: widget.alubums.length,
               itemBuilder: (BuildContext context, int index){
                 Collection album = widget.alubums[index];
-                return GestureDetector(
-                  onTap: () => {
-                    //TODO go to albumpage
-                  },
-                  child: Container(
-                    width: 140,
-                    margin: index == widget.alubums.length -1
-                      ? EdgeInsets.only(right: 20.0)
-                      : EdgeInsets.only(right: 0.0),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            child: Image(
-                              height: 120.0,
-                              width: 120.0,
-                              image: CachedNetworkImageProvider(album.path_image),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          SizedBox(height: 10,),
-                          Text(
-                            album.name_collection,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          SizedBox(height: 10,),
-                          Text(
-                            album.fullname,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 10.0,
-                              color: Colors.grey,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                return itemCollection(album: album, index: index, length: widget.alubums.length,);
               },
             ),
           ),

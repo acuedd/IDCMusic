@@ -2,8 +2,6 @@ import 'package:church_of_christ/generals/ui/screens/tab_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:church_of_christ/generals/ui/screens/menu_screen.dart';
-
 class MainScreen extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => _MainScreenState();

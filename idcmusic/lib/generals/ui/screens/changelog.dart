@@ -2,16 +2,12 @@ import 'package:church_of_christ/bloc/bloc/idc_bloc.dart';
 import 'package:church_of_christ/generals/features/generalRequestEvent.dart';
 import 'package:church_of_christ/generals/features/generalRequestStatus.dart';
 import 'package:church_of_christ/utils/widgets/custom_page.dart';
-import 'package:church_of_christ/utils/url.dart';
 import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 
 /// This screen loads the [CHANGELOG.md] file from GitHub,
@@ -32,51 +28,58 @@ class _ChangelogListState extends State<ChangelogList>{
   @override
   void initState() {
     super.initState();
-  
+    myBLoC = BlocProvider.of<IDCBloc>(context);
+    myBLoC.add(FetchChangeLog());
+  }
+
+  Future<void> _refresh() async{
+     myBLoC.add(FetchChangeLog());
   }
 
   @override
   Widget build(BuildContext context) {    
-    myBLoC = BlocProvider.of<IDCBloc>(context);      
-
+  
     return BlanckPage(
       title: "Lista de cambios",
-      body: BlocBuilder<IDCBloc, RequestState>(
-        builder: (context, state){
-          if(state is RequestEmpty){
-            BlocProvider.of<IDCBloc>(context).add(FetchChangeLog());
-          }
-          if(state is RequestError){
-            return _fatal(context);
-          }
-          if(state is RequestLoadedDio){
-            return Markdown(
-                data: state.response,
-                onTapLink: (url) async => await FlutterWebBrowser.openWebPage(
-                  url: url,
-                  androidToolbarColor: Theme.of(context).primaryColor,
-                ),
-                styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-                  blockSpacing: 12,
-                  h2: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).textTheme.headline6.color,
-                    fontFamily: 'ProductSans',
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: BlocBuilder<IDCBloc, RequestState>(
+          builder: (context, state){
+            if(state is RequestEmpty){
+              BlocProvider.of<IDCBloc>(context).add(FetchChangeLog());
+            }
+            else if(state is RequestError){
+              return _fatal(context);
+            }
+            else if(state is RequestLoadedDio){
+              return Markdown(
+                  data: state.response,
+                  onTapLink: (url) async => await FlutterWebBrowser.openWebPage(
+                    url: url,
+                    androidToolbarColor: Theme.of(context).primaryColor,
                   ),
-                  p: TextStyle(
-                    fontSize: 15,
-                    color: Theme.of(context).textTheme.caption.color,
+                  styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+                    blockSpacing: 12,
+                    h2: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).textTheme.headline6.color,
+                      fontFamily: 'ProductSans',
+                    ),
+                    p: TextStyle(
+                      fontSize: 15,
+                      color: Theme.of(context).textTheme.caption.color,
+                    ),
                   ),
-                ),
-            );
-          }
+              );
+            }
 
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
+      ),            
     );
   }
 
@@ -88,7 +91,7 @@ class _ChangelogListState extends State<ChangelogList>{
         Container(
           child: Center( 
             child: Text("Ocurrió un error", 
-              style: GetTextStyle.getSubHeaderTextStyle(context),
+              style: GetTextStyle.XXL(context),
             ),
           ),          
         ),

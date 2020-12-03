@@ -80,6 +80,7 @@ class Connection {
   
   // Fetches data & returns it
   Future fetchData(String url, {Map<String, dynamic> parameters}) async {
+    print("URL --> ${url}");
     final response = await Dio().get(url, queryParameters: parameters);
 
     return response.data;

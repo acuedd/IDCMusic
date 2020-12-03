@@ -13,6 +13,11 @@ class CollectionModel {
     );
   } 
 
+  factory CollectionModel.fromJsonCollection(Map json) {
+    return CollectionModel(
+      collections: List<Collection>.from(json["resources"].map((x) => Collection.fromJson(x))),
+    );
+  } 
 }
 
 class Collection{

@@ -23,7 +23,7 @@ class IDCBloc extends Bloc<RequestEvent, RequestState>{
     if(event is FetchChangeLog){
       yield RequestLoading();
       try{
-        final response = await repository.fetchChangelog();
+        final dynamic response = await repository.fetchChangelog();
         yield RequestLoadedDio(response: response);
       }
       catch(_){

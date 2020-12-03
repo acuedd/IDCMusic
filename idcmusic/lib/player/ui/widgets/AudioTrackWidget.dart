@@ -47,13 +47,13 @@ class AudioTrackWidget extends StatelessWidget{
   Function setCallback(BuildContext context){
     if(audioPlayerModel.isPlaying)
       return () {
-        BlocProvider.of<AudioPlayerBloc>(context)
-            .add(TriggeredPauseAudio(audioPlayerModel));
+        /*BlocProvider.of<AudioPlayerBloc>(context)
+            .add(TriggeredPauseAudio(audioPlayerModel));*/
       };
     else 
       return (){
-        BlocProvider.of<AudioPlayerBloc>(context)
-          .add(TriggeredPlayAudio(audioPlayerModel));
+        /*BlocProvider.of<AudioPlayerBloc>(context)
+          .add(TriggeredPlayAudio(audioPlayerModel));*/
       };
   }
 }

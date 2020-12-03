@@ -1,5 +1,8 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:church_of_christ/player/models/AudioPlayerModel.dart';
 import 'package:church_of_christ/player/models/songs_model.dart';
 import 'package:church_of_christ/player/ui/widgets/songItem.dart';
+import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/material.dart';
 
 class ForYouCarousel extends StatefulWidget {
@@ -12,9 +15,12 @@ class ForYouCarousel extends StatefulWidget {
 
 class _ForYouCarouselState extends State<ForYouCarousel> {
 
-
+  List<Audio> currentList;
+  
   @override
   Widget build(BuildContext context) {
+    currentList = convertListSongToAudioModel(widget.forYou);
+
     return Column(children: <Widget>[
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
@@ -22,22 +28,14 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text("Para ti",
-              style: TextStyle(
-                fontSize: 22.0,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 12
-              ),
+              style: GetTextStyle.XL(context),
             ),
             GestureDetector(
               onTap: ()=>{
                 print("view all songs"),
               },
               child: Text("Ver todos",
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: GetTextStyle.SM(context),
               ),
             ),
           ],
@@ -47,12 +45,42 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
         shrinkWrap: true,
           physics: new NeverScrollableScrollPhysics(),
           scrollDirection: Axis.vertical,
-          itemCount: widget.forYou.length,
+          itemCount: currentList.length,
           itemBuilder: (BuildContext context, int index){
-            Song data = widget.forYou[index];
-            return songItem(data);
+            Audio dataSong = currentList[index];
+            return songItem(index, dataSong, currentList);
           }
       ),
     ]);
   }
+
+
+  List<Audio> convertListSongToAudioModel(playlist){
+    List<Audio> listAudio = List();
+    
+    for(var i =0; i<playlist.length; i++){
+      Song song = playlist[i];
+      AudioPlayerModel item = convertSongToAudioModel(song);
+      listAudio.add(item.audio);
+    }
+    return listAudio;
+  }
+
+  AudioPlayerModel convertSongToAudioModel(Song song){
+    return AudioPlayerModel(
+          isPlaying: false, 
+          id: song.id_resource,
+          audio: Audio.network(
+            song.path, 
+            metas: Metas(
+              id: song.id_resource, 
+              title: song.title_resource, 
+              artist: song.fullname, 
+              album: song.name_collection, 
+              image: MetasImage.network(song.path_image)
+            )
+          )
+        );
+  }
+
 }

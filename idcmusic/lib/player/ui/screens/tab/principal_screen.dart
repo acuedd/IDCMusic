@@ -1,20 +1,16 @@
+
 import 'package:church_of_christ/bloc/bloc/idc_bloc.dart';
-import 'package:church_of_christ/bloc/repository/idc_api.dart';
 import 'package:church_of_christ/generals/features/generalRequestEvent.dart';
 import 'package:church_of_christ/generals/features/generalRequestStatus.dart';
 import 'package:church_of_christ/player/models/collections_model.dart';
 import 'package:church_of_christ/player/models/songs_model.dart';
+import 'package:church_of_christ/player/ui/widgets/PlayerWidget.dart';
 import 'package:church_of_christ/player/ui/widgets/album_carousel.dart';
 import 'package:church_of_christ/player/ui/widgets/for_you_carousel.dart';
-import 'package:church_of_christ/player/ui/widgets/item_collection.dart';
-import 'package:church_of_christ/player/ui/widgets/record_anim.dart';
-import 'package:church_of_christ/player/ui/widgets/search.dart';
-import 'package:church_of_christ/player/ui/widgets/songItem.dart';
-import 'package:church_of_christ/utils/functions.dart';
+import 'package:church_of_christ/player/ui/anims/record_anim.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PrinciapalScreen extends StatefulWidget{
   const PrinciapalScreen({
@@ -68,13 +64,15 @@ class _PrinciapalScreen extends State<PrinciapalScreen>
 
   @override
   Widget build(BuildContext context) {
+    idcBloc.add(FetchFirstPagePlayer());
+
     return Scaffold(
       //appBar: _getHeader(),
       body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Row(
@@ -116,7 +114,7 @@ class _PrinciapalScreen extends State<PrinciapalScreen>
                       child: RotateRecord(
                         animation: _commonTween.animate(controllerRecord),
                         onTap: () {
-                          print("fuck here");
+                          print("fuck here\n");
                           //idcBloc.add(FetchFirstPagePlayer());
                         },
                       ),
@@ -125,20 +123,21 @@ class _PrinciapalScreen extends State<PrinciapalScreen>
                 ),
               ),
               Expanded(  
-                    child: BlocBuilder<IDCBloc, RequestState>(
-                    
+                child: RefreshIndicator(
+                  onRefresh: _updateData,
+                  child: BlocBuilder<IDCBloc, RequestState>(                    
                     builder: (context, state){       
                         if(state is RequestEmpty){
                           idcBloc.add(FetchFirstPagePlayer());
-                        }               
-                        if( state is RequestError){
+                        }
+                        else if( state is RequestError){
                             return Center(
                               child: Text("Error",
                                 style: TextStyle( fontFamily: "Nunito", fontSize: 17.0),
                               ),
                             );
                         }
-                        if(state is RequestLoadedDual){                      
+                        else if(state is RequestLoadedDual){
                           return ListView(
                             children: <Widget>[
                               SizedBox(height: 10,),
@@ -147,23 +146,29 @@ class _PrinciapalScreen extends State<PrinciapalScreen>
                             ],
                           );
                         }
-                        
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                    }),
-                ),                                          
+                        else{
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }                                              
+                        return Container();
+                    }
+                  ),
+                ),                    
+              ),  
+              /*Container(
+                alignment: Alignment.bottomCenter,
+                child: PlayerWidget(),
+              )*/
             ],
           ),
-        ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.refresh),
-        onPressed: (){
-          idcBloc.add(FetchFirstPagePlayer());
-        },
-      ),
+        ),    
     );
 
+  }
+
+  Future<void> _updateData() async{
+     idcBloc.add(FetchFirstPagePlayer());
   }
 
   Widget _drawListCollections({data}){    
@@ -183,7 +188,7 @@ class _PrinciapalScreen extends State<PrinciapalScreen>
           child: Text(
             data["razon"].toString().split("\n")[0],
             style: TextStyle( fontFamily: "Nunito",fontSize: 17.0,),
-          )
+          )          
         );
       }
       else{

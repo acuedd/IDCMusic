@@ -1,3 +1,4 @@
+import 'package:church_of_christ/bloc/bloc/AudioCurrentBloc.dart';
 import 'package:church_of_christ/bloc/bloc/AudioPlayerBloc.dart';
 import 'package:church_of_christ/player/features/AudioPlayerEvent.dart';
 import 'package:church_of_christ/player/features/AudioPlayerState.dart';
@@ -12,14 +13,16 @@ class PlayerWidget extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AudioPlayerBloc, AudioPlayerState>(
+    return BlocBuilder<AudioCurrentBloc, AudioPlayerState>(
       builder: (context, state){
         if(state is AudioPlayerInitial || state is AudioPlayerReady){
           return SizedBox.shrink();
         }
         else if(state is AudioPlayerPlaying){
-          return _showPlayer(context, state.playingEntity);
-        }
+
+          print(state);
+          //return _showPlayer(context, state.playingEntity);
+        }      
         else{
           return SizedBox.shrink();
         }
@@ -72,13 +75,13 @@ class PlayerWidget extends StatelessWidget{
   Function setCallback(BuildContext context, AudioPlayerModel model){
     if(model.isPlaying)
       return (){
-        BlocProvider.of<AudioPlayerBloc>(context)
-          .add(TriggeredPauseAudio(model));
+        /*BlocProvider.of<AudioPlayerBloc>(context)
+          .add(TriggeredPauseAudio(model));*/
       };
     else 
       return (){
-        BlocProvider.of<AudioPlayerBloc>(context)
-          .add(TriggeredPlayAudio(model));
+        /*BlocProvider.of<AudioPlayerBloc>(context)
+          .add(TriggeredPlayAudio(model));*/
       };
   }
 }

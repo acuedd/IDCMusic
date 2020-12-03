@@ -28,6 +28,7 @@ class _TabNavigatorState extends State<TabNavigator> {
             ? Brightness.dark
             : Brightness.light));
             
+    var iconColor = Theme.of(context).accentColor;
 
     return Scaffold(
       body: PageView.builder(
@@ -69,11 +70,12 @@ class _TabNavigatorState extends State<TabNavigator> {
                 Icons.music_note,
                 size: 25.0,
                 color: Colors.white,
-              ), 
-              title: Text(
+              ),
+              title: Text("", style: TextStyle(color: iconColor),), 
+              /*title: Text(
                 "Buscar",
                 style: TextStyle(color: Colors.white),
-              ),
+              ),*/
             ),
             BubbleBottomBarItem(
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -82,14 +84,15 @@ class _TabNavigatorState extends State<TabNavigator> {
                 size: 25.0,
               ),
               activeIcon: Icon(
-                Icons.music_note,
+                Icons.file_download,
                 size: 25.0,
                 color: Colors.white,
               ),
-              title: Text(
+              title: Text("", style: TextStyle(color: iconColor),), 
+              /*title: Text(
                 "Descargas",
                 style: TextStyle(color: Colors.white),
-              )
+              )*/
             ),
             BubbleBottomBarItem(
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -102,10 +105,11 @@ class _TabNavigatorState extends State<TabNavigator> {
                 size: 25.0,
                 color: Colors.white,
               ),
-              title: Text(
+              title: Text("", style: TextStyle(color: iconColor),), 
+              /*title: Text(
                 "Favoritas",
                 style: TextStyle(color: Colors.white),
-              ),
+              ),*/
             ),
             BubbleBottomBarItem(
               backgroundColor: Theme.of(context).primaryColorDark, 
@@ -118,10 +122,11 @@ class _TabNavigatorState extends State<TabNavigator> {
                 size: 25.0,
                 color: Colors.white,
               ), 
-              title: Text(
+              title: Text("", style: TextStyle(color: iconColor),), 
+              /*title: Text(
                 "General", 
                 style: TextStyle(color: Colors.white),
-              )
+              )*/
             ),
           ],
         ),

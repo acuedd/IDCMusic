@@ -18,13 +18,12 @@ dependencies:
   shared_preferences: ^0.5.8
   device_info: ^0.4.2+4
   package_info: ^0.4.1
-  firebase_messaging: ^6.0.16
-  pull_to_refresh: ^1.6.2
+  #firebase_messaging: ^6.0.16
   localstorage: ^3.0.0
 
   #Online
   flutter_web_browser: ^0.12.0
-  flutter_mailer: ^1.0.0
+  flutter_mailer: ^1.0.1
 
   #Icons
   cupertino_icons: ^0.1.3
@@ -32,7 +31,7 @@ dependencies:
   flutter_vector_icons: ^0.2.1
 
   #Audio
-  assets_audio_player: ^2.0.13+1
+  assets_audio_player: ^2.0.13
 
   #Images
   cached_network_image: ^2.2.0+1
@@ -61,5 +60,6 @@ flutter:
         - asset: assets/fonts/Lato-Regular.ttf
 
   assets:
+    - assets/audios/
     - assets/icons/
     - assets/images/

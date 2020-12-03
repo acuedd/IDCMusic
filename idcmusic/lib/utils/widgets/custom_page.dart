@@ -6,11 +6,14 @@ class BlanckPage extends StatelessWidget {
   final String title;
   final Widget body;
   final List<Widget> actions;
+  final scafoldKey;
+  
 
   const BlanckPage({
     this.title,
     @required this.body,
     this.actions,
+    this.scafoldKey,
   });
 
   factory BlanckPage.offTitle({
@@ -27,7 +30,8 @@ class BlanckPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      key: scafoldKey,
+      appBar: AppBar(        
         title: Text(
           title,
           style: TextStyle(fontFamily: 'Lato'),

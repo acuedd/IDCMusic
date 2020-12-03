@@ -1,3 +1,4 @@
+import 'package:church_of_christ/player/models/AudioPlayerModel.dart';
 import 'package:church_of_christ/utils/url.dart';
 
 class SongModel{
@@ -43,7 +44,7 @@ class Song{
     fullname: json["fullname"], 
     name_collection: json["name_collection"], 
     title_resource: json["title_resource"], 
-    path: json["path"], 
+    path: '${Url.getURL()}/${json["path"]}', 
     duration: json["duration"], 
     id_resource: json["id_resource"], 
     sourcetype: json["sourcetype"], 

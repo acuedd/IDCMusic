@@ -1,17 +1,35 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:church_of_christ/bloc/bloc/AudioCurrentBloc.dart';
+import 'package:church_of_christ/bloc/bloc/AudioPlayerBloc.dart';
+import 'package:church_of_christ/player/features/AudioPlayerEvent.dart';
+import 'package:church_of_christ/player/models/AudioPlayerModel.dart';
 import 'package:church_of_christ/player/models/songs_model.dart';
+import 'package:church_of_christ/player/ui/screens/player_page.dart';
 import 'package:church_of_christ/utils/functions.dart';
+import 'package:church_of_christ/utils/widgets/header_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class songItem extends StatelessWidget{
-  final Song song;
+  final Audio song;
+  final List<Audio> playlist;
+  final int indexSong;
 
-  songItem(this.song );
+  songItem(this.indexSong, this.song, this.playlist );
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        
+      onTap: (){        
+        //BlocProvider.of<AudioCurrentBloc>(context).add(TriggeredStopAudio());
+        Navigator.push(context, MaterialPageRoute(          
+          builder: (_) => PlayerPage(
+            nowPlay: true,
+            song: song,
+            indexSong: indexSong,
+            playlist: playlist,
+          )        
+        ));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -25,7 +43,7 @@ class songItem extends StatelessWidget{
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12.0),
                     child: Image.network(
-                      song.path_image, 
+                      song.metas.image.path, 
                       fit: BoxFit.cover,
                     ),                    
                   ),
@@ -42,26 +60,22 @@ class songItem extends StatelessWidget{
               ],              
             ),
             SizedBox(width: 20.0,),
-            Expanded(
+            Expanded(              
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    song.title_resource,
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w600,
-                    )
+                    song.metas.title,
+                    style: GetTextStyle.M(context),
                   ),
                   SizedBox(height: 8.0,),
                   Text(
-                    song.fullname,
-                    style: GetTextStyle.getThirdHeading(context),
+                    song.metas.artist,
+                    style: GetTextStyle.S(context),
                   )
                 ],
               ),
             ),
-            Spacer(),
             IconButton(
               onPressed: () => print("press favorite"),
               icon: Icon(

@@ -9,7 +9,8 @@ class IDCRepository{
   IDCRepository();
 
   Future fetchChangelog() async{
-    return conn.fetchData(Url.changelog);
+    dynamic response = conn.fetchData(Url.changelog);
+    return response;
   }
 
   Future fetchSongs({
@@ -69,5 +70,13 @@ class IDCRepository{
 
     return conn.con("collections", params);
 
+  }
+
+  Future setThemePreferences(String theme, Color color) async{
+    String colorString = color.toString(); // Color(0x12345678)
+      String valueString = colorString.split('(0x')[1].split(')')[0]; // kind of hacky..
+      prefs = await SharedPreferences.getInstance();
+      prefs.setString("theme", theme);
+      prefs.setString("accentColor", valueString);
   }
 }

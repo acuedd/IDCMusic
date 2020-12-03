@@ -1,10 +1,12 @@
-
-import 'package:church_of_christ/player/models/AudioPlayerModel.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
 abstract class AudioPlayerRepository{
-  Future<AudioPlayerModel> getById(String audioPlayerId);
-  Future<List<AudioPlayerModel>> getAll();
+  Future<Audio> updateCurrentSong(Audio updatedModel);
+  Future<Audio> getCurrentSong();
 
-  Future<List<AudioPlayerModel>> updateModel(AudioPlayerModel updatedModel);
-  Future<List<AudioPlayerModel>> updateAllModels(List<AudioPlayerModel> updatedList);
+  Future<Audio> getById(String audioPlayerId);
+  Future<List<Audio>> getAll();
+
+  Future<List<Audio>> updateModel(Audio updatedModel);
+  Future<List<Audio>> updateAllModels(List<Audio> updatedList);
 }

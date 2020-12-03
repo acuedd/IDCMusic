@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../functions.dart';
+
 class HeaderText extends StatelessWidget{
   final String text;
 
@@ -15,12 +17,7 @@ class HeaderText extends StatelessWidget{
       padding: EdgeInsets.only(left: 16, top: 16),
       child: Text(
         text,
-        style: TextStyle(
-          fontSize: 15,
-          fontFamily: "Lato",
-          color: Theme.of(context).accentColor,
-          fontWeight: FontWeight.bold,
-        ),
+        style: GetTextStyle.XL(context),
       ),
     );
   }

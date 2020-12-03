@@ -17,6 +17,8 @@ class AboutScreen extends StatefulWidget {
 }
 
 class _AboutScreenState extends State<AboutScreen> {
+  final GlobalKey<ScaffoldState> _scafoldKey = GlobalKey<ScaffoldState>();
+
   PackageInfo _packageInfo = PackageInfo(
     version: 'Unknown',
     buildNumber: 'Unknown',
@@ -37,6 +39,7 @@ class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     return BlanckPage(
+      scafoldKey: _scafoldKey,
       title: "Información",
       body: ListView(children: <Widget>[
         HeaderText(text: "Sobre la app"),
@@ -113,10 +116,23 @@ class _AboutScreenState extends State<AboutScreen> {
           trailing: Icon(Icons.chevron_right),
           title: "Envíame un correo",
           subtitle: "Reporta fallos o solicita nuevas funciones",
-          onTap: () async => await FlutterMailer.send(MailOptions(
-            subject: Url.authorEmail['subject'],
-            recipients: [Url.authorEmail['address']],
-          )),
+          onTap: () async {
+            if (Platform.isIOS) {
+              final bool canSend = await FlutterMailer.canSendMail();
+              if (!canSend) {
+                const SnackBar snackbar =
+                    const SnackBar(content: Text('No hay aplicación de email disponible', textAlign: TextAlign.center,),);
+                _scafoldKey.currentState.showSnackBar(snackbar);
+                return;
+              }
+            }
+            await FlutterMailer.send(MailOptions(
+              isHTML: true,
+              subject: Url.authorEmail['subject'],
+              recipients: [Url.authorEmail['address']],
+            ));
+          
+          },
         ),
       ],),
     );

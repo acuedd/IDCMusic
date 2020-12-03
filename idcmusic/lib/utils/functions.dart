@@ -57,50 +57,82 @@ class Utils {
 
   static String randomUrl(
       {int width = 100, int height = 100, Object key = ''}) {
-    return 'http://placeimg.com/$width/$height/${key.hashCode.toString() + key.toString()}';
+    //return 'http://placeimg.com/$width/$height/${key.hashCode.toString() + key.toString()}';
+    return "https://idcrom.homelandplanet.com/var/configuration/theme/geniusAdminLTE/images/9792b824b81b23c8aa886df403278593c31ff90741e71e3403a38e42b56a3704.png";
   }
 }
 
 class GetTextStyle{
-  static getSubHeaderTextStyle(BuildContext context){
+  static SS( BuildContext context){
     return TextStyle(
-      fontSize: 18,
-      //color: firstColor,
+      fontSize: 10, 
+      color: Colors.grey,
+      fontWeight: FontWeight.w700,
+      fontFamily: "Lato",      
+    );    
+  }
+
+  static S( BuildContext context){
+    return TextStyle(
+      fontSize: 11, 
       color: Theme.of(context).textTheme.caption.color.withOpacity(0.5),
       fontWeight: FontWeight.w700,
       fontFamily: "Lato",
-    );
+    );    
   }
 
-  static getThirdHeading(BuildContext context){
+  static SM( BuildContext context){
     return TextStyle(
-      fontSize: 14,
-      color: firstColor,
-      //color: (Provider.of<AppModel>(context).theme == Themes.black || Provider.of<AppModel>(context).theme == Themes.dark)? firstColor: Theme.of(context).textTheme.caption.color,
-      //color: Theme.of(context).textTheme.caption.color,
+      fontSize: 12, 
+      //color: Theme.of(context).textTheme.caption.color.withOpacity(0.5),
+      fontWeight: FontWeight.w600,
+      fontFamily: "Lato",
+    );    
+  }
+
+  static M(BuildContext context){
+    return TextStyle(
+      fontSize: 14, 
+      //color: Theme.of(context).textTheme.,
       fontWeight: FontWeight.w700,
       fontFamily: "Lato",
-    );
+    );    
   }
 
-  static getHeadingOneTextStyle(BuildContext context){
+  static L(BuildContext context){
     return TextStyle(
-      fontSize: 20,
-      //color: Colors.black,
-      color: Theme.of(context).textTheme.caption.color,
+      fontSize: 18, 
+      //color: Theme.of(context).textTheme.caption.color.withOpacity(0.5),
+      fontWeight: FontWeight.w700,
       fontFamily: "Lato",
-      fontWeight: FontWeight.bold,
-    );
+    );    
   }
 
-  static getHeadingMusic(BuildContext context){
+  static XL(BuildContext context){
     return TextStyle(
-      //color: Colors.white,
-        color: Theme.of(context).textTheme.caption.color,
-        fontFamily: "Lato",
-        fontWeight: FontWeight.bold,
-        fontSize: 38.0
-    );
+      fontSize: 22,     
+      fontWeight: FontWeight.bold,
+      fontFamily: "Lato",
+      letterSpacing: 1.2,
+    );    
   }
+
+  static LXL(BuildContext context){
+    return TextStyle(
+      fontSize: 25,     
+      fontWeight: FontWeight.bold,
+      fontFamily: "Lato",
+      letterSpacing: 1.2,
+    );    
+  }
+
+  static XXL(BuildContext context){
+    return TextStyle(
+      fontSize: 38,     
+      fontWeight: FontWeight.bold,
+      fontFamily: "Lato",
+      letterSpacing: 1.2,
+    );    
+  }  
 }
 
