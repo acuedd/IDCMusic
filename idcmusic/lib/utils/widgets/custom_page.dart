@@ -1,3 +1,5 @@
+import 'package:church_of_christ/utils/functions.dart';
+import 'package:church_of_christ/utils/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
 /// Basic screen, which includes an [AppBar] widget.
@@ -29,12 +31,31 @@ class BlanckPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /*return Scaffold(  
+      key: scafoldKey,
+      body: SafeArea(  
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            AppBarCarrousel(title: title,),
+            Expanded(  
+              child: body,
+            ),
+          ]
+        ),
+      ),
+    );*/
+    
     return Scaffold(
       key: scafoldKey,
-      appBar: AppBar(        
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
+        actionsIconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
         title: Text(
           title,
-          style: TextStyle(fontFamily: 'Lato'),
+          style: GetTextStyle.APPBAR(context),
         ),
         centerTitle: true,
         actions: actions,

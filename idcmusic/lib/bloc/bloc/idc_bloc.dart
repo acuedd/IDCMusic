@@ -1,6 +1,4 @@
 import 'dart:async';
-
-
 import 'package:church_of_christ/bloc/repository/idc_api.dart';
 import 'package:church_of_christ/generals/features/generalRequestEvent.dart';
 import 'package:church_of_christ/generals/features/generalRequestStatus.dart';
@@ -16,12 +14,11 @@ class IDCBloc extends Bloc<RequestEvent, RequestState>{
   IDCBloc({ @required this.repository }) : assert(repository != null), super(RequestEmpty());
 
   @override
-  RequestState get initialState => RequestEmpty();
-
-  @override
   Stream<RequestState> mapEventToState(RequestEvent event) async*{
-    if(event is FetchChangeLog){
-      yield RequestLoading();
+    if(event is InitialEvent){
+      yield RequestEmpty();
+    }
+    else if(event is FetchChangeLog){      
       try{
         final dynamic response = await repository.fetchChangelog();
         yield RequestLoadedDio(response: response);
@@ -53,8 +50,7 @@ class IDCBloc extends Bloc<RequestEvent, RequestState>{
       }
   }
 
-  Stream<RequestState> _mapFetchCollectionsToState(RequestEvent event) async*{
-    yield RequestLoading();
+  Stream<RequestState> _mapFetchCollectionsToState(RequestEvent event) async*{    
       try{
         final response = await repository.fetchCollections();
         yield RequestLoaded(response: response);

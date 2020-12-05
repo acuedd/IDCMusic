@@ -1,4 +1,7 @@
+import 'package:church_of_christ/bloc/bloc/AlbumBloc.dart';
 import 'package:church_of_christ/bloc/bloc/AudioCurrentBloc.dart';
+import 'package:church_of_christ/bloc/bloc/ChangeLogBloc.dart';
+import 'package:church_of_christ/bloc/bloc/SongAlbumBloc.dart';
 import 'package:church_of_christ/bloc/bloc/theme_change_bloc.dart';
 import 'package:church_of_christ/bloc/repository/AudioPlayerRepository.dart';
 import 'package:church_of_christ/bloc/repository/InMemoryAudioPlayerRepository.dart';
@@ -74,6 +77,9 @@ class _MyAppState extends State<CherryApp> {
         ],
         child: MultiBlocProvider(
           providers: [          
+            BlocProvider(
+              create: (BuildContext context) => ThemeBloc(repository: RepositoryProvider.of<IDCRepository>(context), ),
+            ),
             BlocProvider<AudioCurrentBloc>(
               create: (BuildContext context) => AudioCurrentBloc(
                 assetsAudioPlayer: AssetsAudioPlayer.newPlayer(),
@@ -86,7 +92,19 @@ class _MyAppState extends State<CherryApp> {
               ),
             ),
             BlocProvider(
-              create: (BuildContext context) => ThemeBloc(repository: RepositoryProvider.of<IDCRepository>(context), ),
+              create: (BuildContext context) => AlbumBloc(
+                repository: RepositoryProvider.of<IDCRepository>(context)
+              ),
+            ),
+            BlocProvider(
+              create: (BuildContext context) => SongAlbumBloc(
+                repository: RepositoryProvider.of<IDCRepository>(context)
+              ),
+            ),
+            BlocProvider(
+              create: (BuildContext context) => ChangeLogBloc(
+                repository: RepositoryProvider.of<IDCRepository>(context)
+              ),
             ),
           ],
           child: BlocBuilder<ThemeBloc, ThState>(

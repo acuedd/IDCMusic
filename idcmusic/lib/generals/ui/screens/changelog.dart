@@ -1,7 +1,7 @@
-import 'package:church_of_christ/bloc/bloc/idc_bloc.dart';
+import 'package:church_of_christ/bloc/bloc/ChangeLogBloc.dart';
 import 'package:church_of_christ/generals/features/generalRequestEvent.dart';
 import 'package:church_of_christ/generals/features/generalRequestStatus.dart';
-import 'package:church_of_christ/utils/widgets/custom_page.dart';
+import 'package:church_of_christ/utils/widgets/app_bar.dart';
 import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,12 +23,12 @@ class ChangelogList extends StatefulWidget {
 class _ChangelogListState extends State<ChangelogList>{
 
   final List<dynamic> items = List();
-  IDCBloc myBLoC;
+  ChangeLogBloc myBLoC;
 
   @override
   void initState() {
     super.initState();
-    myBLoC = BlocProvider.of<IDCBloc>(context);
+    myBLoC = BlocProvider.of<ChangeLogBloc>(context);
     myBLoC.add(FetchChangeLog());
   }
 
@@ -39,14 +39,17 @@ class _ChangelogListState extends State<ChangelogList>{
   @override
   Widget build(BuildContext context) {    
   
-    return BlanckPage(
-      title: "Lista de cambios",
-      body: RefreshIndicator(
+    return Scaffold( 
+      body: SafeArea( 
+        child: Column(children: [
+          AppBarCarrousel(title: "Lista de cambios"),
+          Expanded(
+            child:RefreshIndicator(
         onRefresh: _refresh,
-        child: BlocBuilder<IDCBloc, RequestState>(
+        child: BlocBuilder<ChangeLogBloc, RequestState>(
           builder: (context, state){
             if(state is RequestEmpty){
-              BlocProvider.of<IDCBloc>(context).add(FetchChangeLog());
+              myBLoC.add(FetchChangeLog());
             }
             else if(state is RequestError){
               return _fatal(context);
@@ -80,6 +83,9 @@ class _ChangelogListState extends State<ChangelogList>{
           },
         ),
       ),            
+          ),
+        ]),
+      )
     );
   }
 

@@ -133,6 +133,16 @@ class GetTextStyle{
       fontFamily: "Lato",
       letterSpacing: 1.2,
     );    
-  }  
+  } 
+
+  static APPBAR(BuildContext context){
+    return TextStyle(
+      fontSize: 22,     
+      fontWeight: FontWeight.bold,
+      fontFamily: "Lato",
+      letterSpacing: 1.2,
+      color: Colors.black,
+    );    
+  } 
 }
 

@@ -1,8 +1,7 @@
-import 'package:church_of_christ/bloc/bloc/idc_bloc.dart';
+import 'package:church_of_christ/bloc/bloc/AlbumBloc.dart';
 import 'package:church_of_christ/generals/features/generalRequestEvent.dart';
 import 'package:church_of_christ/generals/features/generalRequestStatus.dart';
 import 'package:church_of_christ/player/models/collections_model.dart';
-import 'package:church_of_christ/player/ui/widgets/album_carousel.dart';
 import 'package:church_of_christ/player/ui/widgets/item_collection.dart';
 import 'package:church_of_christ/utils/functions.dart';
 import 'package:church_of_christ/utils/widgets/app_bar.dart';
@@ -18,7 +17,7 @@ class CarouselCollection extends StatefulWidget{
 }
 
 class _CarouselCollection extends State<CarouselCollection> {
-  IDCBloc idcBloc;
+  AlbumBloc albumBloc;
 
     @override
   void dispose() {
@@ -28,16 +27,15 @@ class _CarouselCollection extends State<CarouselCollection> {
   @override
   initState() {
     super.initState();
-    idcBloc =  BlocProvider.of<IDCBloc>(context);
+    albumBloc =  BlocProvider.of<AlbumBloc>(context);
   }
 
   Future<void> _updateData() async{
-     idcBloc.add(FetchCollections());
+     albumBloc.add(FetchCollections());
   }
 
   @override
-  Widget build(BuildContext context) {
-    idcBloc.add(FetchCollections());
+  Widget build(BuildContext context) {    
     return Scaffold(       
       body: SafeArea(
         child: Column(
@@ -48,14 +46,11 @@ class _CarouselCollection extends State<CarouselCollection> {
             Expanded(  
               child: RefreshIndicator(
                 onRefresh: _updateData,
-                child: BlocBuilder<IDCBloc, RequestState>(  
+                child: BlocBuilder<AlbumBloc, RequestState>(  
                   builder: (context, state){       
                     if(state is RequestEmpty){
-                      idcBloc.add(FetchCollections());
-                    }
-                    else if(state is RequestLoadedDual){
-                      idcBloc.add(FetchCollections());
-                    }
+                      albumBloc.add(FetchCollections());
+                    }                    
                     else if( state is RequestError){
                       return Center(
                         child: Text("Error",

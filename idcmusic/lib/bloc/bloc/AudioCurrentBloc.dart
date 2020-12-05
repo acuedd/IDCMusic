@@ -33,31 +33,31 @@ class AudioCurrentBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
       yield AudioPlayerInitial();
     }
 
-    if(event is AudioPlayed){
+    else if(event is AudioPlayed){
       yield* _mapAudioPlayedToState(event);
     }
-    if(event is AudioPaused){
+    else if(event is AudioPaused){
       yield* _mapAudioPausedToState(event);
     }
-    if(event is AudioStopped){
+    else if(event is AudioStopped){
       yield* _mapAudioStoppedToState();
     }
-    if(event is AudioSetPlaylist){
+    else if(event is AudioSetPlaylist){
       yield* _mapAudioSetPlaylistToState(event);
     }
-    if(event is TriggeredStopAudio){
+    else if(event is TriggeredStopAudio){
       yield* _mapTriggeredStopAudio(event);
     }
-    if(event is TriggeredPlayAudio){
+    else if(event is TriggeredPlayAudio){
       yield* _mapTriggeredPlayAudio(event);
     }
-    if(event is TriggeredPauseAudio){
+    else if(event is TriggeredPauseAudio){
       yield* _mapTriggeredPausedAudio(event);
     }
-    if(event is TriggeredNextAudio){
+    else if(event is TriggeredNextAudio){
       yield* _mapTriggeredNextAudio(event);
     }
-    if(event is TriggeredPrevAudio){
+    else if(event is TriggeredPrevAudio){
       yield* _mapTriggeredPrevAudio(event);
     }
 
@@ -152,9 +152,13 @@ class AudioCurrentBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
   }
 
   Stream<AudioPlayerState> _mapTriggeredStopAudio(TriggeredStopAudio event) async*{
-    await assetsAudioPlayer.stop();
-
-    yield AudioPlayerInitial();
+    try{
+      await assetsAudioPlayer.stop();
+      yield AudioPlayerInitial();
+    }
+    catch(_){
+      yield AudioPlayerInitial();
+    }
   }
 
   Stream<AudioPlayerState> _mapTriggeredNextAudio(TriggeredNextAudio event) async*{
@@ -193,14 +197,21 @@ class AudioCurrentBloc extends Bloc<AudioPlayerEvent, AudioPlayerState> {
   }
 
   Stream<AudioPlayerState> _mapAudioPausedToState( AudioPaused event) async*{
-    final List<Audio> updatedList = assetsAudioPlayer.playlist.audios;
-    final Audio currentAudio = assetsAudioPlayer.current.value.audio.audio;
-    final bool isPlaying = assetsAudioPlayer.isPlaying.value;    
-    int index = assetsAudioPlayer.current.value.playlist.currentIndex;
-    var songDuration = assetsAudioPlayer.current.value.audio.duration;
-    var currentPosition = assetsAudioPlayer.currentPosition.value;
+    try{
+      final List<Audio> updatedList = assetsAudioPlayer.playlist.audios;
+      final Audio currentAudio = assetsAudioPlayer.current.value.audio.audio;
+      final bool isPlaying = assetsAudioPlayer.isPlaying.value;
+      int index = assetsAudioPlayer.current.value.playlist.currentIndex;
+      var songDuration = assetsAudioPlayer.current.value.audio.duration;
+      var currentPosition = assetsAudioPlayer.currentPosition.value;
+      yield AudioPlayerPaused(index, currentAudio, updatedList ,isPlaying, songDuration, currentPosition);
+    }
+    catch(_){
+      yield AudioPlayerInitial();
+    }
+
   
-    yield AudioPlayerPaused(index, currentAudio, updatedList ,isPlaying, songDuration, currentPosition);
+
   }
 
   Stream<AudioPlayerState> _mapAudioStoppedToState() async* {

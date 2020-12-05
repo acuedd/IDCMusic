@@ -30,14 +30,14 @@ class _ForYouCarouselState extends State<ForYouCarousel> {
             Text("Para ti",
               style: GetTextStyle.XL(context),
             ),
-            GestureDetector(
+            /*GestureDetector(
               onTap: ()=>{
                 print("view all songs"),
               },
               child: Text("Ver todos",
                 style: GetTextStyle.SM(context),
               ),
-            ),
+            ),*/
           ],
         ),
       ),

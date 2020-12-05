@@ -16,23 +16,23 @@ class RouteName{
   static const String allCollections = "allCollections";
 }
 
-
+//return MaterialPageRoute(builder: (_) => MainScreen());
 class RouteIDC {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
       case RouteName.tab:
-        return MaterialPageRoute(builder: (_) => MainScreen());
+        return NoAnimRouteBuilder(MainScreen());        
       case RouteName.splash:
         return NoAnimRouteBuilder(SplashPage());
       case RouteName.settings: 
-        return MaterialPageRoute(builder: (_) => SettingsScreen()); 
+        return SlideTopRouteBuilder(SettingsScreen()); 
       case RouteName.about: 
-        return MaterialPageRoute(builder: (_) => AboutScreen());
+        return SlideTopRouteBuilder(AboutScreen());
       case RouteName.changelog:
-        return MaterialPageRoute(builder: (_) => ChangelogList());
+        return SlideTopRouteBuilder(ChangelogList());
       case RouteName.allCollections: 
-        return MaterialPageRoute(builder: (_) => CarouselCollection());
+        return SlideTopRouteBuilder(CarouselCollection());
       default:
         return _errorRoute();
     }

@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:church_of_christ/player/models/collections_model.dart';
+import 'package:church_of_christ/player/ui/screens/album_page.dart';
+import 'package:church_of_christ/utils/anims/page_route_anim.dart';
 import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +16,7 @@ class itemCollection extends StatelessWidget{
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => {
-        //TODO go to albumpage
+        Navigator.push(context, SizeRoute(AlbumPage(album: album, index: index,)))
       },
       child: Container(
         width: 140,

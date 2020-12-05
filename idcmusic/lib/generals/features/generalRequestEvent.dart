@@ -4,6 +4,12 @@ abstract class RequestEvent extends Equatable{
   const RequestEvent();
 }
 
+class InitialEvent extends RequestEvent{
+  InitialEvent();
+  @override
+  List<Object> get props => [];
+}
+
 class FetchChangeLog extends RequestEvent{
   const FetchChangeLog();
 
@@ -30,4 +36,13 @@ class FetchSongs extends RequestEvent{
 
   @override
   List<Object> get props =>[];
+}
+
+class FetchSongByAlbum extends RequestEvent{
+  final int idAlbum;
+
+  const FetchSongByAlbum(this.idAlbum);
+
+  @override
+  List<Object> get props => [idAlbum];
 }

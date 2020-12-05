@@ -64,7 +64,6 @@ class _PrinciapalScreen extends State<PrinciapalScreen>
 
   @override
   Widget build(BuildContext context) {
-    idcBloc.add(FetchFirstPagePlayer());
 
     return Scaffold(
       //appBar: _getHeader(),
@@ -125,8 +124,8 @@ class _PrinciapalScreen extends State<PrinciapalScreen>
               Expanded(  
                 child: RefreshIndicator(
                   onRefresh: _updateData,
-                  child: BlocBuilder<IDCBloc, RequestState>(                    
-                    builder: (context, state){       
+                  child: BlocBuilder<IDCBloc, RequestState>(
+                    builder: (context, state){
                         if(state is RequestEmpty){
                           idcBloc.add(FetchFirstPagePlayer());
                         }

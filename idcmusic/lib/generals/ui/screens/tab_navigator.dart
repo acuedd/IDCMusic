@@ -1,5 +1,4 @@
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
-import 'package:church_of_christ/generals/ui/screens/about.dart';
 import 'package:church_of_christ/generals/ui/screens/tab/settings_screen.dart';
 import 'package:church_of_christ/player/ui/screens/tab/download_page.dart';
 import 'package:church_of_christ/player/ui/screens/tab/favorite_page.dart';
@@ -28,7 +27,7 @@ class _TabNavigatorState extends State<TabNavigator> {
             ? Brightness.dark
             : Brightness.light));
             
-    var iconColor = Theme.of(context).accentColor;
+    var iconColor = Colors.white;
 
     return Scaffold(
       body: PageView.builder(
@@ -71,7 +70,7 @@ class _TabNavigatorState extends State<TabNavigator> {
                 size: 25.0,
                 color: Colors.white,
               ),
-              title: Text("", style: TextStyle(color: iconColor),), 
+              title: Text("Online", style: TextStyle(color: iconColor),), 
               /*title: Text(
                 "Buscar",
                 style: TextStyle(color: Colors.white),
@@ -88,7 +87,7 @@ class _TabNavigatorState extends State<TabNavigator> {
                 size: 25.0,
                 color: Colors.white,
               ),
-              title: Text("", style: TextStyle(color: iconColor),), 
+              title: Text("Descargas", style: TextStyle(color: iconColor),), 
               /*title: Text(
                 "Descargas",
                 style: TextStyle(color: Colors.white),
@@ -105,7 +104,7 @@ class _TabNavigatorState extends State<TabNavigator> {
                 size: 25.0,
                 color: Colors.white,
               ),
-              title: Text("", style: TextStyle(color: iconColor),), 
+              title: Text("Favoritas", style: TextStyle(color: iconColor),), 
               /*title: Text(
                 "Favoritas",
                 style: TextStyle(color: Colors.white),
@@ -122,7 +121,7 @@ class _TabNavigatorState extends State<TabNavigator> {
                 size: 25.0,
                 color: Colors.white,
               ), 
-              title: Text("", style: TextStyle(color: iconColor),), 
+              title: Text("General", style: TextStyle(color: iconColor),), 
               /*title: Text(
                 "General", 
                 style: TextStyle(color: Colors.white),
