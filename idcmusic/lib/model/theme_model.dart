@@ -33,6 +33,7 @@ class ThemeModel with ChangeNotifier{
   void switchTheme({ bool useDarkMode, MaterialColor color}){
     _userDarkMode = useDarkMode ?? _userDarkMode;
     _themeColor = color ?? _themeColor;
+    debugPrint('color --> ${_themeColor}');
     notifyListeners();
     
   }

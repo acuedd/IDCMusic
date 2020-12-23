@@ -1,3 +1,8 @@
+import 'dart:math';
+import 'package:church_of_christ/model/theme_model.dart';
+import 'package:church_of_christ/ui/widgets/header_text.dart';
+import 'package:church_of_christ/utils/functions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,11 +17,176 @@ class _SettingsPage extends State<SettingsPage>
   bool get wantKeepAlive => true;
 
   @override
-  Widget build(BuildContext context) {
-    super.build(context);
+  void initState() {    
+    super.initState();
+  }
 
-    return Container(
-      child: Text("hola settings"),
+  @override
+  Widget build(BuildContext context) {
+    return _handleOptionWidget(context);
+  }
+
+  Widget _handleOptionWidget(BuildContext context){
+    super.build(context);
+    return Scaffold( 
+      body: SafeArea( 
+        child: Column( 
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: HeaderText(text: "General"),
+            ),
+            Expanded( 
+              child: CustomScrollView( 
+                slivers: <Widget>[
+                  listOptionWidget(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }  
+}
+
+class listOptionWidget extends StatelessWidget{ 
+    
+  @override
+  Widget build(BuildContext context) {
+    var iconColor = Theme.of(context).accentColor; 
+    
+    return ListTileTheme( 
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+      child: SliverList( 
+        delegate: SliverChildListDelegate([ 
+          ListTile( 
+            title: Text("Modo oscuro" , 
+              style: GetTextStyle.L(context),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+            onTap: (){ 
+              switchDarkMode(context);
+            },
+            leading: Transform.rotate(
+              angle: -pi,
+              child: Icon( 
+                Theme.of(context).brightness == Brightness.light
+                  ? Icons.brightness_5
+                  : Icons.brightness_2, 
+                color: iconColor,
+              ),
+            ),
+            trailing: CupertinoSwitch( 
+              activeColor: Theme.of(context).accentColor,
+              value: Theme.of(context).brightness == Brightness.dark,
+              onChanged: (value){
+                switchDarkMode(context);
+              },
+            ),
+          ), 
+          SettingThemeWidget(),
+          ListTile(
+            title: Text("Información del app", 
+              style: GetTextStyle.L(context),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+            onTap: (){
+              Navigator.of(context).pushNamed("/about");
+            },
+            leading: Icon(
+              Icons.info,
+              color: iconColor,
+            ),
+            trailing: IconButton(
+              icon: Icon(Icons.chevron_right),
+              onPressed: (){
+                Navigator.of(context).pushNamed("/about");
+              },
+            ),
+          ),
+        ]),
+      ),
+    ); 
+  }
+}
+
+void switchDarkMode(BuildContext context){
+  if(MediaQuery.of(context).platformBrightness == Brightness.dark){
+    debugPrint('fuck here');
+  }
+  else{
+    Provider.of<ThemeModel>(context, listen: false).switchTheme(
+      useDarkMode: Theme.of(context).brightness == Brightness.light
+    );
+  }
+}
+
+class SettingThemeWidget extends StatelessWidget{
+  SettingThemeWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpansionTile( 
+      title: Text("Tema", style: GetTextStyle.L(context),
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
+      ),
+      leading: Icon( 
+        Icons.color_lens, 
+        color: Theme.of(context).accentColor,
+      ),
+      children: <Widget>[
+        Padding( 
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Wrap( 
+            spacing: 5,
+            runSpacing: 5,
+            children: <Widget>[
+              ...Colors.primaries.map((color) {
+                return Material(
+                  color: color,
+                  child: InkWell(
+                    onTap: () {
+                      var model = Provider.of<ThemeModel>(context, listen: false);
+                      model.switchTheme(color: color);
+                    },
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                    ),
+                  ),
+                );
+              }).toList(),
+              Material(
+                child: InkWell(
+                  onTap: () {
+                    var model = Provider.of<ThemeModel>(context, listen: false);
+                    var brightness = Theme.of(context).brightness;
+                    model.switchRandomTheme(brightness: brightness);
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).accentColor)),
+                    width: 40,
+                    height: 40,
+                    child: Text(
+                      "?",
+                      style: TextStyle(
+                          fontSize: 20, color: Theme.of(context).accentColor),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
