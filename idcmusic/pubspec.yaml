@@ -13,13 +13,12 @@ dependencies:
   #core
   dio: ^3.0.1
   http: ^0.12.2
-  equatable: ^1.2.5
-  flutter_bloc: ^6.1.1
   shared_preferences: ^0.5.8
   device_info: ^0.4.2+4
   package_info: ^0.4.1
-  #firebase_messaging: ^6.0.16
-  localstorage: ^3.0.0
+  localstorage: ^3.0.3+6
+  provider: ^4.3.2+3
+  path_provider: ^1.6.24
 
   #Online
   flutter_web_browser: ^0.12.0
@@ -31,7 +30,7 @@ dependencies:
   flutter_vector_icons: ^0.2.1
 
   #Audio
-  assets_audio_player: ^2.0.13
+  audioplayers: ^0.17.0
 
   #Images
   cached_network_image: ^2.2.0+1
@@ -43,6 +42,8 @@ dependencies:
   #UI
   shimmer: ^1.1.2
   bubble_bottom_bar: ^1.2.0
+  pull_to_refresh: ^1.6.3
+  oktoast: ^2.3.2
 
 dev_dependencies:
   flutter_test:
