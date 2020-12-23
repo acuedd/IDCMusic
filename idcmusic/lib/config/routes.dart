@@ -1,3 +1,4 @@
+import 'package:church_of_christ/ui/page/about.dart';
 import 'package:church_of_christ/ui/page/splash_page.dart';
 import 'package:church_of_christ/ui/page/tab/tab_navigator.dart';
 import 'package:church_of_christ/utils/anims/page_route_anim.dart';
@@ -22,6 +23,8 @@ class RouteIDC {
         return NoAnimRouteBuilder(Tabnavigator());
       case RouteName.splash:      
         return NoAnimRouteBuilder(SplashPage());
+      case RouteName.about: 
+        return SlideTopRouteBuilder(AboutScreen());
       default:
         return _errorRoute();
     }

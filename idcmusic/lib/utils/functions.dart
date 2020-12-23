@@ -134,6 +134,18 @@ class GetTextStyle{
     );    
   } 
 
+  static subtitle1(BuildContext context){
+    return Theme.of(context).textTheme.subtitle1.copyWith(
+      color: Theme.of(context).textTheme.caption.color,
+    );
+  }
+
+  static headline6(BuildContext context){
+    return Theme.of(context).textTheme.headline6.copyWith(
+      color: Theme.of(context).textTheme.caption.color,
+    );
+  }
+
   static APPBAR(BuildContext context){
     return TextStyle(
       fontSize: 22,     
