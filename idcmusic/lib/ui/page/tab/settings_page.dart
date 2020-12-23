@@ -5,6 +5,7 @@ import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -116,7 +117,7 @@ class listOptionWidget extends StatelessWidget{
 
 void switchDarkMode(BuildContext context){
   if(MediaQuery.of(context).platformBrightness == Brightness.dark){
-    debugPrint('fuck here');
+    Toast.show("Tienes activado el modo oscuro en tu celular", context, duration: 2, gravity: Toast.BOTTOM);
   }
   else{
     Provider.of<ThemeModel>(context, listen: false).switchTheme(

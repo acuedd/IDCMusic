@@ -1,11 +1,8 @@
 import 'package:church_of_christ/provider/view_state.dart';
-import 'package:church_of_christ/provider/view_state.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:church_of_christ/config/net/api.dart';
-import 'package:oktoast/oktoast.dart';
-
-import 'package:church_of_christ/provider/view_state.dart';
+import 'package:toast/toast.dart';
 
 class ViewStateModel with ChangeNotifier{
   bool _disposed = false;
@@ -95,8 +92,8 @@ class ViewStateModel with ChangeNotifier{
       else{
         message ??= viewStateError.message; 
       }
-      Future.microtask(() {
-        showToast(message, context: context);
+      Future.microtask(() {      
+        Toast.show(message, context, gravity: Toast.BOTTOM);
       });
     }
   }

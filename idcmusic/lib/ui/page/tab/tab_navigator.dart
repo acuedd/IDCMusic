@@ -4,7 +4,6 @@ import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/provider/provider_widget.dart';
 import 'package:church_of_christ/ui/page/tab/favorite_page.dart';
 import 'package:church_of_christ/ui/page/tab/settings_page.dart';
-import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +19,8 @@ class _TabNavigatorState extends State<Tabnavigator>{
   int _selectedIndex = 0;
 
   List<Widget> pages = <Widget>[ 
+    FavoritePage(),
+    FavoritePage(),
     FavoritePage(), 
     SettingsPage(),
   ];
@@ -76,32 +77,58 @@ class _TabNavigatorState extends State<Tabnavigator>{
             BubbleBottomBarItem(
               backgroundColor: Theme.of(context).primaryColorDark, 
               icon: Icon( 
-                Icons.search, 
+                Icons.music_note, 
                 size: 25.0,
               ), 
               activeIcon: Icon( 
-                Icons.search, 
+                Icons.music_note,
                 size: 25.0,
                 color: Colors.white,
               ), 
               title: Text( 
-                "Musica", 
+                "Musica online", 
                 style: TextStyle(color: Colors.white),
               ),
+            ),
+            BubbleBottomBarItem( 
+              backgroundColor: Theme.of(context).primaryColorDark, 
+              icon: Icon(  
+                Icons.file_download, 
+                size: 25.0,
+              ), 
+              activeIcon: Icon( 
+                Icons.file_download,
+                size: 25.0,
+                color: Colors.white,
+              ), 
+              title: Text("Descargas", style: TextStyle(color: Colors.white))
+            ),
+            BubbleBottomBarItem(
+              backgroundColor: Theme.of(context).primaryColorDark,
+              icon: Icon(
+                Icons.favorite,
+                size: 25.0,
+              ),
+              activeIcon: Icon(
+                Icons.favorite,
+                size: 25.0,
+                color: Colors.white,
+              ),
+              title: Text("Favoritas", style: TextStyle(color: Colors.white)), 
             ),
             BubbleBottomBarItem(
               backgroundColor: Theme.of(context).primaryColorDark, 
               icon: Icon(  
-                Icons.search, 
+                Icons.settings, 
                 size: 25.0,
               ), 
               activeIcon: Icon( 
-                Icons.search, 
+                Icons.settings,
                 size: 25.0,
                 color: Colors.white,
               ), 
               title: Text( 
-                "Configuraciones", 
+                "General", 
                 style: TextStyle(color: Colors.white),
               ),
             ),

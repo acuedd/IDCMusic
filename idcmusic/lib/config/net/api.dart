@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:dio/native_imp.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart';
 
 _parseAndDecode(String response){
   return jsonDecode(response);

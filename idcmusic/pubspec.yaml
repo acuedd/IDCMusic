@@ -43,8 +43,8 @@ dependencies:
   shimmer: ^1.1.2
   bubble_bottom_bar: ^1.2.0
   pull_to_refresh: ^1.6.3
-  oktoast: ^2.3.2
-
+  toast: ^0.1.5
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
