@@ -1,7 +1,7 @@
 import 'package:church_of_christ/provider/view_state_model.dart';
 
 abstract class ViewStateListModel<T> extends ViewStateModel{
-  List<T> list = []; 
+  Map<String, dynamic> list = Map<String, dynamic>(); 
 
   initData() async{
     setBusy();
@@ -10,7 +10,7 @@ abstract class ViewStateListModel<T> extends ViewStateModel{
 
   refresh({bool init = false}) async{
     try{
-      List<T> data = await loadData();
+    Map<String, dynamic> data = await loadData();
       if(data.isEmpty){
         list.clear();
         setEmpty();
@@ -18,7 +18,7 @@ abstract class ViewStateListModel<T> extends ViewStateModel{
       else{
         onCompleted(data);
         list.clear();
-        list.addAll(data);
+        list = data;
         setIdle();
       }      
     } catch( e,s ){
@@ -27,7 +27,7 @@ abstract class ViewStateListModel<T> extends ViewStateModel{
     }
   }
 
-  Future<List<T>> loadData(); 
+  Future<Map<String, dynamic>> loadData(); 
 
-  onCompleted(List<T> data){}
+  onCompleted(Map<String, dynamic> data){}
 }

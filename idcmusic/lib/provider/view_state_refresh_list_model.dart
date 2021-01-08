@@ -14,7 +14,7 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T>{
 
   int _currentPageNum = pageNumFirst;
 
-  Future<List<T>> refresh({bool init = false}) async{
+  Future refresh({bool init = false}) async{
     try{
       _currentPageNum = pageNumFirst;
       var data = await loadData(pageNum: pageNumFirst); 
@@ -45,7 +45,7 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T>{
     }
   }
 
-  Future<List<T>> loadMore() async{
+  Future loadMore() async{
     try{
       var data = await loadData(pageNum: ++_currentPageNum); 
       if(data.isEmpty){
@@ -73,7 +73,7 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T>{
     }
   }
 
-  Future<List<T>> loadData({int pageNum});
+  Future<Map<String, dynamic>> loadData({int pageNum});
 
   @override
   void dispose() {

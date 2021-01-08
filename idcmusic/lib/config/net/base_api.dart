@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:church_of_christ/utils/url.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'api.dart';
@@ -9,7 +8,7 @@ final Http http = Http();
 class Http extends BaseHttp{
   @override
   void init() {
-    options.baseUrl = Url.getURL();
+    //options.baseUrl = Url.getURL();
     interceptors..add(ApiInterceptor());
   }
 }
@@ -18,8 +17,8 @@ class ApiInterceptor extends InterceptorsWrapper{
   @override
   onRequest(RequestOptions options) async{
     debugPrint('---api-request--->url--> ${options.baseUrl}${options.path}' +
-        ' queryParameters: ${options.queryParameters}' +
-        ' data: ${options.data}');
+        ' \nqueryParameters: ${options.queryParameters}' +
+        ' \ndata: ${options.data}');
     return options;
   }
 

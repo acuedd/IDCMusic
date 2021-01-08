@@ -3,6 +3,7 @@ import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/provider/provider_widget.dart';
 import 'package:church_of_christ/ui/page/tab/favorite_page.dart';
+import 'package:church_of_christ/ui/page/tab/home_page.dart';
 import 'package:church_of_christ/ui/page/tab/settings_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class _TabNavigatorState extends State<Tabnavigator>{
   int _selectedIndex = 0;
 
   List<Widget> pages = <Widget>[ 
-    FavoritePage(),
+    HomePage(),
     FavoritePage(),
     FavoritePage(), 
     SettingsPage(),

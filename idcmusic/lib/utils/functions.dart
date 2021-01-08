@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import "dart:math";
 
+Widget loadingIndicator() => Center(child: CircularProgressIndicator());
+
 enum Themes { light, dark, black, monokai, system }
 
 class Utils {

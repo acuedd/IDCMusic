@@ -10,8 +10,8 @@ class SongListModel extends ViewStateRefreshListModel<Song>{
   SongListModel({this.input}); 
 
   @override
-  Future<List<Song>> loadData({int pageNum}) async{
-    return await BaseRepository.fetchShongList(input, pageNum);
+  Future<Map<String, dynamic>> loadData({int pageNum}) async{
+    return await BaseRepository.fetchShongList();
   }
 }
 
@@ -131,12 +131,15 @@ class SongModel with ChangeNotifier{
 class Song {
   String type;
   String link;
-  int songid;
+  dynamic songid;
   String title;
   String author;
   String lrc;
   String url;
   String pic;
+  dynamic name_collection;
+  dynamic sourcetype;
+  List<Tag> tags;
 
   Song.fromJsonMap(Map<String, dynamic> map)
       : type = map["type"],
@@ -146,7 +149,10 @@ class Song {
         author = map["author"],
         lrc = map["lrc"],
         url = map["url"],
-        pic = map["pic"];
+        pic = map["pic"],
+        name_collection = map["name_collection"], 
+        sourcetype = map["sourcetype"],
+        tags = List<Tag>.from(map["tags"].map((x) => Tag.fromJson(x)));
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -158,6 +164,24 @@ class Song {
     data['lrc'] = lrc;
     data['url'] = url;
     data['pic'] = pic;
+    data["name_collection"] = name_collection;
+    data["sourcetype"] = sourcetype;
     return data;
   }
+}
+
+class Tag{
+  dynamic id_tag;
+  dynamic name_tag;
+
+  Tag({
+    this.id_tag, 
+    this.name_tag,
+  });
+
+  factory Tag.fromJson(Map<dynamic, dynamic> json) => Tag(
+    id_tag: json["id_tag"], 
+    name_tag: json["name_tag"],
+  );
+
 }

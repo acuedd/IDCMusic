@@ -1,7 +1,5 @@
 PODS:
-  - assets_audio_player (0.0.1):
-    - Flutter
-  - assets_audio_player_web (0.0.1):
+  - audioplayers (0.0.1):
     - Flutter
   - device_info (0.0.1):
     - Flutter
@@ -24,8 +22,7 @@ PODS:
     - FMDB (~> 2.7.2)
 
 DEPENDENCIES:
-  - assets_audio_player (from `.symlinks/plugins/assets_audio_player/ios`)
-  - assets_audio_player_web (from `.symlinks/plugins/assets_audio_player_web/ios`)
+  - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - Flutter (from `Flutter`)
   - flutter_mailer (from `.symlinks/plugins/flutter_mailer/ios`)
@@ -40,10 +37,8 @@ SPEC REPOS:
     - FMDB
 
 EXTERNAL SOURCES:
-  assets_audio_player:
-    :path: ".symlinks/plugins/assets_audio_player/ios"
-  assets_audio_player_web:
-    :path: ".symlinks/plugins/assets_audio_player_web/ios"
+  audioplayers:
+    :path: ".symlinks/plugins/audioplayers/ios"
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   Flutter:
@@ -62,8 +57,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
 
 SPEC CHECKSUMS:
-  assets_audio_player: edee322b9cb625571b830b35872ead1a295fd917
-  assets_audio_player_web: 19826380c44375761aa0b9053665c1e3fbc3b86b
+  audioplayers: 455322b54050b30ea4b1af7cd9e9d105f74efa8c
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_mailer: 2ef5a67087bc8c6c4cefd04a178bf1ae2c94cd83

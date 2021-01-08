@@ -11,7 +11,7 @@ class FavoriteListModel extends ViewStateListModel<Song> {
 
   FavoriteListModel({this.favoriteModel});
   @override
-  Future<List<Song>> loadData() async {
+  Future<Map<String, dynamic>> loadData() async {
     LocalStorage localStorage = LocalStorage(kLocalStorageSearch);
     await localStorage.ready;
     List<Song> favoriteList =
@@ -20,7 +20,11 @@ class FavoriteListModel extends ViewStateListModel<Song> {
     }).toList();
     favoriteModel.setFavorites(favoriteList);
     setIdle();
-    return favoriteList;
+    
+    var favoritereturn = Map<String, dynamic>();
+    favoritereturn["valido"] = 1;
+    favoritereturn["detalle"] = favoriteList;
+    return favoritereturn;
   }
 }
 

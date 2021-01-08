@@ -10,9 +10,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  #core
+  #Network 
   dio: ^3.0.1
   http: ^0.12.2
+
+  #core  
   shared_preferences: ^0.5.8
   device_info: ^0.4.2+4
   package_info: ^0.4.1

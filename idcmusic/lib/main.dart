@@ -1,5 +1,6 @@
 import 'package:church_of_christ/config/routes.dart';
 import 'package:church_of_christ/config/storage_manager.dart';
+import 'package:church_of_christ/model/changelog_model.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget{
         ChangeNotifierProvider<FavoriteModel>(create: (context) => FavoriteModel()),
         ChangeNotifierProvider<DownloadModel>(create: (context) => DownloadModel()),
         ChangeNotifierProvider<SongModel>(create: (context) => SongModel()),
+        ChangeNotifierProvider<ChangelogModel>(create: (context) => ChangelogModel()),
       ],
       child: Consumer<ThemeModel>(
         builder: (context, themeModel, child){
