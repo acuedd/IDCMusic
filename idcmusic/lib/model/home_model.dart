@@ -4,6 +4,7 @@ import 'package:church_of_christ/model/collections_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/provider/view_state_refresh_list_model.dart';
 import 'package:church_of_christ/service/base_repository.dart';
+import 'package:church_of_christ/utils/url.dart';
 
 class HomeModel extends ViewStateRefreshListModel{
   static const albumValueList = ['酒吧', '怀旧', '女歌手', '经典', '热门'];
@@ -42,13 +43,13 @@ class HomeModel extends ViewStateRefreshListModel{
 
       Map<String,dynamic> mySong = Map<String,dynamic>();
       mySong["type"] = "netease";
-      mySong["link"] = data[i]["path"];
+      mySong["link"] = "${Url.getURL()}/${data[i]["path"]}";
       mySong["songid"] = data[i]["id_resource"];
       mySong["title"] = data[i]["title_resource"];
       mySong["author"] = data[i]["fullname"];
       mySong["lrc"] = data[i]["duration"];
-      mySong["url"] = data[i]["path"];
-      mySong["pic"] = data[i]["path_image"];
+      mySong["url"] = "${Url.getURL()}/${data[i]["path"]}";
+      mySong["pic"] = "${Url.getURL()}/${data[i]["path_image"]}";
       mySong["sourcetype"] = data[i]["sourcetype"];
       mySong["name_collection"] = data[i]["name_collection"];
       mySong["tags"] = data[i]["tags"];

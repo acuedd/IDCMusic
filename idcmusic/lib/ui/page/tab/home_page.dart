@@ -5,9 +5,11 @@ import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/provider/provider_widget.dart';
 import 'package:church_of_christ/provider/view_state_widget.dart';
 import 'package:church_of_christ/ui/widgets/albums_carousel.dart';
+import 'package:church_of_christ/ui/widgets/for_you_carousel.dart';
 import 'package:church_of_christ/utils/anims/record_anim.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomePage extends StatefulWidget{
   @override
@@ -132,13 +134,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                   ),
                 ),
                 Expanded( 
-                  child: RefreshIndicator( 
+                  child: SmartRefresher( 
+                    controller: homeModel.refreshController,
                     onRefresh: () async{
                       await homeModel.refresh();
+                      homeModel.showErrorMessage(context);
                     },
                     child: ListView(children: <Widget>[
                       SizedBox(height: 10,),
                       AlbumsCarousel(albums.collections),
+                      ForYouCarousel(foryou),
                     ]),
                   ),
                 ),
