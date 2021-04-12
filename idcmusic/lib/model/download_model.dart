@@ -23,11 +23,12 @@ class DownloadListModel extends ViewStateListModel<Song>{
     await localStorage.ready; 
     
     List<Song> downloadList = (localStorage.getItem(kDownloadList) ?? []).map<Song>((item){
+      Map<String,dynamic> mySong = Map<String,dynamic>();      
       return Song.fromJsonMap(item);
     }).toList();
     downloadModel.setDownloads(downloadList); 
     setIdle(); 
-    
+
     var downloadreturn = Map<String, dynamic>();
     downloadreturn["valido"] = 1;
     downloadreturn["detalle"] = downloadList;
@@ -57,14 +58,14 @@ class DownloadModel with ChangeNotifier{
   }
 
   String getSongUrl(Song s){
-    return 'here the urlsong';
+    return s.url;
   }
 
   Future downloadFile(Song s) async{
     final bytes = await readBytes(getSongUrl(s));
     final dir = await getApplicationDocumentsDirectory();
     setDirectoryPath(dir.path);
-    final file = File('${dir.path}/${s.songid}.mp3');
+    final file = File('${dir.path}/${s.songid}.${s.ext}');
 
     if(await file.exists()){
       return; 

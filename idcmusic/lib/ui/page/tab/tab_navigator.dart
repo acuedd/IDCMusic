@@ -2,6 +2,7 @@ import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/provider/provider_widget.dart';
+import 'package:church_of_christ/ui/page/tab/download_page.dart';
 import 'package:church_of_christ/ui/page/tab/favorite_page.dart';
 import 'package:church_of_christ/ui/page/tab/home_page.dart';
 import 'package:church_of_christ/ui/page/tab/settings_page.dart';
@@ -21,7 +22,7 @@ class _TabNavigatorState extends State<Tabnavigator>{
 
   List<Widget> pages = <Widget>[ 
     HomePage(),
-    FavoritePage(),
+    MusicPage(),
     FavoritePage(), 
     SettingsPage(),
   ];
@@ -87,7 +88,7 @@ class _TabNavigatorState extends State<Tabnavigator>{
                 color: Colors.white,
               ), 
               title: Text( 
-                "Musica online", 
+                "En línea", 
                 style: TextStyle(color: Colors.white),
               ),
             ),

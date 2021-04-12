@@ -2,6 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:church_of_christ/model/song_model.dart';
+import 'package:church_of_christ/ui/page/player_page.dart';
 import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,9 +19,9 @@ class RotateRecord extends AnimatedWidget{
     return GestureDetector( 
       onTap: (){
         if(songModel.songs != null){
-          /*Navigator.push( context,
-            MaterialPageRoute(builder: (_) => PlayPage(nowPlay: false));
-          );*/
+          Navigator.push( context,
+            MaterialPageRoute(builder: (_) => PlayPage(nowPlay: false)),
+          );
         }
       },
       child: Container( 

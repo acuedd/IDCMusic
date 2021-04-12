@@ -7,7 +7,7 @@ import 'package:church_of_christ/service/base_repository.dart';
 import 'package:church_of_christ/utils/url.dart';
 
 class HomeModel extends ViewStateRefreshListModel{
-  static const albumValueList = ['酒吧', '怀旧', '女歌手', '经典', '热门'];
+  static const albumValueList = [':(', '(TT_TT)', '(TT_TT)', '(TT_TT)', '(TT_TT)'];
 
   CollectionModel _albums; 
   List<Song> _forYou; 
@@ -30,6 +30,7 @@ class HomeModel extends ViewStateRefreshListModel{
     var result = await Future.wait(futures);
     CollectionModel collectionModel = CollectionModel.fromJson(result[0]);  
     _albums = collectionModel;
+    //TODO arreglar cuando da un timeout (falta de internet)
     List<Song> foryou = convertResponseToListSong(result[1]["resources"]);
     print(foryou);
     _forYou = foryou;
@@ -52,6 +53,7 @@ class HomeModel extends ViewStateRefreshListModel{
       mySong["pic"] = "${Url.getURL()}/${data[i]["path_image"]}";
       mySong["sourcetype"] = data[i]["sourcetype"];
       mySong["name_collection"] = data[i]["name_collection"];
+      mySong["ext"] = data[i]["ext"];
       mySong["tags"] = data[i]["tags"];
       response.add(Song.fromJsonMap(mySong));
     }

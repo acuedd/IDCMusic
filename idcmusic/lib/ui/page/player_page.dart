@@ -1,6 +1,10 @@
 
+import 'package:church_of_christ/model/download_model.dart';
+import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/ui/widgets/app_bar.dart';
+import 'package:church_of_christ/ui/widgets/player_carousel.dart';
+import 'package:church_of_christ/ui/widgets/song_list_carrousel.dart';
 import 'package:church_of_christ/utils/anims/player_anim.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,35 +48,41 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
     return s.url;
   }
 
-  @override
+   @override
   Widget build(BuildContext context) {
-    SongModel songModel = Provider.of(context, listen: false);
-    if(songModel.isPlaying){
+    SongModel songModel = Provider.of(context);
+    DownloadModel downloadModel = Provider.of(context);
+    FavoriteModel favouriteModel = Provider.of(context);
+    if (songModel.isPlaying) {
       controllerPlayer.forward();
-    }
-    else{ 
+    } else {
       controllerPlayer.stop(canceled: false);
     }
-
-    return Scaffold( 
-      body: SafeArea( 
-        child: Column( 
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
           children: <Widget>[
-            Expanded( 
-              child: Column( 
+            Expanded(
+              child: Column(
                 children: <Widget>[
-                  Column( 
-                    children: <Widget>[
-                      AppBarCarrousel(title: "", ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.05,), 
-                      RotatePlayer(
-                        animation: _commonTween.animate(controllerPlayer),
-                      ), 
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.3,),
-                      Row( 
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
+                  !songModel.showList
+                      ? Column(
+                          children: <Widget>[
+                            AppBarCarrousel(title: "",),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.05),
+                            RotatePlayer(
+                                animation:
+                                    _commonTween.animate(controllerPlayer)),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.03),
+                            Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
                                   IconButton(
                                     onPressed: () => songModel
                                         .setShowList(!songModel.showList),
@@ -97,42 +107,67 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                                           ),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
+                                    onPressed: () => favouriteModel
+                                        .collect(songModel.currentSong),
+                                    icon: favouriteModel.isCollect(
+                                                songModel.currentSong) ==
+                                            true
+                                        ? Icon(
+                                            Icons.favorite,
+                                            size: 25.0,
+                                            color:
+                                                Theme.of(context).accentColor,
+                                          )
+                                        : Icon(
                                             Icons.favorite_border,
                                             size: 25.0,
                                             color: Colors.grey,
                                           ),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
+                                    onPressed: () => downloadModel
+                                        .download(songModel.currentSong),
+                                    icon: downloadModel
+                                            .isDownload(songModel.currentSong)
+                                        ? Icon(
+                                            Icons.cloud_done,
+                                            size: 25.0,
+                                            color:
+                                                Theme.of(context).accentColor,
+                                          )
+                                        : Icon(
                                             Icons.cloud_download,
                                             size: 25.0,
                                             color: Colors.grey,
                                           ),
                                   ),
                                 ]),
-                      SizedBox(
-                        height:
-                            MediaQuery.of(context).size.height * 0.02),
-                      Text(
-                        songModel.currentSong.author,
-                        style:
-                            TextStyle(color: Colors.grey, fontSize: 15.0),
-                      ),
-                      SizedBox(
-                          height:
-                              MediaQuery.of(context).size.height * 0.01),
-                      Text(
-                        songModel.currentSong.title,
-                        style: TextStyle(fontSize: 20.0),
-                      ),
-                    ],
-                  )
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.02),
+                            Text(
+                              songModel.currentSong.author,
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 15.0),
+                            ),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.01),
+                            Text(
+                              songModel.currentSong.title,
+                              style: TextStyle(fontSize: 20.0),
+                            ),
+                          ],
+                        )
+                      : SongListCarousel(),
                 ],
               ),
-            )
+            ),
+            Player(
+              songData: songModel,
+              downloadData: downloadModel,
+              nowPlay: widget.nowPlay,
+            ),
           ],
         ),
       ),

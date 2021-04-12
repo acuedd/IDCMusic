@@ -137,6 +137,7 @@ class Song {
   String lrc;
   String url;
   String pic;
+  String ext;
   dynamic name_collection;
   dynamic sourcetype;
   List<Tag> tags;
@@ -150,9 +151,10 @@ class Song {
         lrc = map["lrc"],
         url = map["url"],
         pic = map["pic"],
+        ext = map["ext"],
         name_collection = map["name_collection"], 
-        sourcetype = map["sourcetype"],
-        tags = List<Tag>.from(map["tags"].map((x) => Tag.fromJson(x)));
+        sourcetype = map["sourcetype"];
+        //tags = List<Tag>.from(map["tags"] ?? [].map((x) => Tag.fromJson(x)));
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -164,6 +166,7 @@ class Song {
     data['lrc'] = lrc;
     data['url'] = url;
     data['pic'] = pic;
+    data["ext"] = ext;
     data["name_collection"] = name_collection;
     data["sourcetype"] = sourcetype;
     return data;
