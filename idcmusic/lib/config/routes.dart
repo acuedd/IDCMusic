@@ -25,9 +25,9 @@ class RouteIDC {
       case RouteName.splash:      
         return NoAnimRouteBuilder(SplashPage());
       case RouteName.about: 
-        return SlideTopRouteBuilder(AboutScreen());
+        return SlideLeftRouteBuilder(AboutScreen());
       case RouteName.changelog: 
-        return SlideTopRouteBuilder(ChangelogList());
+        return SlideLeftRouteBuilder(ChangelogList());
       default:
         return _errorRoute();
     }

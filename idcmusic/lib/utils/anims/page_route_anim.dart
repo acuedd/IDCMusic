@@ -30,6 +30,26 @@ class FadeRouteBuilder extends PageRouteBuilder {
                 ));
 }
 
+class SlideBottomRouteBuilder extends PageRouteBuilder{
+  final Widget page;
+
+  SlideBottomRouteBuilder(this.page)
+    :super( 
+      pageBuilder: (context, animation, secondaryanimation) => page, 
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: 
+          (context, animation, secondaryAnimation, child) => 
+            SlideTransition(
+              child: child,
+              position: Tween<Offset>( 
+                begin: Offset(0.0, 1.0), end: Offset.zero
+              ).animate(CurvedAnimation(
+                parent: animation, curve: Curves.ease
+              )),
+            )
+    );
+}
+
 class SlideTopRouteBuilder extends PageRouteBuilder {
   final Widget page;
 
@@ -46,6 +66,46 @@ class SlideTopRouteBuilder extends PageRouteBuilder {
                               parent: animation, curve: Curves.fastOutSlowIn)),
                       child: child,
                     ));
+}
+
+class SlideLeftRouteBuilder extends PageRouteBuilder{
+  final Widget page;
+
+  SlideLeftRouteBuilder(this.page)
+    :super( 
+      pageBuilder: (context, animation, secondaryanimation) => page, 
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: 
+          (context, animation, secondaryAnimation, child) => 
+            SlideTransition(
+              child: child,
+              position: Tween<Offset>( 
+                begin: Offset(1, 0), end: Offset.zero
+              ).animate(CurvedAnimation(
+                parent: animation, curve: Curves.ease
+              )),
+            )
+    );
+}
+
+class SlideRightRouteBuilder extends PageRouteBuilder{
+  final Widget page;
+
+  SlideRightRouteBuilder(this.page)
+    :super( 
+      pageBuilder: (context, animation, secondaryanimation) => page, 
+      transitionDuration: Duration(milliseconds: 500),
+      transitionsBuilder: 
+          (context, animation, secondaryAnimation, child) => 
+            SlideTransition(
+              child: child,
+              position: Tween<Offset>( 
+                begin: Offset(-1, 0), end: Offset.zero
+              ).animate(CurvedAnimation(
+                parent: animation, curve: Curves.ease
+              )),
+            )
+    );
 }
 
 class SizeRoute extends PageRouteBuilder {

@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:church_of_christ/model/collections_model.dart';
+import 'package:church_of_christ/ui/page/album_page.dart';
 import 'package:church_of_christ/utils/anims/page_route_anim.dart';
 import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class itemCollection extends StatelessWidget{
   final Collection album;
   final int index;
@@ -15,7 +17,7 @@ class itemCollection extends StatelessWidget{
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => {
-        //Navigator.push(context, SizeRoute(AlbumPage(album: album, index: index,)))
+        Navigator.push(context, SlideLeftRouteBuilder(AlbumsPage(album: album)))
       },
       child: Container(
         width: 140,

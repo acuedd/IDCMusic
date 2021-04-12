@@ -4,6 +4,17 @@ import 'package:church_of_christ/provider/view_state_refresh_list_model.dart';
 import 'package:church_of_christ/service/base_repository.dart';
 import 'package:flutter/material.dart';
 
+class AlbumListModel extends ViewStateRefreshListModel<Song>{
+  final String input; 
+
+  AlbumListModel({this.input}); 
+
+  @override
+  Future<Map<String,dynamic >> loadData({int pageNum}) async{
+    return await BaseRepository.fetchShongList(idCollection:input );
+  }
+}
+
 class SongListModel extends ViewStateRefreshListModel<Song>{ 
   final String input; 
 
