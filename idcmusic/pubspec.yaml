@@ -38,13 +38,13 @@ dependencies:
   cached_network_image: ^2.2.0+1
 
   #Widgets
-  row_collection: ^0.2.4
+  row_collection: ^0.2.5
   flutter_markdown: ^0.4.4
 
   #UI
   shimmer: ^1.1.2
   bubble_bottom_bar: ^1.2.0
-  pull_to_refresh: ^1.6.3
+  pull_to_refresh: 1.6.3
   toast: ^0.1.5
   
 dev_dependencies:

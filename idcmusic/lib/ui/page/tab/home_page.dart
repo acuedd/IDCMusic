@@ -4,6 +4,7 @@ import 'package:church_of_christ/model/home_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/provider/provider_widget.dart';
 import 'package:church_of_christ/provider/view_state_widget.dart';
+import 'package:church_of_christ/ui/page/search_page.dart';
 import 'package:church_of_christ/ui/widgets/albums_carousel.dart';
 import 'package:church_of_christ/ui/widgets/for_you_carousel.dart';
 import 'package:church_of_christ/utils/anims/record_anim.dart';
@@ -107,7 +108,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                             controller: _inputController,
                             onChanged: (value){},
                             onSubmitted: (value){
-
+                              if(value.isNotEmpty == true){
+                                Navigator.push(context, 
+                                  MaterialPageRoute(
+                                    builder: (_) => SearchPage( 
+                                      input: value,
+                                    ),
+                                  ),
+                                );
+                              }
                             },
                             decoration: InputDecoration( 
                               border: InputBorder.none, 
@@ -135,6 +144,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                 ),
                 Expanded( 
                   child: SmartRefresher( 
+                    header: WaterDropHeader(),
                     controller: homeModel.refreshController,
                     onRefresh: () async{
                       await homeModel.refresh();

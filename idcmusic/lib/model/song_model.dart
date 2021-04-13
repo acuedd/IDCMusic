@@ -22,7 +22,7 @@ class SongListModel extends ViewStateRefreshListModel<Song>{
 
   @override
   Future<Map<String, dynamic>> loadData({int pageNum}) async{
-    return await BaseRepository.fetchShongList();
+    return await BaseRepository.fetchShongList(titleResource: input);
   }
 }
 
