@@ -25,8 +25,8 @@ class RotateRecord extends AnimatedWidget{
         }
       },
       child: Container( 
-        height: 45.0,
-        width: 45.0,
+        height: 75.0,
+        width: 75.0,
         child: RotationTransition( 
           turns: animation,
           child: Container( 

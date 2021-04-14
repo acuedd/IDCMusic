@@ -1,6 +1,7 @@
 import 'package:church_of_christ/ui/page/about.dart';
 import 'package:church_of_christ/ui/page/album_full_page.dart';
 import 'package:church_of_christ/ui/page/changelog.dart';
+import 'package:church_of_christ/ui/page/songs_all_page.dart';
 import 'package:church_of_christ/ui/page/splash_page.dart';
 import 'package:church_of_christ/ui/page/tab/tab_navigator.dart';
 import 'package:church_of_christ/utils/anims/page_route_anim.dart';
@@ -14,6 +15,7 @@ class RouteName{
   static const String about = '/about';
   static const String changelog = '/changelog';
   static const String allCollections = "allCollections";
+  static const String allSongs = "allSongs";
 }
 
 //return MaterialPageRoute(builder: (_) => MainScreen());
@@ -30,7 +32,9 @@ class RouteIDC {
       case RouteName.changelog: 
         return SlideLeftRouteBuilder(ChangelogList());
       case RouteName.allCollections: 
-        return SlideLeftRouteBuilder(AlbumGridCarousel());
+        return SlideBottomRouteBuilder(AlbumGridCarousel());
+      case RouteName.allSongs: 
+        return SlideBottomRouteBuilder(SongsAllCarousel());
       default:
         return _errorRoute();
     }

@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:church_of_christ/ui/widgets/songItem.dart';
+import 'package:church_of_christ/utils/anims/page_route_anim.dart';
+import 'package:church_of_christ/utils/anims/record_anim.dart';
 import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:church_of_christ/model/download_model.dart';
@@ -14,12 +17,28 @@ class MusicPage extends StatefulWidget{
   _MusicPageState createState() => _MusicPageState();
 }
 
-class _MusicPageState extends State<MusicPage> with AutomaticKeepAliveClientMixin{
+class _MusicPageState extends State<MusicPage> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin{
+
+  AnimationController controllerRecord; 
+  Animation<double> animationRecord; 
+  final _commonTween = new Tween<double>(begin: 0.0, end: 1.0); 
 
   @override
   void initState() {
-    loadData();
     super.initState();
+    loadData();
+    
+    controllerRecord = new AnimationController(
+       duration: const Duration(milliseconds: 15000), vsync: this);
+     animationRecord = new CurvedAnimation(parent: controllerRecord, curve: Curves.linear);
+     animationRecord.addStatusListener((status) {
+       if(status == AnimationStatus.completed){
+         controllerRecord.repeat();
+       }
+       else if(status == AnimationStatus.dismissed ){
+         controllerRecord.forward();
+       }
+     });
   }
 
   loadData() async{
@@ -32,81 +51,26 @@ class _MusicPageState extends State<MusicPage> with AutomaticKeepAliveClientMixi
   }
 
   @override
-  bool get wantKeepAlive => true;
-  Widget _buildSongItem(Song data){
-    DownloadModel downloadModel = Provider.of(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-      child: Row(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12.0),
-            child: Container(
-              width: 50,
-              height: 50,
-              child: Image(image: CachedNetworkImageProvider(data.pic),),
-            ),
-          ),
-          SizedBox( width: 20.0,),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  data.title,
-                  style: data.url == null
-                      ? TextStyle(
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFFE0E0E0),
-                  )
-                      : TextStyle(
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                SizedBox(height: 10,),
-                Text(
-                  data.author,
-                  style: data.url == null
-                      ? TextStyle(
-                    fontSize: 10.0,
-                    color: Color(0xFFE0E0E0),
-                  )
-                      : TextStyle(
-                    fontSize: 10.0,
-                    color: Colors.grey,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-          IconButton(
-            onPressed: () => downloadModel.download(data),
-            icon: downloadModel.isDownload(data)
-              ? Icon(
-              Icons.cloud_done,
-              color: Theme.of(context).accentColor,
-              size: 20.0,
-              )
-                  : Icon(
-              Icons.cloud_download,
-              size: 20.0,
-              )
-          ),
-        ],
-      ),
-    );
+  void dispose() {
+    controllerRecord.dispose();
+    super.dispose();    
   }
+
+  @override
+  bool get wantKeepAlive => true;  
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
     DownloadModel downloadModel = Provider.of(context);
+    SongModel songModel = Provider.of(context);
+    if(songModel.isPlaying){
+      controllerRecord.forward();
+    }
+    else {
+      controllerRecord.stop(canceled: false);
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -150,7 +114,7 @@ class _MusicPageState extends State<MusicPage> with AutomaticKeepAliveClientMixi
                           );
                         }
                       },
-                      child: _buildSongItem(data),
+                      child: SongItem(song: data,),
                     );
                   },
                 )
@@ -158,6 +122,21 @@ class _MusicPageState extends State<MusicPage> with AutomaticKeepAliveClientMixi
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: "downloadFAB",
+        onPressed: (){
+          SongModel songModel = Provider.of(context); 
+          if(songModel.songs != null){
+            Navigator.push( context,
+              SlideBottomRouteBuilder(PlayPage(nowPlay: false))
+            );
+          }
+        },
+        child: RotateRecord(
+            animation: _commonTween.animate(controllerRecord),
+        ),
+        backgroundColor: Colors.transparent,
       ),
     );
   }

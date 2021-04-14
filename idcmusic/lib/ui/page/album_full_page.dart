@@ -20,31 +20,6 @@ class AlbumGridCarousel extends StatefulWidget{
 
 class _AlbumGridCarouselState extends State<AlbumGridCarousel>{
 
-  List<Song>  convertResponseToListSong(data){
-    List<Song> response = [];
-
-    for(var i = 0; i<data.length; i++){
-
-      Map<String,dynamic> mySong = Map<String,dynamic>();
-      mySong["type"] = "netease";
-      mySong["link"] = "${Url.getURL()}/${data[i]["path"]}";
-      mySong["songid"] = data[i]["id_resource"];
-      mySong["title"] = data[i]["title_resource"];
-      mySong["author"] = data[i]["fullname"];
-      mySong["lrc"] = data[i]["duration"];
-      mySong["url"] = "${Url.getURL()}/${data[i]["path"]}";
-      mySong["pic"] = "${Url.getURL()}/${data[i]["path_image"]}";
-      mySong["sourcetype"] = data[i]["sourcetype"];
-      mySong["name_collection"] = data[i]["name_collection"];
-      mySong["ext"] = data[i]["ext"];
-      mySong["tags"] = data[i]["tags"];
-      response.add(Song.fromJsonMap(mySong));
-    }
-
-    return response;
-  }
-
-
   @override
   Widget build(BuildContext context) {
     
@@ -52,7 +27,7 @@ class _AlbumGridCarouselState extends State<AlbumGridCarousel>{
       body: SafeArea( 
         child: Column( 
           children: <Widget>[
-            AppBarCarrousel(title: "Albums",), 
+            AppBarCarrousel(title: "Albums", iconBottom: true,), 
             Expanded(
               child: ProviderWidget<AlbumModel>( 
                 onModelReady: (model) async{

@@ -55,7 +55,8 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
     DownloadModel downloadModel = Provider.of(context);
     FavoriteModel favouriteModel = Provider.of(context);
     if (songModel.isPlaying) {
-      controllerPlayer.forward();
+      controllerPlayer.stop(canceled: false);
+      //controllerPlayer.forward();
     } else {
       controllerPlayer.stop(canceled: false);
     }
@@ -69,7 +70,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                   !songModel.showList
                       ? Column(
                           children: <Widget>[
-                            AppBarCarrousel(title: "",),
+                            AppBarCarrousel(title: "", iconBottom: true,),
                             SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.05),
