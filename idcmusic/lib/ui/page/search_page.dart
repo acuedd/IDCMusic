@@ -1,3 +1,4 @@
+import 'package:church_of_christ/ui/widgets/loader.dart';
 import 'package:church_of_christ/utils/url.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -127,15 +128,24 @@ class _SearchPageState extends State<SearchPage>{
                 builder: (context, model, child){
                   List<Song> mylist = convertResponseToListSong(model.list["resources"] ?? []);
                   if(model.busy){
-                    return Center(child: Text("Cargando..."),);
+                    return Column(
+                      children: <Widget>[
+                        Center(child: Text("Cargando..."),),
+                        Loader(),
+                      ],
+                    );
                   }
                   else if(model.error && model.list["valido"] == 0){
                     return ViewStateEmptyWidget(onPressed: model.initData());
                   }
                   return SmartRefresher( 
                     controller: model.refreshController,
-                    header: WaterDropMaterialHeader(),                    
-                    enablePullUp: true,
+                    header: WaterDropHeader(),                    
+                    enablePullUp: false,
+                    onRefresh: () async{
+                      await model.refresh();
+                      model.showErrorMessage(context);
+                    },
                     child: ListView.builder( 
                       itemCount: mylist.length,
                       itemBuilder: (context, index){

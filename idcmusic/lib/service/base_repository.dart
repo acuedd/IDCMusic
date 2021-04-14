@@ -17,7 +17,7 @@ class BaseRepository{
 
   static Future fetchShongList({
     active, nameAuthor, nameTag, nameCollection, idCollection,titleResource,
-    lessTime, olderTime
+    lessTime, olderTime, randomSort, limitTo, limitFrom
   }) async{
     Connection conn = new Connection();
 
@@ -43,6 +43,15 @@ class BaseRepository{
     if(titleResource != null && titleResource.toString().isNotEmpty){
       params["titleResource"] = titleResource;
     }
+    if(randomSort != null && randomSort.toString().isNotEmpty){
+      params["random_sort"] = randomSort;
+    }
+    if(limitFrom != null && limitFrom.toString().isNotEmpty){
+      params["limit_from"] = limitFrom;
+    }
+    if(limitTo != null && limitTo.toString().isNotEmpty){
+      params["limit_to"] = limitTo;
+    }
     params["active"] = "Y";  
 
     var response = await conn.con("songs", params);
@@ -51,7 +60,8 @@ class BaseRepository{
   }
 
   static Future fetchCollections({
-    nameAuthor, releaseDate, lowerReleaseDate, nameCollection
+    nameAuthor, releaseDate, lowerReleaseDate, nameCollection, randomSort, 
+    limitTo, limitFrom
   })async{
     Connection conn = new Connection();
     SharedPreferences prefsApi = await SharedPreferences.getInstance();
@@ -73,6 +83,15 @@ class BaseRepository{
     }
     if(nameCollection != null && nameCollection.toString().isNotEmpty){
       params["nameCollection"] = nameCollection;
+    }
+    if(randomSort != null && randomSort.toString().isNotEmpty){
+      params["random_sort"] = randomSort;
+    }
+    if(limitFrom != null && limitFrom.toString().isNotEmpty){
+      params["limit_from"] = limitFrom;
+    }
+    if(limitTo != null && limitTo.toString().isNotEmpty){
+      params["limit_to"] = limitTo;
     }
 
     var response = await conn.con("collections", params);

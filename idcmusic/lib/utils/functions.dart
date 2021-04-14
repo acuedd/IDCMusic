@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:church_of_christ/ui/widgets/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import "dart:math";
 
-Widget loadingIndicator() => Center(child: CircularProgressIndicator());
+Widget loadingIndicator() => Loader();
 
 enum Themes { light, dark, black, monokai, system }
 
@@ -165,8 +166,8 @@ class IconFonts {
   /// iconfont:flutter base
   static const String fontFamily = 'iconfont';
 
-  static const IconData pageEmpty = IconData(0xe63c, fontFamily: fontFamily);
-  static const IconData pageError = IconData(0xe600, fontFamily: fontFamily);
-  static const IconData pageNetworkError = IconData(0xe65f, fontFamily: fontFamily);
-  static const IconData pageUnAuth = IconData(0xe65f, fontFamily: fontFamily);  
+  static const pageEmpty = Icons.error_outline; //IconData(0xe63c, fontFamily: fontFamily);
+  static const pageError = Icons.phonelink_erase_rounded; //IconData(0xe600, fontFamily: fontFamily);
+  static const pageNetworkError = Icons.perm_scan_wifi;//IconData(0xe65f, fontFamily: fontFamily);
+  static const pageUnAuth = Icons.person_add_disabled;//IconData(0xe65f, fontFamily: fontFamily);
 }

@@ -1,4 +1,5 @@
 import 'package:church_of_christ/ui/page/about.dart';
+import 'package:church_of_christ/ui/page/album_full_page.dart';
 import 'package:church_of_christ/ui/page/changelog.dart';
 import 'package:church_of_christ/ui/page/splash_page.dart';
 import 'package:church_of_christ/ui/page/tab/tab_navigator.dart';
@@ -28,6 +29,8 @@ class RouteIDC {
         return SlideLeftRouteBuilder(AboutScreen());
       case RouteName.changelog: 
         return SlideLeftRouteBuilder(ChangelogList());
+      case RouteName.allCollections: 
+        return SlideLeftRouteBuilder(AlbumGridCarousel());
       default:
         return _errorRoute();
     }

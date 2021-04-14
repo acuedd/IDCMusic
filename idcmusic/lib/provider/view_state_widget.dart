@@ -1,3 +1,4 @@
+import 'package:church_of_christ/ui/widgets/loader.dart';
 import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,14 @@ import 'package:church_of_christ/provider/view_state.dart';
 class ViewStateBusyWidget extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return Center(child: CircularProgressIndicator());
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Center(child: Text("Cargando..."),),
+        Loader(),
+      ],
+    );
   }
 }
 

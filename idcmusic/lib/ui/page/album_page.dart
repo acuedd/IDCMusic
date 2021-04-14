@@ -55,36 +55,7 @@ class _AlbumsPageState extends State<AlbumsPage>{
                       widget.album.fullname,
                       style: TextStyle(fontSize: 12.0),
                     ),
-                  ),
-                  Row( 
-                    children: <Widget>[
-                      Expanded( 
-                        flex: 1,
-                        child: Container( 
-                          height: 70,
-                          margin: EdgeInsets.only( top: 20, bottom: 20, left: 20, right: 10),
-                          decoration: BoxDecoration( 
-                            border: Border.all(color: Colors.black12, width: 1), 
-                            borderRadius: BorderRadius.circular(20.0), 
-                          ),
-                          child: Row( 
-                            mainAxisAlignment: MainAxisAlignment.center,                            
-                            children: <Widget>[
-                              Icon( 
-                                Icons.play_arrow, 
-                                color: Theme.of(context).accentColor,
-                              ), 
-                              SizedBox(width: 5,), 
-                              Text( 
-                                'Play', 
-                                style: TextStyle( color: Theme.of(context).accentColor),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),                       
-                    ],
-                  ), 
+                  ),                  
                   AlbumCarousel(input: widget.album.id),
                 ],
               ),

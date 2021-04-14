@@ -1,6 +1,7 @@
 
 
 
+import 'package:church_of_christ/ui/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
@@ -137,42 +138,89 @@ class _AlbumCarouselState extends State<AlbumCarousel>{
       },
       model: AlbumListModel(input: widget.input),
       builder: (context, model, child){
-        print("here fuck");
         List<Song> mylist = convertResponseToListSong(model.list["resources"] ?? []);
-        print(mylist);
+        //print(mylist);
         return mylist.length == 0
-          ? Center(
-              child: CircularProgressIndicator(),
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Center(child: Text("Cargando..."),),
+                Loader(),
+              ],
             )
-          : 
-          Container( 
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: new NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              itemCount: mylist.length,
-              itemBuilder: (BuildContext context, int index){              
-                Song data = mylist[index];
-                print("fuck here");              
-                return GestureDetector( 
-                  onTap: (){
-                    if(null != data.url){
-                      SongModel songModel = Provider.of(context, listen: false); 
-                      songModel.setSongs(mylist);
-                      songModel.setCurrentIndex(index);
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (_) => PlayPage(
-                          nowPlay: true,
-                        )),
-                      );
-                    }
-                  },
-                  child: _buildSongItem(data, index + 1),
-                );
-              }
-            ),
-          );
+          : Column(
+            children: [
+              Row( 
+                children: <Widget>[
+                  Expanded( 
+                    flex: 1,
+                    child: Container( 
+                      height: 70,
+                      margin: EdgeInsets.only( top: 20, bottom: 20, left: 20, right: 10),
+                      decoration: BoxDecoration( 
+                        border: Border.all(color: Colors.black12, width: 1), 
+                        borderRadius: BorderRadius.circular(20.0), 
+                      ),
+                      child: GestureDetector(
+                        onTap: (){
+                          SongModel songModel = Provider.of(context, listen: false); 
+                          songModel.setSongs(mylist);
+                          songModel.setCurrentIndex(0);
+                          Navigator.push(
+                            context, 
+                            MaterialPageRoute(builder: (_) => PlayPage(
+                              nowPlay: true,
+                            )),
+                          );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                          Icon( 
+                            Icons.play_arrow, 
+                            color: Theme.of(context).accentColor,
+                          ), 
+                          SizedBox(width: 5,), 
+                          Text( 
+                            'Play', 
+                            style: TextStyle( color: Theme.of(context).accentColor),
+                          )
+                        ])
+                      ),                        
+                    ),
+                  ),
+                ],
+              ), 
+              Container( 
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: new NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  itemCount: mylist.length,
+                  itemBuilder: (BuildContext context, int index){              
+                    Song data = mylist[index];           
+                    return GestureDetector( 
+                      onTap: (){
+                        if(null != data.url){
+                          SongModel songModel = Provider.of(context, listen: false); 
+                          songModel.setSongs(mylist);
+                          songModel.setCurrentIndex(index);
+                          Navigator.push(
+                            context, 
+                            MaterialPageRoute(builder: (_) => PlayPage(
+                              nowPlay: true,
+                            )),
+                          );
+                        }
+                      },
+                      child: _buildSongItem(data, index + 1),
+                    );
+                  }
+                ),
+              )
+            ],
+          );        
       },
     );
   }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
@@ -122,7 +123,16 @@ class _MusicPageState extends State<MusicPage> with AutomaticKeepAliveClientMixi
             ),
             Expanded(
               child: downloadModel.downloadSong.length == 0
-                ? Center(child: Text(':( NO HAY DESCARGAS'))
+                ? Center(
+                    child: EmptyListWidget(
+                      image : null,
+                      packageImage: PackageImage.Image_1,
+                      title: 'No hay descargas',
+                      subTitle: 'Aún no descargas ninguna canción',
+                      titleTextStyle: Theme.of(context).typography.dense.headline4.copyWith(color: Color(0xff9da9c7)),
+                      subtitleTextStyle: Theme.of(context).typography.dense.bodyText1.copyWith(color: Color(0xffabb8d6))
+                    ),
+                  )
                 : ListView.builder(
                   itemCount: downloadModel.downloadSong.length,
                   itemBuilder: (BuildContext context, int index){

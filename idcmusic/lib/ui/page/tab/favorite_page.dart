@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
@@ -113,7 +114,16 @@ class _FavoritePageState extends State<FavoritePage>
             ), 
             Expanded( 
               child: favoriteModel.favoriteSong.length == 0 
-                ? Center(child: Text(':( NO TIENES FAVORITAS'),)
+                ? Center(
+                    child: EmptyListWidget(
+                      image : null,
+                      packageImage: PackageImage.Image_4,
+                      title: 'No tienes favoritas',
+                      subTitle: 'Aún no agregas tu\n canciones favoritas',
+                      titleTextStyle: Theme.of(context).typography.dense.headline4.copyWith(color: Color(0xff9da9c7)),
+                      subtitleTextStyle: Theme.of(context).typography.dense.bodyText1.copyWith(color: Color(0xffabb8d6))
+                    ),
+                  ) 
                 : ListView.builder(
                     itemCount: favoriteModel.favoriteSong.length,
                     itemBuilder: (BuildContext context, int index){
@@ -121,7 +131,7 @@ class _FavoritePageState extends State<FavoritePage>
                       return GestureDetector( 
                         onTap: (){
                           if(null != data.url){
-                            SongModel songModel = Provider.of(context);
+                            SongModel songModel = Provider.of(context, listen: false);
                             songModel.setSongs(new List<Song>.from(favoriteModel.favoriteSong));
                             songModel.setCurrentIndex(index);
                             Navigator.push(context, 

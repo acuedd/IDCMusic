@@ -23,18 +23,17 @@ class HomeModel extends ViewStateRefreshListModel{
     String inputAlbums = albumValueList[_randomSongAlbum];
 
 
-    futures.add(BaseRepository.fetchCollections());
-    futures.add(BaseRepository.fetchShongList());
+    futures.add(BaseRepository.fetchCollections(randomSort: "true", limitFrom: "0", limitTo: "4"));
+    futures.add(BaseRepository.fetchShongList(randomSort: "true", limitFrom: "0", limitTo: "15"));
     
     //futures.add(BaseRepository.fetchCollections());
-    var result = await Future.wait(futures);
-    CollectionModel collectionModel = CollectionModel.fromJson(result[0]);  
-    _albums = collectionModel;
-    //TODO arreglar cuando da un timeout (falta de internet)
-    List<Song> foryou = convertResponseToListSong(result[1]["resources"]);
-    print(foryou);
-    _forYou = foryou;
-    return result[0];
+      var result = await Future.wait(futures);
+      CollectionModel collectionModel = CollectionModel.fromJson(result[0]);
+      _albums = collectionModel;
+      //TODO arreglar cuando da un timeout (falta de internet)
+      List<Song> foryou = convertResponseToListSong(result[1]["resources"]);
+      _forYou = foryou;
+      return result[0];
   }
 
   List<Song>  convertResponseToListSong(data){

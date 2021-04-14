@@ -29,9 +29,8 @@ class DownloadListModel extends ViewStateListModel<Song>{
     downloadModel.setDownloads(downloadList); 
     setIdle(); 
 
-    var downloadreturn = Map<String, dynamic>();
-    downloadreturn["valido"] = 1;
-    downloadreturn["detalle"] = downloadList;
+    Map<String, dynamic> downloadreturn = Map<String, dynamic>();
+    downloadreturn["valido"] = 0;
     return downloadreturn;
   }
 }

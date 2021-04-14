@@ -1,4 +1,18 @@
+import 'package:church_of_christ/provider/view_state_refresh_list_model.dart';
+import 'package:church_of_christ/service/base_repository.dart';
 import 'package:church_of_christ/utils/url.dart';
+
+class AlbumModel extends ViewStateRefreshListModel<CollectionModel>{
+  final String input; 
+
+  AlbumModel({this.input}); 
+
+  @override
+  Future<Map<String,dynamic >> loadData({int pageNum}) async{
+    return await BaseRepository.fetchCollections();
+  }
+}
+
 
 class CollectionModel {
   List<Collection> collections;
@@ -8,8 +22,9 @@ class CollectionModel {
   });
 
   factory CollectionModel.fromJson(Map json) {
+    var myDetail = json["detailCollections"] ?? [];
     return CollectionModel(
-      collections: List<Collection>.from(json["detailCollections"].map((x) => Collection.fromJson(x))),
+      collections: List<Collection>.from(myDetail.map((x) => Collection.fromJson(x))),
     );
   } 
 
