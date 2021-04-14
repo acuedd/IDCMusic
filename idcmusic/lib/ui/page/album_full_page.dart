@@ -85,6 +85,7 @@ class _AlbumGridCarouselState extends State<AlbumGridCarousel>{
                     child: GridView.count(
                         crossAxisCount: 2, 
                         crossAxisSpacing: 0,
+                        mainAxisSpacing: 10.0,
                         children: collectionModel.collections.map((album){
                           Collection myAlbum = album;
                           return itemCollection(album: album, index: 1, length: 1,);

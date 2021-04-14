@@ -25,32 +25,32 @@ class itemCollection extends StatelessWidget{
           ? EdgeInsets.only(right: 20.0)
           : EdgeInsets.only(right: 0.0),
         child: Padding(
-          padding: const EdgeInsets.only(left: 20.0),
+          padding: const EdgeInsets.only(left: 5.0,),
           child: Column(
             //crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: Image(
-                  height: 120.0,
-                  width: 120.0,
+                  height: 150.0,
+                  width: 150.0,
                   image: CachedNetworkImageProvider(album.path_image),
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 3,),
               Text(
                 album.name_collection,
                 textAlign: TextAlign.center,
-                style: GetTextStyle.SM(context),
+                style: GetTextStyle.M(context),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 0,),
               Text(
                 album.fullname,
                 textAlign: TextAlign.center,
-                style: GetTextStyle.SS(context),
+                style: GetTextStyle.SM(context),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               )

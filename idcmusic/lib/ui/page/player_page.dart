@@ -6,6 +6,7 @@ import 'package:church_of_christ/ui/widgets/app_bar.dart';
 import 'package:church_of_christ/ui/widgets/player_carousel.dart';
 import 'package:church_of_christ/ui/widgets/song_list_carrousel.dart';
 import 'package:church_of_christ/utils/anims/player_anim.dart';
+import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -77,7 +78,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                                     _commonTween.animate(controllerPlayer)),
                             SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.03),
+                                    MediaQuery.of(context).size.height * 0.06),
                             Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
@@ -155,7 +156,11 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                                     MediaQuery.of(context).size.height * 0.01),
                             Text(
                               songModel.currentSong.title,
-                              style: TextStyle(fontSize: 20.0),
+                              style: GetTextStyle.XL(context),
+                            ),
+                            Text(
+                              songModel.currentSong.name_collection,
+                              style: GetTextStyle.M(context),
                             ),
                           ],
                         )

@@ -31,7 +31,7 @@ class _AlbumsCarouselState extends State<AlbumsCarousel>{
                 Navigator.of(context).pushNamed(RouteName.allCollections);
               },
               child: Text("Ver todos",
-                style: GetTextStyle.SM(context),
+                style: GetTextStyle.M(context),
               ),
             )
           ],
@@ -47,7 +47,10 @@ class _AlbumsCarouselState extends State<AlbumsCarousel>{
               itemCount: widget.albums.length,
               itemBuilder: (BuildContext context, int index){
                 Collection album = widget.albums[index];
-                return itemCollection(album: album, index: index, length: widget.albums.length,);
+                return Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: itemCollection(album: album, index: index, length: widget.albums.length,),
+                );
               },
             ),
           ),

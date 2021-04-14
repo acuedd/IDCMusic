@@ -95,7 +95,7 @@ class _ForYouCarouselState extends State<ForYouCarousel>{
           child: Row( 
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text("Canciones",
+              Text("Para ti",
                 style: GetTextStyle.XL(context),
               ),
               GestureDetector( 
@@ -103,7 +103,7 @@ class _ForYouCarouselState extends State<ForYouCarousel>{
                   print("View all"),
                 },
                 child: Text("Ver todos",
-                  style: GetTextStyle.SM(context),
+                  style: GetTextStyle.M(context),
                 ),
               )
             ],

@@ -16,8 +16,8 @@ class RotatePlayer extends AnimatedWidget{
       child: RotationTransition( 
         turns: animation,
         child: Container( 
-          width: MediaQuery.of(context).size.width * 0.5,
-          height: MediaQuery.of(context).size.width * 0.5,
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: MediaQuery.of(context).size.width * 0.8,
           decoration: BoxDecoration( 
             shape: BoxShape.circle, 
             image: DecorationImage( 

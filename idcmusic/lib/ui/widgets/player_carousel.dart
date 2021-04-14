@@ -196,7 +196,7 @@ class PlayerState extends State<Player> {
     if (_songData.playNow) {
       play(_songData.currentSong);
     }
-    return Column(
+    return Column(    
       children: _controllers(context),
     );
   }
@@ -262,7 +262,7 @@ class PlayerState extends State<Player> {
         ),
       ),
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
         child: new Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
