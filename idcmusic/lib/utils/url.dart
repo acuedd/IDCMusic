@@ -46,7 +46,9 @@ class Url {
                                           "A Hno Guillermo Acu y Nancy de Acu por sus ánimos " +
                                           "y confianza para la realización de este proyecto. " +
                                           "\n";
-
+  static const String thanksToArtist = "Agradecemos a todos los artistas que de buena voluntad han permitido"+
+                                        " compartir la discografía de forma gratuita, si deseas que todo el material"+ 
+                                        " futuro siga siendo libre y gratuito, apoya a tu artista más cercano.";
 }
 
 class Connection {

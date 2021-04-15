@@ -179,6 +179,25 @@ class _AboutScreenState extends State<AboutScreen>{
                     ),
                   ),
                   Separator.divider(indent: 72),
+                  ListCell.icon(
+                    icon: Icons.thumb_up,
+                    trailing: Icon(Icons.chevron_right),
+                    title: "Gracias",
+                    subtitle: "A todos los artistas",
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => RoundDialog(
+                        title: "Con gratitud",
+                        children: [
+                          Padding(padding: EdgeInsets.only(left: 25, right: 25),
+                            child: Text(Url.thanksToArtist, 
+                            textAlign: TextAlign.justify,
+                            style: GetTextStyle.subtitle1(context)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
               ]),
             ),
           ],
