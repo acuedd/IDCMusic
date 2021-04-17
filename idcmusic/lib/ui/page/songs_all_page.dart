@@ -13,8 +13,9 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SongsAllCarousel extends StatefulWidget{
-
-  SongsAllCarousel();
+  final bool recently;
+  final String strTitle;
+  SongsAllCarousel({this.recently = false, this.strTitle =  "Todas las canciones"});
 
   _SongsAllCarouselState createState() => _SongsAllCarouselState();
 }
@@ -52,13 +53,13 @@ class _SongsAllCarouselState extends State<SongsAllCarousel>{
       body: SafeArea( 
         child: Column( 
           children: <Widget>[
-            AppBarCarrousel(title: "Todas las canciones", iconBottom: true,), 
+            AppBarCarrousel(title: widget.strTitle, iconBottom: true,), 
             Expanded( 
               child: ProviderWidget<SongListModel>( 
                 onModelReady: (model) async{
                   await model.initData();
                 },
-                model: SongListModel(),
+                model: SongListModel(recently: widget.recently),
                 builder: (context, model,child){
                   List<Song> mylist = convertResponseToListSong(model.list["resources"] ?? []);
                   if(model.busy){

@@ -36,9 +36,10 @@ class _AboutScreenState extends State<AboutScreen>{
     final PackageInfo info = await PackageInfo.fromPlatform();
     setState(() => _packageInfo = info);
   }
+  
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     return Scaffold( 
       body: SafeArea( 
         child: Column( 
@@ -48,7 +49,8 @@ class _AboutScreenState extends State<AboutScreen>{
               child: ListView( children: <Widget>[
                 HeaderText(text: "Sobre la app"), 
                 ListCell.icon( 
-                  icon: Icons.info_outline,
+                  context: context,
+                  icon: Icons.info,
                   trailing: Icon(Icons.chevron_right),
                   title: "Versión ${_packageInfo.version}",
                   subtitle: "Echa un vistazo a los nuevos cambios",
@@ -56,7 +58,8 @@ class _AboutScreenState extends State<AboutScreen>{
                 ), 
                 Separator.divider(indent: 72),
                 ListCell.icon( 
-                  icon: Icons.star_border,
+                  context: context,
+                  icon: Icons.star,
                   trailing: Icon(Icons.chevron_right),
                   title: "¿Disfrutando de la app?",
                   subtitle: "Deja tu experiencia de tienda",
@@ -77,6 +80,7 @@ class _AboutScreenState extends State<AboutScreen>{
                 ),
                 HeaderText(text: "Autor"),
                 ListCell.icon(
+                  context: context,
                     icon: Icons.person_outline,
                     trailing: Icon(Icons.chevron_right),
                     title: "Aplicaciones libres",
@@ -97,9 +101,10 @@ class _AboutScreenState extends State<AboutScreen>{
                     }
                   ),
                   ListCell.icon(
+                    context: context,
                     icon: Icons.cake,
                     trailing: Icon(Icons.chevron_right),
-                    title: "Conviértete en sponsor",
+                    title: "Apoya la iniciativa",
                     subtitle: "Escríbeme en whatsapp",
                     onTap: () => showDialog(
                       context: context,
@@ -116,7 +121,8 @@ class _AboutScreenState extends State<AboutScreen>{
                   ),
                   Separator.divider(indent: 72),
                   ListCell.icon(
-                    icon: Icons.mail_outline,
+                    context: context,
+                    icon: Icons.mail,
                     trailing: Icon(Icons.chevron_right),
                     title: "Envíame un correo",
                     subtitle: "Reporta fallos o solicita nuevas funciones",
@@ -140,6 +146,7 @@ class _AboutScreenState extends State<AboutScreen>{
                   ),
                   HeaderText(text: "Agradecimientos"),
                   ListCell.icon(
+                    context: context,
                     icon: Icons.favorite,
                     trailing: Icon(Icons.chevron_right),
                     title: "Iglesia de Cristo GT",
@@ -160,6 +167,7 @@ class _AboutScreenState extends State<AboutScreen>{
                   ),                  
                   Separator.divider(indent: 72),
                   ListCell.icon(
+                    context: context,
                     icon: Icons.favorite,
                     trailing: Icon(Icons.chevron_right),
                     title: "Gratitud",
@@ -180,6 +188,7 @@ class _AboutScreenState extends State<AboutScreen>{
                   ),
                   Separator.divider(indent: 72),
                   ListCell.icon(
+                    context: context,
                     icon: Icons.thumb_up,
                     trailing: Icon(Icons.chevron_right),
                     title: "Gracias",

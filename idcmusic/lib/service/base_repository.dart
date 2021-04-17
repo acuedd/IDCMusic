@@ -17,7 +17,7 @@ class BaseRepository{
 
   static Future fetchShongList({
     active, nameAuthor, nameTag, nameCollection, idCollection,titleResource,
-    lessTime, olderTime, randomSort, limitTo, limitFrom
+    lessTime, olderTime, randomSort, limitTo, limitFrom, recently
   }) async{
     Connection conn = new Connection();
 
@@ -51,6 +51,9 @@ class BaseRepository{
     }
     if(limitTo != null && limitTo.toString().isNotEmpty){
       params["limit_to"] = limitTo;
+    }
+    if(recently == "Y"){
+      params["recently"] = (recently == "Y")?"Y":"N";
     }
     params["active"] = "Y";  
 

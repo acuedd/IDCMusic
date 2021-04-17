@@ -54,7 +54,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin{
             child: SafeArea( 
               child: InkWell( 
                 onTap: (){
-                  nextPage(context);
+                  goToIndex(context);
                 },  
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -84,7 +84,7 @@ class AnimatedCountdown extends AnimatedWidget{
     : super(key: key, listenable: animation){
       this.animation.addStatusListener((status) {
         if(status == AnimationStatus.completed){
-          nextPage(context);
+          goToIndex(context);
         }
       });
     }
@@ -93,8 +93,4 @@ class AnimatedCountdown extends AnimatedWidget{
   Widget build(BuildContext context) {
     return Text('Skip');
   }
-}
-
-void nextPage(context){
-  Navigator.of(context).pushReplacementNamed(RouteName.tab);
 }

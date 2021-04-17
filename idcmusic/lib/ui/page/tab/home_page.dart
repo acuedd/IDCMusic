@@ -6,8 +6,10 @@ import 'package:church_of_christ/provider/provider_widget.dart';
 import 'package:church_of_christ/provider/view_state_widget.dart';
 import 'package:church_of_christ/ui/page/player_page.dart';
 import 'package:church_of_christ/ui/page/search_page.dart';
+import 'package:church_of_christ/ui/page/welcome_page.dart';
 import 'package:church_of_christ/ui/widgets/albums_carousel.dart';
 import 'package:church_of_christ/ui/widgets/for_you_carousel.dart';
+import 'package:church_of_christ/ui/widgets/recently_songs.dart';
 import 'package:church_of_christ/utils/anims/page_route_anim.dart';
 import 'package:church_of_christ/utils/anims/record_anim.dart';
 import 'package:flutter/material.dart';
@@ -90,6 +92,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
 
               CollectionModel albums = homeModel?.albums ?? CollectionModel();
               List<Song> foryou = homeModel?.forYou ?? List<Song>();
+              List<Song> songsRecently = homeModel?.songsRecently ?? List<Song>();
+
               return Column(children: <Widget>[
                 Padding( 
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -142,7 +146,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                           color: Theme.of(context).accentColor,
                           iconSize: 30.0,
                           onPressed: (){
-                            print("show notifications");
+                            Navigator.push(
+                              context, 
+                              SlideTopRouteBuilder(WelcomeScreen(popRoute: true,)),
+                            );                            
                           },
                         ),
                       ),
@@ -166,6 +173,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                     child: ListView(children: <Widget>[
                       SizedBox(height: 10,),
                       AlbumsCarousel(albums.collections),
+                      RecentlySongs(songsRecently),
                       ForYouCarousel(foryou),
                     ]),
                   ),

@@ -1,4 +1,5 @@
 import 'package:church_of_christ/ui/widgets/dialog_round.dart';
+import 'package:church_of_christ/utils/url.dart';
 import 'package:flutter/material.dart';
 import 'package:row_collection/row_collection.dart';
 
@@ -72,13 +73,13 @@ class PresentationDialog extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return RoundDialog(
-      title: "Regístrate en la app",
+      title: "Bendice a otros con tus aportes",
       children: <Widget>[
         RowLayout(
           padding: EdgeInsets.symmetric(horizontal: 24),
           children: <Widget>[
             Text(
-              "Apoyanos con ideas nuevas o si quieres ser parte de los colaboradores del app, envíame un mail",
+              Url.patreon,
               textAlign: TextAlign.justify,
               style: Theme.of(context).textTheme.subtitle1.copyWith(
                 color: Theme.of(context).textTheme.caption.color,

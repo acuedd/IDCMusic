@@ -45,14 +45,17 @@ class ListCell extends StatelessWidget {
   }
 
   factory ListCell.icon({
+    @required BuildContext context,
     @required IconData icon,
     Widget trailing,
     @required String title,
     String subtitle,
     VoidCallback onTap,
   }) {
+    
+    var iconColor = Theme.of(context).accentColor; 
     return ListCell(
-      leading: Icon(icon, size: 40),
+      leading: Icon(icon, size: 40, color: iconColor,),
       trailing: trailing,
       title: title,
       subtitle: subtitle,

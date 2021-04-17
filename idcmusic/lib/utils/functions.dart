@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:church_of_christ/config/routes.dart';
 import 'package:church_of_christ/ui/widgets/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,10 @@ import 'package:flutter/widgets.dart';
 import "dart:math";
 
 Widget loadingIndicator() => Loader();
+
+void goToIndex(context){
+  Navigator.of(context).pushReplacementNamed(RouteName.afterFistLayout);
+}
 
 enum Themes { light, dark, black, monokai, system }
 
@@ -135,7 +140,16 @@ class GetTextStyle{
       fontFamily: "Lato",
       letterSpacing: 1.2,
     );    
-  } 
+  }
+ 
+  static TITLE(BuildContext context){
+    return TextStyle(
+      fontSize: 50, 
+      fontWeight: FontWeight.w300,
+      height: 2.0,
+      fontFamily: "Lato",
+    );
+  }
 
   static subtitle1(BuildContext context){
     return Theme.of(context).textTheme.subtitle1.copyWith(

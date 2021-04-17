@@ -11,8 +11,10 @@ class HomeModel extends ViewStateRefreshListModel{
 
   CollectionModel _albums; 
   List<Song> _forYou; 
+  List<Song> _songsRecently;
   CollectionModel get albums => _albums;
   List<Song> get forYou => _forYou; 
+  List<Song> get songsRecently => _songsRecently; 
 
   @override
   Future<Map<String, dynamic>> loadData({int pageNum}) async{
@@ -24,7 +26,8 @@ class HomeModel extends ViewStateRefreshListModel{
 
 
     futures.add(BaseRepository.fetchCollections(randomSort: "true", limitFrom: "0", limitTo: "4"));
-    futures.add(BaseRepository.fetchShongList(randomSort: "true", limitFrom: "0", limitTo: "15"));
+    futures.add(BaseRepository.fetchShongList(randomSort: "true", limitFrom: "0", limitTo: "10"));
+    futures.add(BaseRepository.fetchShongList(randomSort: "true", limitFrom: "0", limitTo: "5", recently: "Y"));
     
     //futures.add(BaseRepository.fetchCollections());
       var result = await Future.wait(futures);
@@ -33,6 +36,9 @@ class HomeModel extends ViewStateRefreshListModel{
       //TODO arreglar cuando da un timeout (falta de internet)
       List<Song> foryou = convertResponseToListSong(result[1]["resources"]);
       _forYou = foryou;
+      List<Song> songsRecently = convertResponseToListSong(result[2]["resources"]);
+      _songsRecently = songsRecently;
+
       return result[0];
   }
 

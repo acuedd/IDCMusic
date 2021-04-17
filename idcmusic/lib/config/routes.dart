@@ -1,4 +1,5 @@
 import 'package:church_of_christ/ui/page/about.dart';
+import 'package:church_of_christ/ui/page/after_fist_layout.dart';
 import 'package:church_of_christ/ui/page/album_full_page.dart';
 import 'package:church_of_christ/ui/page/changelog.dart';
 import 'package:church_of_christ/ui/page/songs_all_page.dart';
@@ -16,6 +17,7 @@ class RouteName{
   static const String changelog = '/changelog';
   static const String allCollections = "allCollections";
   static const String allSongs = "allSongs";
+  static const String afterFistLayout = "afterFist";
 }
 
 //return MaterialPageRoute(builder: (_) => MainScreen());
@@ -35,6 +37,8 @@ class RouteIDC {
         return SlideBottomRouteBuilder(AlbumGridCarousel());
       case RouteName.allSongs: 
         return SlideBottomRouteBuilder(SongsAllCarousel());
+      case RouteName.afterFistLayout: 
+        return NoAnimRouteBuilder(AfterFist());
       default:
         return _errorRoute();
     }
