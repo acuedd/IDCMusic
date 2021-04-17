@@ -26,7 +26,7 @@ class HomeModel extends ViewStateRefreshListModel{
     String inputAlbums = albumValueList[_randomSongAlbum];
 
 
-    futures.add(BaseRepository.fetchCollections(randomSort: "true", limitFrom: "0", limitTo: "4"));
+    futures.add(BaseRepository.fetchCollections(randomSort: "true", limitFrom: "0", limitTo: "7"));
     futures.add(BaseRepository.fetchShongList(randomSort: "true", limitFrom: "0", limitTo: "10"));
     futures.add(BaseRepository.fetchShongList(randomSort: "true", limitFrom: "0", limitTo: "5", recently: "Y"));
     
