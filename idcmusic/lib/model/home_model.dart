@@ -5,6 +5,7 @@ import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/provider/view_state_refresh_list_model.dart';
 import 'package:church_of_christ/service/base_repository.dart';
 import 'package:church_of_christ/utils/url.dart';
+import 'package:dio/dio.dart';
 
 class HomeModel extends ViewStateRefreshListModel{
   static const albumValueList = [':(', '(TT_TT)', '(TT_TT)', '(TT_TT)', '(TT_TT)'];
@@ -31,15 +32,31 @@ class HomeModel extends ViewStateRefreshListModel{
     
     //futures.add(BaseRepository.fetchCollections());
       var result = await Future.wait(futures);
+      Map<String,dynamic> tmpSongRecently = result[2];
+      Map<String,dynamic> tmpForYou = result[1];
+
+      _songsRecently = List<Song>();
+      _forYou = List<Song>();
+
       CollectionModel collectionModel = CollectionModel.fromJson(result[0]);
       _albums = collectionModel;
-      //TODO arreglar cuando da un timeout (falta de internet)
-      List<Song> foryou = convertResponseToListSong(result[1]["resources"]);
-      _forYou = foryou;
-      List<Song> songsRecently = convertResponseToListSong(result[2]["resources"]);
-      _songsRecently = songsRecently;
+      
+      if(tmpForYou.containsKey("resources")){
+        _forYou = convertResponseToListSong(result[1]["resources"]);
+      }
+      print(result[2]);      
+      
+      if(tmpSongRecently.containsKey("resources")){
+        _songsRecently = convertResponseToListSong(result[2]["resources"] ?? []);
+      }
 
-      return result[0];
+      if(_forYou.isEmpty && _songsRecently.isEmpty){
+        var e = DioError().error;
+        setError("No internet", "No internet");
+      }      
+      else{
+        return result[0];
+      }
   }
 
   List<Song>  convertResponseToListSong(data){

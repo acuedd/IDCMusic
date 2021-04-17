@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:church_of_christ/model/download_model.dart';
+import 'package:church_of_christ/ui/widgets/empty_widget.dart';
 import 'package:church_of_christ/ui/widgets/songItem.dart';
 import 'package:church_of_christ/utils/anims/page_route_anim.dart';
 import 'package:church_of_christ/utils/anims/record_anim.dart';
-import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
@@ -78,13 +78,9 @@ class _FavoritePageState extends State<FavoritePage> with TickerProviderStateMix
             Expanded( 
               child: favoriteModel.favoriteSong.length == 0 
                 ? Center(
-                    child: EmptyListWidget(
-                      image : null,
-                      packageImage: PackageImage.Image_4,
+                    child: EmptyWidget(
                       title: 'No tienes favoritas',
-                      subTitle: 'Aún no agregas tu\n canciones favoritas',
-                      titleTextStyle: Theme.of(context).typography.dense.headline4.copyWith(color: Color(0xff9da9c7)),
-                      subtitleTextStyle: Theme.of(context).typography.dense.bodyText1.copyWith(color: Color(0xffabb8d6))
+                      description: 'Aún no agregas tu\n canciones favoritas',
                     ),
                   ) 
                 : ListView.builder(

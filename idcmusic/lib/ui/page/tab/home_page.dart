@@ -173,7 +173,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                     child: ListView(children: <Widget>[
                       SizedBox(height: 10,),
                       AlbumsCarousel(albums.collections),
-                      RecentlySongs(songsRecently),
+                      (songsRecently.length >0)
+                        ? RecentlySongs(songsRecently)
+                        : SizedBox.shrink(),
                       ForYouCarousel(foryou),
                     ]),
                   ),

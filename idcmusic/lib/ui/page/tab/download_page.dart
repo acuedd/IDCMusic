@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:church_of_christ/ui/widgets/empty_widget.dart';
 import 'package:church_of_christ/ui/widgets/songItem.dart';
 import 'package:church_of_christ/utils/anims/page_route_anim.dart';
 import 'package:church_of_christ/utils/anims/record_anim.dart';
-import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
@@ -88,13 +88,9 @@ class _MusicPageState extends State<MusicPage> with TickerProviderStateMixin, Au
             Expanded(
               child: downloadModel.downloadSong.length == 0
                 ? Center(
-                    child: EmptyListWidget(
-                      image : null,
-                      packageImage: PackageImage.Image_1,
-                      title: 'No hay descargas',
-                      subTitle: 'Aún no descargas ninguna canción',
-                      titleTextStyle: Theme.of(context).typography.dense.headline4.copyWith(color: Color(0xff9da9c7)),
-                      subtitleTextStyle: Theme.of(context).typography.dense.bodyText1.copyWith(color: Color(0xffabb8d6))
+                    child:  EmptyWidget(
+                      title: 'No tienes descargas',
+                      description: 'Aún no descargas\n ninguna de tus canciones favoritas',
                     ),
                   )
                 : ListView.builder(
