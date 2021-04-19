@@ -2,9 +2,12 @@
 
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
+import 'package:church_of_christ/ui/widgets/dialog_round.dart';
 import 'package:church_of_christ/utils/functions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:church_of_christ/model/song_model.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class SongItem extends StatelessWidget{
@@ -49,7 +52,7 @@ class SongItem extends StatelessWidget{
                   child: Utils.image(song.pic, fit: BoxFit.cover)
                 ),
               ), 
-              Container( 
+              /*Container( 
                 height: 50.0,
                 width: 50.0,
                 child: Icon( 
@@ -57,7 +60,7 @@ class SongItem extends StatelessWidget{
                   color: Colors.white.withOpacity(0.7),
                   size: 42.0,
                 ),
-              ),
+              ),*/
             ],
           ),
           SizedBox(width: 20.0,),           
@@ -76,20 +79,7 @@ class SongItem extends StatelessWidget{
                 )
               ],
             ),
-          ), 
-          IconButton(
-            onPressed: () => downloadModel.download(song),
-            icon: downloadModel.isDownload(song)
-              ? Icon(
-              Icons.cloud_done,
-              color: Theme.of(context).accentColor,
-              size: 20.0,
-              )
-                  : Icon(
-              Icons.cloud_download,
-              size: 20.0,
-              )
-          ),
+          ),           
           IconButton(
             onPressed: () => favoriteModel.collect(song),
             icon: song.url == null
@@ -108,6 +98,44 @@ class SongItem extends StatelessWidget{
                           Icons.favorite_border,
                           size: 20.0,
                         ),
+          ),
+          IconButton(
+            onPressed: () async{
+              var status = await Permission.storage.request();
+              if (status.isGranted) {
+                await downloadModel.download(song);
+              }
+              else{
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => CupertinoAlertDialog(
+                        title: Text('Permiso de almacenamiento'),
+                        content: Text(
+                            'El app necesita permiso para poder guardar las canciones descargadas en el almacenamiento del dispositivo.'),
+                        actions: <Widget>[
+                          CupertinoDialogAction(
+                            child: Text('Deny'),
+                            onPressed: () => Navigator.of(context).pop(),
+                          ),
+                          CupertinoDialogAction(
+                            child: Text('Settings'),
+                            onPressed: () => openAppSettings(),
+                          ),
+                        ],
+                      )
+                  );
+              }       
+            }, 
+            icon: downloadModel.isDownload(song)
+              ? Icon(
+              Icons.cloud_done,
+              color: Theme.of(context).accentColor,
+              size: 20.0,
+              )
+                  : Icon(
+              Icons.cloud_download,
+              size: 20.0,
+              )
           ),
         ],
       ),

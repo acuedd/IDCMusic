@@ -35,7 +35,7 @@ class ThemeModel with ChangeNotifier{
     _themeColor = color ?? _themeColor;
     debugPrint('color --> ${_themeColor}');
     notifyListeners();
-    
+    saveTheme2Storage(_userDarkMode, _themeColor);
   }
 
   void switchRandomTheme({ Brightness brightness }){

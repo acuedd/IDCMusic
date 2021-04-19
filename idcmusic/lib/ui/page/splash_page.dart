@@ -91,6 +91,6 @@ class AnimatedCountdown extends AnimatedWidget{
 
     @override
   Widget build(BuildContext context) {
-    return Text('Skip');
+    return Text('Saltar');
   }
 }

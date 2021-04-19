@@ -7,7 +7,9 @@ import 'package:church_of_christ/ui/widgets/player_carousel.dart';
 import 'package:church_of_christ/ui/widgets/song_list_carrousel.dart';
 import 'package:church_of_christ/utils/anims/player_anim.dart';
 import 'package:church_of_christ/utils/functions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class PlayPage extends StatefulWidget{
@@ -127,8 +129,33 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                                           ),
                                   ),
                                   IconButton(
-                                    onPressed: () => downloadModel
-                                        .download(songModel.currentSong),
+                                    onPressed: () async{
+                                      var status = await Permission.storage.request();
+                                      if (status.isGranted) {
+                                        downloadModel
+                                        .download(songModel.currentSong);
+                                      }
+                                      else{
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) => CupertinoAlertDialog(
+                                                title: Text('Permiso de almacenamiento'),
+                                                content: Text(
+                                                    'El app necesita permiso para poder guardar las canciones descargadas en el almacenamiento del dispositivo.'),
+                                                actions: <Widget>[
+                                                  CupertinoDialogAction(
+                                                    child: Text('Deny'),
+                                                    onPressed: () => Navigator.of(context).pop(),
+                                                  ),
+                                                  CupertinoDialogAction(
+                                                    child: Text('Settings'),
+                                                    onPressed: () => openAppSettings(),
+                                                  ),
+                                                ],
+                                              )
+                                          );
+                                      }
+                                    },
                                     icon: downloadModel
                                             .isDownload(songModel.currentSong)
                                         ? Icon(

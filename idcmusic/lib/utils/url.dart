@@ -34,7 +34,7 @@ class Url {
   }
 
 
-  static const String strAcknoledgementChurch = "A la iglesia de Cristo en Mixco Nueva Jerusalén."+
+  static const String strAcknoledgementChurch = "A la iglesia de Cristo en Mixco Nueva Jerusalén por su amor y cariño."+
                                           "\n"+
                                           "Romanos 16:16"+
                                           "\n\n"+
@@ -46,7 +46,7 @@ class Url {
                                           "A Hno Guillermo Acu y Nancy de Acu por sus ánimos " +
                                           "y confianza para la realización de este proyecto. " +
                                           "\n\n"+
-                                          "A Andrea Lux por no dejar de creer en el proyecto."
+                                          "A las personas que no dejaron de creer en el proyecto."
                                           "\n";
   static const String thanksToArtist = "Agradecemos a todos los artistas que de buena voluntad han permitido"+
                                         " compartir sus discografías de forma gratuita, si deseas que todo el material"+ 

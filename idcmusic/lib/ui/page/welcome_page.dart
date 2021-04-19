@@ -161,7 +161,7 @@ class _WelcomeScreen extends State<WelcomeScreen>{
                           borderRadius: BorderRadius.circular(15), 
                           border: Border.all(color: Colors.black12, width: 1), 
                         ),
-                        child: Text("Skip"),
+                        child: Text("Saltar"),
                       ),
                     ),
                   ),

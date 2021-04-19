@@ -142,7 +142,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                       Padding( 
                         padding: const EdgeInsets.only(right: 10.0),
                         child: IconButton( 
-                          icon: Icon(Icons.notifications),
+                          icon: Icon(Icons.device_unknown),
                           color: Theme.of(context).accentColor,
                           iconSize: 30.0,
                           onPressed: (){

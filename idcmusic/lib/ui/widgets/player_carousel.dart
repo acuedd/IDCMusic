@@ -81,6 +81,10 @@ class PlayerState extends State<Player> {
       }
     });
 
+    _audioPlayer.onPlayerCommand.listen((event) {
+        print(event);
+      });
+
     _audioPlayer.onAudioPositionChanged.listen((position) {
       if (!mounted) return;
       if (_isSeeking) return;
