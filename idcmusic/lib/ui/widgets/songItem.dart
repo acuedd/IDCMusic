@@ -1,5 +1,7 @@
 
 
+import 'dart:io';
+
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/ui/widgets/dialog_round.dart';
@@ -99,44 +101,45 @@ class SongItem extends StatelessWidget{
                           size: 20.0,
                         ),
           ),
-          IconButton(
-            onPressed: () async{
-              var status = await Permission.storage.request();
-              if (status.isGranted) {
-                await downloadModel.download(song);
-              }
-              else{
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => CupertinoAlertDialog(
-                        title: Text('Permiso de almacenamiento'),
-                        content: Text(
-                            'El app necesita permiso para poder guardar las canciones descargadas en el almacenamiento del dispositivo.'),
-                        actions: <Widget>[
-                          CupertinoDialogAction(
-                            child: Text('Deny'),
-                            onPressed: () => Navigator.of(context).pop(),
-                          ),
-                          CupertinoDialogAction(
-                            child: Text('Settings'),
-                            onPressed: () => openAppSettings(),
-                          ),
-                        ],
-                      )
-                  );
-              }       
-            }, 
-            icon: downloadModel.isDownload(song)
-              ? Icon(
-              Icons.cloud_done,
-              color: Theme.of(context).accentColor,
-              size: 20.0,
-              )
-                  : Icon(
-              Icons.cloud_download,
-              size: 20.0,
-              )
-          ),
+          if(!Platform.isIOS)
+            IconButton(
+              onPressed: () async{
+                var status = await Permission.storage.request();
+                if (status.isGranted) {
+                  await downloadModel.download(song);
+                }
+                else{
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => CupertinoAlertDialog(
+                          title: Text('Permiso de almacenamiento'),
+                          content: Text(
+                              'El app necesita permiso para poder guardar las canciones descargadas en el almacenamiento del dispositivo.'),
+                          actions: <Widget>[
+                            CupertinoDialogAction(
+                              child: Text('Deny'),
+                              onPressed: () => Navigator.of(context).pop(),
+                            ),
+                            CupertinoDialogAction(
+                              child: Text('Settings'),
+                              onPressed: () => openAppSettings(),
+                            ),
+                          ],
+                        )
+                    );
+                }       
+              }, 
+              icon: downloadModel.isDownload(song)
+                ? Icon(
+                Icons.cloud_done,
+                color: Theme.of(context).accentColor,
+                size: 20.0,
+                )
+                    : Icon(
+                Icons.cloud_download,
+                size: 20.0,
+                )
+            ),
         ],
       ),
     );

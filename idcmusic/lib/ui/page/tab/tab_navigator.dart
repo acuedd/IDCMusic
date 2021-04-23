@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
@@ -29,6 +31,14 @@ class _TabNavigatorState extends State<Tabnavigator>{
 
   @override
   Widget build(BuildContext context) {
+    if(Platform.isIOS){
+      pages = <Widget>[ 
+        HomePage(),
+        FavoritePage(), 
+        SettingsPage(),
+      ];
+    }
+
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle( 
       statusBarColor: Colors.transparent, 
       statusBarBrightness: Theme.of(context).brightness == Brightness.dark 
@@ -92,19 +102,20 @@ class _TabNavigatorState extends State<Tabnavigator>{
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            BubbleBottomBarItem( 
-              backgroundColor: Theme.of(context).primaryColorDark, 
-              icon: Icon(  
-                Icons.file_download, 
-                size: 25.0,
-              ), 
-              activeIcon: Icon( 
-                Icons.file_download,
-                size: 25.0,
-                color: Colors.white,
-              ), 
-              title: Text("Descargas", style: TextStyle(color: Colors.white))
-            ),
+            if(!Platform.isIOS)
+             BubbleBottomBarItem( 
+                backgroundColor: Theme.of(context).primaryColorDark, 
+                icon: Icon(  
+                  Icons.file_download, 
+                  size: 25.0,
+                ), 
+                activeIcon: Icon( 
+                  Icons.file_download,
+                  size: 25.0,
+                  color: Colors.white,
+                ), 
+                title: Text("Descargas", style: TextStyle(color: Colors.white))
+              ),
             BubbleBottomBarItem(
               backgroundColor: Theme.of(context).primaryColorDark,
               icon: Icon(
@@ -117,7 +128,7 @@ class _TabNavigatorState extends State<Tabnavigator>{
                 color: Colors.white,
               ),
               title: Text("Favoritas", style: TextStyle(color: Colors.white)), 
-            ),
+            ),            
             BubbleBottomBarItem(
               backgroundColor: Theme.of(context).primaryColorDark, 
               icon: Icon(  
