@@ -15,6 +15,18 @@ class itemCollection extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenAspectRatio = 0;
+    if(screenHeight>800){
+      screenAspectRatio = 150.0;
+    }
+    else if(screenHeight>=600 && screenHeight <= 800){
+      screenAspectRatio = 145.0;
+    }
+    else if(screenHeight <= 600){
+      screenAspectRatio = 140.0;
+    }
+    
     return GestureDetector(
       onTap: () => {
         Navigator.push(context, SlideLeftRouteBuilder(AlbumsPage(album: album)))
@@ -32,8 +44,8 @@ class itemCollection extends StatelessWidget{
               ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: Image(
-                  height: 150.0,
-                  width: 150.0,
+                  height: screenAspectRatio,
+                  width: screenAspectRatio,
                   image: CachedNetworkImageProvider(album.path_image),
                   fit: BoxFit.cover,
                 ),

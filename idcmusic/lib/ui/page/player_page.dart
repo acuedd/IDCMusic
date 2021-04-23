@@ -62,6 +62,20 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
     } else {
       controllerPlayer.stop(canceled: false);
     }
+
+    //To manage screen height looks of ui
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenAspectRatio = 0;
+    if(screenHeight>800){
+      screenAspectRatio = 0.05;
+    }
+    else if(screenHeight>=600 && screenHeight <= 800){
+      screenAspectRatio = 0.03;
+    }
+    else if(screenHeight <= 600){
+      screenAspectRatio = 0.01;
+    }
+    
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -75,13 +89,13 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                             AppBarCarrousel(title: "", iconBottom: true,),
                             SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.05),
+                                    MediaQuery.of(context).size.height * screenAspectRatio),
                             RotatePlayer(
                                 animation:
                                     _commonTween.animate(controllerPlayer)),
                             SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.06),
+                                    MediaQuery.of(context).size.height * screenAspectRatio),
                             Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:

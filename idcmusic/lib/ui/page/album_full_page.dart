@@ -22,7 +22,6 @@ class _AlbumGridCarouselState extends State<AlbumGridCarousel>{
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: SafeArea( 
         child: Column( 
@@ -62,7 +61,6 @@ class _AlbumGridCarouselState extends State<AlbumGridCarousel>{
                         crossAxisSpacing: 0,
                         mainAxisSpacing: 10.0,
                         children: collectionModel.collections.map((album){
-                          Collection myAlbum = album;
                           return itemCollection(album: album, index: 1, length: 1,);
                         }).toList(),
                       ),

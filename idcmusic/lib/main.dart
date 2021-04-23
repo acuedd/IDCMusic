@@ -4,12 +4,15 @@ import 'package:church_of_christ/model/changelog_model.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
+import 'package:church_of_christ/service/push_notificacions_service.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'model/theme_model.dart';
 
@@ -23,7 +26,29 @@ void main() async{
     });
 }
 
-class MyApp extends StatelessWidget{
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+
+
+class _MyAppState extends State<MyApp> {
+  final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+  
+  void initState() {
+    super.initState();
+    Firebase.initializeApp().whenComplete(() { 
+      print("completed");
+      setState(() {
+        final pushProvider = new PushNotificationService();
+        pushProvider.initialize();
+      });
+    });
+    
+  }
+  
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -39,6 +64,7 @@ class MyApp extends StatelessWidget{
           return RefreshConfiguration(
             hideFooterWhenNotFull: true,
             child: MaterialApp(
+              navigatorKey: navigatorKey,
               debugShowCheckedModeBanner: false,
               theme: themeModel.themeData(),
               darkTheme: themeModel.themeData(platformDarkMode: true),

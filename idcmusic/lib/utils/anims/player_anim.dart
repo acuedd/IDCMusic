@@ -11,13 +11,27 @@ class RotatePlayer extends AnimatedWidget{
   Widget build(BuildContext context){
     final Animation<double> animation = listenable; 
     SongModel songModel = Provider.of(context, listen: false);
+    
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenAspectRatio = 0;
+    if(screenHeight>800){
+      screenAspectRatio = 0.8;
+    }
+    else if(screenHeight>=600 && screenHeight <= 800){
+      screenAspectRatio = 0.6;
+    }
+    else if(screenHeight <= 600){
+      screenAspectRatio = 0.4;
+    }
+
+
     return GestureDetector( 
       onTap: (){},
       child: RotationTransition( 
         turns: animation,
         child: Container( 
-          width: MediaQuery.of(context).size.width * 0.8,
-          height: MediaQuery.of(context).size.width * 0.8,
+          width: MediaQuery.of(context).size.width * screenAspectRatio,
+          height: MediaQuery.of(context).size.width * screenAspectRatio,
           decoration: BoxDecoration( 
             shape: BoxShape.circle, 
             image: DecorationImage( 

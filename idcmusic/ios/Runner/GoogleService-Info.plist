@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>108403745549-fkcpbk3kb3d1dus8i4ds4g9rh2hp4mia.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.108403745549-fkcpbk3kb3d1dus8i4ds4g9rh2hp4mia</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>108403745549-kh45mbrok6tmhg310ghhtspjm0hc8jsq.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDsqPcVwRGvBdUiP-5lYCPwmKaompC8X38</string>
+	<key>GCM_SENDER_ID</key>
+	<string>108403745549</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>gt.com.acuedd.idcmusic</string>
+	<key>PROJECT_ID</key>
+	<string>acapellamusic-f33b7</string>
+	<key>STORAGE_BUCKET</key>
+	<string>acapellamusic-f33b7.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:108403745549:ios:d0c16a2a15e6cad253c644</string>
+</dict>
+</plist>

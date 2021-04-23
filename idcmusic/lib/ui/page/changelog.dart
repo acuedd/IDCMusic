@@ -40,11 +40,13 @@ class ChangelogList extends StatelessWidget {
                       model.showErrorMessage(context);
                     },
                     child: Markdown( 
-                      data: model.list["data"], 
-                      onTapLink: (url) async => await FlutterWebBrowser.openWebPage( 
-                        url:url, 
-                        androidToolbarColor: Theme.of(context).primaryColor,
-                      ),
+                      data: model.list["data"],                       
+                      onTapLink: (text, url, title) async{
+                        FlutterWebBrowser.openWebPage( 
+                          url:url, 
+                          androidToolbarColor: Theme.of(context).primaryColor,
+                        );
+                      },
                       styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith( 
                         blockSpacing: 12, 
                         h2: TextStyle( 
