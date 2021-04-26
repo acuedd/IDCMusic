@@ -26,10 +26,12 @@ class itemCollection extends StatelessWidget{
     else if(screenHeight <= 600){
       screenAspectRatio = 140.0;
     }
+
+    imageAlbum albumImage = imageAlbum(album.path_image, screenAspectRatio);
     
     return GestureDetector(
       onTap: () => {
-        Navigator.push(context, SlideLeftRouteBuilder(AlbumsPage(album: album)))
+        Navigator.push(context, SlideLeftRouteBuilder(AlbumsPage(album, image: albumImage,)))
       },
       child: Container(
         width: 140,
@@ -43,12 +45,7 @@ class itemCollection extends StatelessWidget{
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
-                child: Image(
-                  height: screenAspectRatio,
-                  width: screenAspectRatio,
-                  image: CachedNetworkImageProvider(album.path_image),
-                  fit: BoxFit.cover,
-                ),
+                child: albumImage,
               ),
               SizedBox(height: 3,),
               Text(
@@ -73,4 +70,23 @@ class itemCollection extends StatelessWidget{
     );
 
   }
+}
+
+class imageAlbum extends StatelessWidget{
+
+  final String path;
+  final double screenAspectRatio;
+
+  imageAlbum(this.path, this.screenAspectRatio);
+
+  @override
+  Widget build(BuildContext context) {
+    return Image(
+            height: screenAspectRatio,
+            width: screenAspectRatio,
+            image: CachedNetworkImageProvider(path),
+            fit: BoxFit.cover,
+          );
+  }
+  
 }
