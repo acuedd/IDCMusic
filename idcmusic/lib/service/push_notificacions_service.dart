@@ -91,7 +91,7 @@ class PushNotification {
   String title;
   String body;
 
-  factory PushNotification.fromJson(Map<String, dynamic> json) {
+  factory PushNotification.fromJson(Map<dynamic, dynamic> json) {
     return PushNotification(
       title: json["notification"]["title"],
       body: json["notification"]["body"],

@@ -24,7 +24,7 @@ class BaseRepository{
     SharedPreferences prefsApi = await SharedPreferences.getInstance();
     String token = prefsApi.getString('token_user');
 
-    Map params = {};
+    Map params = Map<String, dynamic>();
     if(token != null && token.isEmpty){
       params["t"] = token;
     }
@@ -57,7 +57,7 @@ class BaseRepository{
     }
     params["active"] = "Y";  
 
-    var response = await conn.con("songs", params);
+    var response = await conn.connect("songs", params);
     print(response);
     return response;
   }
@@ -70,7 +70,7 @@ class BaseRepository{
     SharedPreferences prefsApi = await SharedPreferences.getInstance();
     String token = prefsApi.getString("token_user");
 
-    Map params = {};
+    Map params = Map<String, dynamic>();
     if(token != null && token.isNotEmpty){
       params["t"] = token;
     }
@@ -97,15 +97,17 @@ class BaseRepository{
       params["limit_to"] = limitTo;
     }
 
-    var response = await conn.con("collections", params);
-    return response; 
+    //var response = await conn.con("collections", params);
+    var response1 = await conn.connect("collections", params);
+    print(response1);
+    return response1; 
   }
 
-  static Future<Map<String, dynamic>> fetchChangelog() async{
+  static Future<Map<dynamic, dynamic>> fetchChangelog() async{
     Connection conn = new Connection();
     var response = await conn.fetchData(Url.changelog);
 
-    var myresponse = Map<String, dynamic>();
+    var myresponse = Map<dynamic, dynamic>();
     myresponse["valido"] = 1; 
     myresponse["data"] = response; 
     return myresponse;

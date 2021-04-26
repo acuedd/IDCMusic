@@ -18,18 +18,18 @@ class DownloadListModel extends ViewStateListModel<Song>{
   DownloadListModel({this.downloadModel});
 
   @override
-  Future<Map<String, dynamic>> loadData() async{
+  Future<Map<dynamic, dynamic>> loadData() async{
     LocalStorage localStorage = LocalStorage(kLocalStorageSearch);
     await localStorage.ready; 
     
     List<Song> downloadList = (localStorage.getItem(kDownloadList) ?? []).map<Song>((item){
-      Map<String,dynamic> mySong = Map<String,dynamic>();      
+      Map<dynamic,dynamic> mySong = Map<dynamic,dynamic>();      
       return Song.fromJsonMap(item);
     }).toList();
     downloadModel.setDownloads(downloadList); 
     setIdle(); 
 
-    Map<String, dynamic> downloadreturn = Map<String, dynamic>();
+    Map<dynamic, dynamic> downloadreturn = Map<dynamic, dynamic>();
     downloadreturn["valido"] = 0;
     return downloadreturn;
   }

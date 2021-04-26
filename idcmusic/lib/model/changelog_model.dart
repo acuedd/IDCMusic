@@ -14,7 +14,7 @@ class ChangelogModel extends ViewStateListModel{
   ChangelogModel();
 
   @override
-  Future<Map<String, dynamic>> loadData() async{
+  Future<Map<dynamic, dynamic>> loadData() async{
     return await BaseRepository.fetchChangelog();
   }
 

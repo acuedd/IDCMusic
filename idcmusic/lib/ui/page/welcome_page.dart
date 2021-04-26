@@ -5,7 +5,7 @@ List items = [
   {
     "header": "Usar el app",
     "description":
-        "En esta aplicación es completamente gratuita y podrás escuchar las canciones acapella de la Iglesia de Cristo, es probable que no estén algunas por lo que apoyanos contactándonos.",
+        "Esta app es completamente gratuita, podrás escuchar las canciones acapella de la Iglesia de Cristo, es probable que no estén algunas, por lo que si conoces algún artista, ayudanos a contactarnos.",
     "image": "assets/images/1.png"
   },
   {

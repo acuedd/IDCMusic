@@ -83,7 +83,7 @@ class Connection {
           http.Response res = await http.post('${Url.getURL()}/webservice.php', body: allParams).timeout(const Duration(seconds: 30));
           if(res.statusCode == 200){
             var data = jsonDecode(utf8.decode(res.bodyBytes));
-            var rest = data as Map<String, dynamic>;
+            var rest = data as Map<dynamic, dynamic>;
             return rest;
           }
           else{
@@ -103,11 +103,28 @@ class Connection {
     }
   }
   
+Future connect(operation, params) async {
+    var myParams = Map<String, dynamic>();
+    myParams["o"] = myOperations[operation];
+    myParams["f"] = "json";
+    myParams["m"] = "am";
+
+    var allParams = Map<String, dynamic>();
+    allParams.addAll(myParams);
+    allParams.addAll(params);
+    
+    print("URL --> ${Url.getURL()}/webservice.php");
+    //http.Response res = await http.post('${Url.getURL()}/webservice.php', body: allParams).timeout(const Duration(seconds: 30));
+    final response = await Dio().post('${Url.getURL()}/webservice.php', queryParameters: allParams);          
+    print(response);
+    return response.data;      
+  }
+
   // Fetches data & returns it
-  Future fetchData(String url, {Map<String, dynamic> parameters}) async {
+  Future fetchData(String url, {Map<dynamic, dynamic> parameters}) async {
     print("URL --> ${url}");
     final response = await Dio().get(url, queryParameters: parameters);
-
+    print(response);
     return response.data;
   }
 }

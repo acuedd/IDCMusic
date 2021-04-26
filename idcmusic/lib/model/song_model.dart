@@ -10,7 +10,7 @@ class AlbumListModel extends ViewStateRefreshListModel<Song>{
   AlbumListModel({this.input}); 
 
   @override
-  Future<Map<String,dynamic >> loadData({int pageNum}) async{
+  Future<Map<dynamic,dynamic >> loadData({int pageNum}) async{
     return await BaseRepository.fetchShongList(idCollection:input );
   }
 }
@@ -22,7 +22,7 @@ class SongListModel extends ViewStateRefreshListModel<Song>{
   SongListModel({this.input, this.recently = false}); 
 
   @override
-  Future<Map<String, dynamic>> loadData({int pageNum}) async{
+  Future<Map<dynamic, dynamic>> loadData({int pageNum}) async{
     return await BaseRepository.fetchShongList(titleResource: input, recently: (recently)?"Y":"N");
   }
 }
@@ -154,7 +154,7 @@ class Song {
   dynamic sourcetype;
   List<Tag> tags;
 
-  Song.fromJsonMap(Map<String, dynamic> map)
+  Song.fromJsonMap(Map<dynamic, dynamic> map)
       : type = map["type"],
         link = map["link"],
         songid = map["songid"],
@@ -168,8 +168,8 @@ class Song {
         sourcetype = map["sourcetype"];
         //tags = List<Tag>.from(map["tags"] ?? [].map((x) => Tag.fromJson(x)));
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+  Map<dynamic, dynamic> toJson() {
+    final Map<dynamic, dynamic> data = new Map<dynamic, dynamic>();
     data['type'] = type;
     data['link'] = link;
     data['songid'] = songid;

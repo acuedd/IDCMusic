@@ -18,6 +18,7 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T>{
     try{
       _currentPageNum = pageNumFirst;
       var data = await loadData(pageNum: pageNumFirst); 
+      print(data);
       if(data.isEmpty){
         refreshController.refreshCompleted(resetFooterState: true); 
         list.clear();
@@ -73,7 +74,7 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T>{
     }
   }
 
-  Future<Map<String, dynamic>> loadData({int pageNum});
+  Future<Map<dynamic, dynamic>> loadData({int pageNum});
 
   @override
   void dispose() {

@@ -11,6 +11,7 @@ class ViewStateBusyWidget extends StatelessWidget{
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
+        SizedBox(height: 50.0,),
         Center(child: Text("Cargando..."),),
         Loader(),
       ],
@@ -41,39 +42,41 @@ class ViewStateWidget extends StatelessWidget{
     var titleStyle = Theme.of(context).textTheme.headline6.copyWith(color: Colors.grey);
     var messageStyle = titleStyle.copyWith(color: titleStyle.color.withOpacity(0.7), fontSize: 14);
 
-    return Column( 
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        image ?? Icon(IconFonts.pageError, size: 80, color: Colors.grey[500]), 
-        Padding( 
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-          child: Column( 
-            mainAxisSize: MainAxisSize.max, 
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Text( 
-                title ?? 'Load Failed', 
-                style: titleStyle,                
-              ), 
-              SizedBox(height: 20),
-              ConstrainedBox( 
-                constraints: BoxConstraints(maxHeight: 200, minHeight: 150),
-                child: SingleChildScrollView(  
-                  child: Text( message ?? '', style: messageStyle),
-                ),
-              ), 
-            ],
+    return Center(
+      child: Column( 
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          image ?? Icon(IconFonts.pageError, size: 80, color: Colors.grey[500]), 
+          Padding( 
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+            child: Column( 
+              mainAxisSize: MainAxisSize.max, 
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text( 
+                  title ?? 'Load Failed', 
+                  style: titleStyle,                
+                ), 
+                SizedBox(height: 20),
+                ConstrainedBox( 
+                  constraints: BoxConstraints(maxHeight: 200, minHeight: 150),
+                  child: SingleChildScrollView(  
+                    child: Text( message ?? '', style: messageStyle),
+                  ),
+                ), 
+              ],
+            ),
           ),
-        ),
-        Center(
-          child: ViewStateButton(
-            child: buttonText,
-            textData: buttonTextData,
-            onPressed: onPressed,
+          Center(
+            child: ViewStateButton(
+              child: buttonText,
+              textData: buttonTextData,
+              onPressed: onPressed,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

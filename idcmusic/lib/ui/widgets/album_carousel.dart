@@ -28,7 +28,7 @@ class _AlbumCarouselState extends State<AlbumCarousel>{
 
     for(var i = 0; i<data.length; i++){
 
-      Map<String,dynamic> mySong = Map<String,dynamic>();
+      Map<dynamic,dynamic> mySong = Map<dynamic,dynamic>();
       mySong["type"] = "netease";
       mySong["link"] = "${Url.getURL()}/${data[i]["path"]}";
       mySong["songid"] = data[i]["id_resource"];

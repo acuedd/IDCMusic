@@ -18,7 +18,7 @@ class HomeModel extends ViewStateRefreshListModel{
   List<Song> get songsRecently => _songsRecently; 
 
   @override
-  Future<Map<String, dynamic>> loadData({int pageNum}) async{
+  Future<Map<dynamic, dynamic>> loadData({int pageNum}) async{
     List<Future> futures = []; 
 
     Random r = new Random();
@@ -28,12 +28,13 @@ class HomeModel extends ViewStateRefreshListModel{
 
     futures.add(BaseRepository.fetchCollections(randomSort: "true", limitFrom: "0", limitTo: "7"));
     futures.add(BaseRepository.fetchShongList(randomSort: "true", limitFrom: "0", limitTo: "10"));
-    futures.add(BaseRepository.fetchShongList(randomSort: "true", limitFrom: "0", limitTo: "5", recently: "Y"));
+    futures.add(BaseRepository.fetchShongList(randomSort: "true", limitFrom: "0", limitTo: "3", recently: "Y"));
     
     //futures.add(BaseRepository.fetchCollections());
       var result = await Future.wait(futures);
-      Map<String,dynamic> tmpSongRecently = result[2];
-      Map<String,dynamic> tmpForYou = result[1];
+      print(result);
+      Map<dynamic,dynamic> tmpSongRecently = result[2];
+      Map<dynamic,dynamic> tmpForYou = result[1];
 
       _songsRecently = List<Song>();
       _forYou = List<Song>();
@@ -49,14 +50,8 @@ class HomeModel extends ViewStateRefreshListModel{
       if(tmpSongRecently.containsKey("resources")){
         _songsRecently = convertResponseToListSong(result[2]["resources"] ?? []);
       }
-
-      if(_forYou.isEmpty && _songsRecently.isEmpty){
-        var e = DioError().error;
-        setError("No internet", "No internet");
-      }      
-      else{
-        return result[0];
-      }
+      
+      return result[2];
   }
 
   List<Song>  convertResponseToListSong(data){
@@ -64,7 +59,7 @@ class HomeModel extends ViewStateRefreshListModel{
 
     for(var i = 0; i<data.length; i++){
 
-      Map<String,dynamic> mySong = Map<String,dynamic>();
+      Map<dynamic,dynamic> mySong = Map<dynamic,dynamic>();
       mySong["type"] = "netease";
       mySong["link"] = "${Url.getURL()}/${data[i]["path"]}";
       mySong["songid"] = data[i]["id_resource"];

@@ -8,7 +8,7 @@ class AlbumModel extends ViewStateRefreshListModel<CollectionModel>{
   AlbumModel({this.input}); 
 
   @override
-  Future<Map<String,dynamic >> loadData({int pageNum}) async{
+  Future<Map<dynamic,dynamic >> loadData({int pageNum}) async{
     return await BaseRepository.fetchCollections();
   }
 }
@@ -52,7 +52,7 @@ class Collection{
     this.fullname,
   });
 
-  factory Collection.fromJson(Map<String, dynamic> json) => Collection(
+  factory Collection.fromJson(Map<dynamic, dynamic> json) => Collection(
     id: json["id"],
     name_collection: json["name_collection"], 
     release_date: json["release_date"], 
