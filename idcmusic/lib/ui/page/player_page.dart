@@ -5,6 +5,7 @@ import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/ui/widgets/app_bar.dart';
+import 'package:church_of_christ/ui/widgets/marquee_widget.dart';
 import 'package:church_of_christ/ui/widgets/player_carousel.dart';
 import 'package:church_of_christ/ui/widgets/song_list_carrousel.dart';
 import 'package:church_of_christ/utils/anims/player_anim.dart';
@@ -199,10 +200,14 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                             SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.01),
-                            Center(
-                              child: Text(
-                                songModel.currentSong.title,
-                                style: GetTextStyle.L(context),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: MarqueeWidget(
+                                direction: Axis.horizontal,
+                                child: Text(
+                                  songModel.currentSong.title,
+                                  style: GetTextStyle.L(context),
+                                ),
                               ),
                             ),
                             Text(
