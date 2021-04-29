@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:church_of_christ/provider/view_state_refresh_list_model.dart';
 import 'package:church_of_christ/service/base_repository.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +35,8 @@ class SongModel with ChangeNotifier{
     notifyListeners();
   }
 
-  AudioPlayer _audioPlayer = AudioPlayer(); 
-  AudioPlayer get audioPlayer => _audioPlayer; 
+  AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.withId("idc"); 
+  AssetsAudioPlayer get audioPlayer => _audioPlayer; 
 
   List<Song> _songs; 
 
@@ -150,6 +150,7 @@ class Song {
   String url;
   String pic;
   String ext;
+  // ignore: non_constant_identifier_names
   dynamic name_collection;
   dynamic sourcetype;
   List<Tag> tags;

@@ -65,45 +65,7 @@ class Connection {
     "collections": "f0dd5ef2-04f5-11eb-b265-0242ac130002",
   };
 
-  Future con(operation, params) async {
-    var myParams = Map<String, String>();
-    myParams["o"] = myOperations[operation];
-    myParams["f"] = "json";
-    myParams["m"] = "am";
-
-    var allParams = {};
-    allParams.addAll(myParams);
-    allParams.addAll(params);
-
-    try{
-      final result = await InternetAddress.lookup("google.com");
-      if(result.isNotEmpty && result[0].rawAddress.isNotEmpty){
-        try{
-          print("URL --> ${Url.getURL()}/webservice.php");
-          http.Response res = await http.post('${Url.getURL()}/webservice.php', body: allParams).timeout(const Duration(seconds: 30));
-          if(res.statusCode == 200){
-            var data = jsonDecode(utf8.decode(res.bodyBytes));
-            var rest = data as Map<dynamic, dynamic>;
-            return rest;
-          }
-          else{
-            return {"valido": 0};
-          }
-        } 
-        on TimeoutException catch(_){
-          return {"timeout":"exceeded"};
-        }
-        catch(e){
-          return e;
-        }
-      }
-    }
-    on SocketException catch(_){
-      return {"interneet":"no"};
-    }
-  }
-  
-Future connect(operation, params) async {
+  Future connect(operation, params) async {
     var myParams = Map<String, dynamic>();
     myParams["o"] = myOperations[operation];
     myParams["f"] = "json";
@@ -116,7 +78,6 @@ Future connect(operation, params) async {
     print("URL --> ${Url.getURL()}/webservice.php");
     //http.Response res = await http.post('${Url.getURL()}/webservice.php', body: allParams).timeout(const Duration(seconds: 30));
     final response = await Dio().post('${Url.getURL()}/webservice.php', queryParameters: allParams);          
-    print(response);
     return response.data;      
   }
 
@@ -124,7 +85,6 @@ Future connect(operation, params) async {
   Future fetchData(String url, {Map<dynamic, dynamic> parameters}) async {
     print("URL --> ${url}");
     final response = await Dio().get(url, queryParameters: parameters);
-    print(response);
     return response.data;
   }
 }

@@ -58,7 +58,6 @@ class BaseRepository{
     params["active"] = "Y";  
 
     var response = await conn.connect("songs", params);
-    print(response);
     return response;
   }
 
@@ -99,7 +98,6 @@ class BaseRepository{
 
     //var response = await conn.con("collections", params);
     var response1 = await conn.connect("collections", params);
-    print(response1);
     return response1; 
   }
 

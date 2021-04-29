@@ -1,11 +1,9 @@
-import 'dart:math';
 
 import 'package:church_of_christ/model/collections_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/provider/view_state_refresh_list_model.dart';
 import 'package:church_of_christ/service/base_repository.dart';
 import 'package:church_of_christ/utils/url.dart';
-import 'package:dio/dio.dart';
 
 class HomeModel extends ViewStateRefreshListModel{
   static const albumValueList = [':(', '(TT_TT)', '(TT_TT)', '(TT_TT)', '(TT_TT)'];
@@ -21,9 +19,9 @@ class HomeModel extends ViewStateRefreshListModel{
   Future<Map<dynamic, dynamic>> loadData({int pageNum}) async{
     List<Future> futures = []; 
 
-    Random r = new Random();
-    int _randomSongAlbum = r.nextInt(albumValueList.length);    
-    String inputAlbums = albumValueList[_randomSongAlbum];
+    //Random r = new Random();
+    //int _randomSongAlbum = r.nextInt(albumValueList.length);    
+    //String inputAlbums = albumValueList[_randomSongAlbum];
 
 
     futures.add(BaseRepository.fetchCollections(randomSort: "true", limitFrom: "0", limitTo: "7"));
@@ -32,12 +30,11 @@ class HomeModel extends ViewStateRefreshListModel{
     
     //futures.add(BaseRepository.fetchCollections());
       var result = await Future.wait(futures);
-      print(result);
       Map<dynamic,dynamic> tmpSongRecently = result[2];
       Map<dynamic,dynamic> tmpForYou = result[1];
 
-      _songsRecently = List<Song>();
-      _forYou = List<Song>();
+      _songsRecently = [];
+      _forYou = [];
 
       CollectionModel collectionModel = CollectionModel.fromJson(result[0]);
       _albums = collectionModel;
@@ -45,8 +42,7 @@ class HomeModel extends ViewStateRefreshListModel{
       if(tmpForYou.containsKey("resources")){
         _forYou = convertResponseToListSong(result[1]["resources"]);
       }
-      print(result[2]);      
-      
+    
       if(tmpSongRecently.containsKey("resources")){
         _songsRecently = convertResponseToListSong(result[2]["resources"] ?? []);
       }

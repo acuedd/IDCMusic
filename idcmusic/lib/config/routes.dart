@@ -23,7 +23,7 @@ class RouteName{
 //return MaterialPageRoute(builder: (_) => MainScreen());
 class RouteIDC {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
+    //final args = settings.arguments;
     switch (settings.name) {      
       case RouteName.tab:
         return NoAnimRouteBuilder(Tabnavigator());

@@ -1,7 +1,10 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'dart:async';
+
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
 import 'package:flutter/material.dart';
+import 'package:toast/toast.dart';
 
 
 class Player extends StatefulWidget {
@@ -37,9 +40,9 @@ class PlayerState extends State<Player> {
   SongModel _songData;
   DownloadModel _downloadData;
   bool _isSeeking = false;
-
-  AudioPlayer _audioPlayer;
-  AudioPlayerState _audioPlayerState;
+  final List<StreamSubscription> _subscriptions = [];
+  AssetsAudioPlayer _audioPlayer;
+  //AudioPlayerState _audioPlayerState;
 
   @override
   void initState() {
@@ -47,87 +50,46 @@ class PlayerState extends State<Player> {
     _songData = widget.songData;
     _downloadData = widget.downloadData;
     _initAudioPlayer(_songData);
-    if (_songData.isPlaying || widget.nowPlay) {
+    if (!_songData.isPlaying || widget.nowPlay) {
       play(_songData.currentSong);
-    }
+    }    
   }
 
   void _initAudioPlayer(SongModel songData) {
     _audioPlayer = songData.audioPlayer;
     _position = _songData.position;
     _duration = _songData.duration;
-    _audioPlayer.onDurationChanged.listen((duration) {
-      if (!mounted) return;
-      setState(() {
-        _duration = duration;
-        _songData.setDuration(_duration);
-      });
-
-      // TODO implemented for iOS, waiting for android impl
-      if (Theme.of(context).platform == TargetPlatform.iOS) {
-        // (Optional) listen for notification updates in the background
-        _audioPlayer.startHeadlessService();
-
-        // set at least title to see the notification bar on ios.
-        _audioPlayer.setNotification(
-            title: _songData.currentSong.title,
-            artist: _songData.currentSong.author,
-            //albumTitle: 'Name or blank',
-            imageUrl: _songData.currentSong.pic,
-            forwardSkipInterval: const Duration(seconds: 30), // default is 30s
-            backwardSkipInterval: const Duration(seconds: 30), // default is 30s
-            duration: duration,
-            elapsedTime: Duration(seconds: 0));
+    
+    _audioPlayer.current.listen((playingAudio) {
+      try{
+        final songDuration = playingAudio.audio.duration;
+        if (!mounted) return;
+        setState(() {
+          _duration = songDuration;
+        });
       }
+      catch(t){ }      
     });
 
-    _audioPlayer.onPlayerCommand.listen((event) {
-        print(event);
-      });
-
-    _audioPlayer.onAudioPositionChanged.listen((position) {
+    _audioPlayer.currentPosition.listen((position) {
       if (!mounted) return;
-      if (_isSeeking) return;
       setState(() {
         _position = position;
-        _songData.setPosition(_position);
       });
     });
 
-    _audioPlayer.onPlayerCompletion.listen((event) {
-      // // _onComplete();
-      // setState(() {
-      //   _position = _duration;
-      // });
+    _audioPlayer.playlistAudioFinished.listen((Playing playing) {
+      //print("fuck finish $playing");
+      
       next();
     });
 
-    _audioPlayer.onSeekComplete.listen((finished) {
-      _isSeeking = false;
-    });
-
-    _audioPlayer.onPlayerError.listen((msg) {
-      if (!mounted) return;
-      print('audioPlayer error : $msg');
-      setState(() {
-        _duration = Duration(seconds: 0);
-        _position = Duration(seconds: 0);
-      });
-    });
-
-    _audioPlayer.onPlayerStateChanged.listen((state) {
+    _audioPlayer.isPlaying.listen((isPlaying) {
+      //print("is playing $isPlaying");
       if (!mounted) return;
       setState(() {
-        _audioPlayerState = state;
-        _songData.setPlaying(_audioPlayerState == AudioPlayerState.PLAYING);
-      });
-    });
-
-    _audioPlayer.onNotificationPlayerStateChanged.listen((state) {
-      if (!mounted) return;
-      setState(() {
-        _audioPlayerState = state;
-        _songData.setPlaying(_audioPlayerState == AudioPlayerState.PLAYING);
+        //_audioPlayerState = state;
+        _songData.setPlaying(isPlaying);
       });
     });
   }
@@ -139,51 +101,125 @@ class PlayerState extends State<Player> {
 
   void play(Song s) async {
     String url;
+    bool isDownload;
+    Audio audio;    
     if (_downloadData.isDownload(s)) {
+      isDownload = true;
       url = _downloadData.getDirectoryPath + '/${s.songid}.${s.ext}';
+      audio = Audio.file(
+         url, 
+         metas: Metas( 
+            title: s.title, 
+            artist: s.author, 
+            album: s.name_collection, 
+            //image: MetasImage.network(path)
+         )
+      );
     }
     else {
+      isDownload = false;
       url = getSongUrl(s);
+      audio = Audio.network(
+         url, 
+         metas: Metas( 
+            title: s.title, 
+            artist: s.author, 
+            album: s.name_collection,
+            image: MetasImage.network(s.pic)
+         )
+      );
     }
 
-    if (url == _songData.url) {
-      int result = await _audioPlayer.setUrl(url);
-      if (result == 1) {
+    if (url == _songData.url) {      
+        await _audioPlayer.open( audio, 
+                showNotification: true, 
+                headPhoneStrategy: HeadPhoneStrategy.pauseOnUnplug, 
+                notificationSettings: NotificationSettings(
+                  customPrevAction: (player){
+                    print("prevAction");
+                    print(player);
+                  }, 
+                  customNextAction: (player){
+                    print("nextAction");
+                    print(player);
+                  }
+                )
+              );
         _songData.setPlaying(true);
-      }
+        _audioPlayer.onErrorDo = (handler){
+          _songData.setPlaying(false);
+          if(isDownload){
+            Toast.show("Ha ocurrido un error, quita la canción de tus descargas e intenta nuevamente", context, gravity: Toast.BOTTOM);
+          }
+          else{
+            Toast.show("El audio no se puede cargar, revisa tu conexión", context, gravity: Toast.BOTTOM);
+          }
+          next();
+        };        
     }
     else {
-      int result = await _audioPlayer.play(url, stayAwake:true);
-      if (result == 1) {
-        _songData.setPlaying(true);
-      }
+      await _audioPlayer.open( audio, 
+              showNotification: true, 
+              headPhoneStrategy: HeadPhoneStrategy.pauseOnUnplug,
+              notificationSettings: NotificationSettings(
+                  customPrevAction: (player){
+                    print("prevAction");
+                    print(player);
+                    previous();
+                  }, 
+                  customNextAction: (player){
+                    print("nextAction");
+                    print(player);
+                    next();
+                  }
+                )
+            );
+      _songData.setPlaying(true);
       _songData.setUrl(url);
+      _audioPlayer.onErrorDo = (handler){
+        _songData.setPlaying(false);
+        if(isDownload){
+          Toast.show("Ha ocurrido un error, quita la canción de tus descargas e intenta nuevamente", context, gravity: Toast.BOTTOM);
+        }
+        else{
+          Toast.show("El audio no se puede cargar, revisa tu conexión", context, gravity: Toast.BOTTOM);
+        }
+        next();
+      };
     }
   }
 
   void pause() async {
-    final result = await _audioPlayer.pause();
-    if (result == 1) setState(() => _songData.setPlaying(false));
+    try{
+      await _audioPlayer.playOrPause();
+      setState(() => _songData.setPlaying(false));
+    }
+    catch(t){
+
+    }
   }
 
   void resume() async {
-    final result = await _audioPlayer.resume();
-    if (result == 1) setState(() => _songData.setPlaying(true));
+    try{
+      await _audioPlayer.playOrPause();
+      setState(() => _songData.setPlaying(true));
+    }
+    catch(t){ }
   }
 
   void next() {
     Song data = _songData.nextSong;
-    /*while (data.url == null) {
+    while (data.url == null) {
       data = _songData.nextSong;
-    }*/
+    }
     play(data);
   }
 
   void previous() {
     Song data = _songData.prevSong;
-    /*while (data.url == null) {
+    while (data.url == null) {
       data = _songData.prevSong;
-    }*/
+    }
     play(data);
   }
 
@@ -344,7 +380,7 @@ class PlayerState extends State<Player> {
     ];
   }
 
-  // void _onComplete() {
-  //   setState(() => _songData.setPlayState(PlayState.stopped));
-  // }
+  /*void _onComplete() {
+    setState(() => _songData.setPlayState(PlayState.stopped));
+  }*/
 }

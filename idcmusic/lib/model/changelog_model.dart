@@ -1,7 +1,7 @@
 import 'package:church_of_christ/provider/view_state_list_model.dart';
 import 'package:church_of_christ/service/base_repository.dart';
-import 'package:church_of_christ/utils/url.dart';
-import 'package:flutter/material.dart';
+//import 'package:church_of_christ/utils/url.dart';
+//import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChangelogModel extends ViewStateListModel{
