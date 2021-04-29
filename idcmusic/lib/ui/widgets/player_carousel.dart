@@ -209,17 +209,17 @@ class PlayerState extends State<Player> {
 
   void next() {
     Song data = _songData.nextSong;
-    while (data.url == null) {
+    /*while (data.url == null) {
       data = _songData.nextSong;
-    }
+    }*/
     play(data);
   }
 
   void previous() {
     Song data = _songData.prevSong;
-    while (data.url == null) {
+    /*while (data.url == null) {
       data = _songData.prevSong;
-    }
+    }*/
     play(data);
   }
 
