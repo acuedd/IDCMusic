@@ -323,8 +323,8 @@ class PlayerState extends State<Player> {
               onPressed: () => previous(),
               icon: Icon(
                 //Icons.skip_previous,
-                Icons.fast_rewind,
-                size: 25.0,
+                Icons.skip_previous,
+                size: 40.0,
                 color: Theme.of(context).brightness == Brightness.dark
                     ? Theme.of(context).accentColor
                     : Color(0xFF787878),
@@ -341,7 +341,7 @@ class PlayerState extends State<Player> {
                 },
                 icon: Icon(
                   _songData.isPlaying ? Icons.pause : Icons.play_arrow,
-                  size: 30.0,
+                  size: 45.0,
                   color: Theme.of(context).accentColor,
                 ),
               ),
@@ -350,8 +350,8 @@ class PlayerState extends State<Player> {
               onPressed: () => next(),
               icon: Icon(
                 //Icons.skip_next,
-                Icons.fast_forward,
-                size: 25.0,
+                Icons.skip_next,
+                size: 40.0,
                 color: Theme.of(context).brightness == Brightness.dark
                     ? Theme.of(context).accentColor
                     : Color(0xFF787878),

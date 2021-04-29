@@ -44,7 +44,7 @@ class WelcomeScreen extends StatefulWidget{
 
 class _WelcomeScreen extends State<WelcomeScreen>{
   double currentPage = 0.0;
-  final _pageViewController = new PageController();
+  final _pageViewController = new PageController(); 
 
   List<Widget> slides = items
       .map((item) => Container(
@@ -109,7 +109,6 @@ class _WelcomeScreen extends State<WelcomeScreen>{
     )
   );
 
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(

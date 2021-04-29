@@ -12,6 +12,17 @@ class EmptyWidget extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     String path_image = "assets/images/no_data.png";  
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenAspectRatio = 0;
+    if(screenHeight>800){
+      screenAspectRatio = 300;
+    }
+    else if(screenHeight>=600 && screenHeight <= 800){
+      screenAspectRatio = 260;
+    }
+    else if(screenHeight <= 600){
+      screenAspectRatio = 210;
+    }
 
     Widget item =  Container(
         padding: EdgeInsets.symmetric(horizontal: 18.0),
@@ -23,7 +34,7 @@ class EmptyWidget extends StatelessWidget{
               child: Image.asset(
                 path_image,
                 fit: BoxFit.fitWidth,
-                width: 300.0,
+                width: screenAspectRatio,
                 alignment: Alignment.bottomCenter,
               ),
             ),

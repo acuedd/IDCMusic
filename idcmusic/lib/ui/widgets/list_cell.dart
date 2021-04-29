@@ -29,14 +29,16 @@ class ListCell extends StatelessWidget {
     VoidCallback onTap,
   }) {
     return ListCell(
-      leading: Image.asset(
-        image,
+      leading: Image.asset(        
+        image,        
         width: 40,
         height: 40,
+        fit: BoxFit.cover,
+        alignment: Alignment.center,
         color: Theme.of(context).brightness == Brightness.light
             ? Colors.black45
             : null,
-      ),
+      ),      
       trailing: trailing,
       title: title,
       subtitle: subtitle,
@@ -55,7 +57,7 @@ class ListCell extends StatelessWidget {
     
     var iconColor = Theme.of(context).accentColor; 
     return ListCell(
-      leading: Icon(icon, size: 40, color: iconColor,),
+      leading: Icon(icon, size: 30, color: iconColor,),
       trailing: trailing,
       title: title,
       subtitle: subtitle,

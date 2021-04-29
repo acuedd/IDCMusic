@@ -34,11 +34,11 @@ class Url {
   }
 
 
-  static const String strAcknoledgementChurch = "A la iglesia de Cristo en Mixco Nueva Jerusalén por su amor y cariño."+
+  static const String strAcknoledgementChurch = "A la iglesia de Cristo en Mixco Nueva Jerusalén, Guatemala por su amor y cariño."+
                                           "\n"+
                                           "Romanos 16:16"+
                                           "\n\n"+
-                                          "Esperando que esta aplicación sea de bendición a cualquier persona que la descargue "+
+                                          "A ti por descargar el app y compartirla con otros, esperando que esta aplicación sea de bendición a cualquier persona que la descargue y escuche alabanzas al Creador."+
                                           "\n";
 
   static const String strAcknoledgement = "A Dios por su ayuda, providencia y por todas sus bendiciones. "+
@@ -46,13 +46,17 @@ class Url {
                                           "A Hno Guillermo Acu y Nancy de Acu por sus ánimos " +
                                           "y confianza para la realización de este proyecto. " +
                                           "\n\n"+
-                                          "A las personas que no dejaron de creer en el proyecto."
+                                          "A las personas que apoyan esta iniciativa."
+                                          "\n\n"+
+                                          "Romanos 11:35 " +
+                                          "\n"+
+                                          "Porque de él, y por él, y para él, son todas las cosas. A él sea la gloria por los siglos. Amén."+                                                                                    
                                           "\n";
   static const String thanksToArtist = "Agradecemos a todos los artistas que de buena voluntad han permitido"+
                                         " compartir sus discografías de forma gratuita, si deseas que todo el material"+ 
                                         " futuro siga siendo libre y gratuito, APOYA a tu artista más cercano."+
                                         "\n\n"+
-                                        "Si eres artista y te gustaría compartir tu talento, pinchale en \"Apoya la iniciativa\" y contáctame";
+                                        "Si eres artista y te gustaría compartir tu talento, pinchale en \"Apoya la iniciativa\" y contáctame.";
 
   static const String patreon = "Publicar para iOS y mantener los servidores tienen un costo, si deseas colaborar para que todo siga siendo completamente gratis, pínchale en \"Contáctame.\""+
                                 "\n\n" +

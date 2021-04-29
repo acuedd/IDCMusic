@@ -81,7 +81,7 @@ class _AboutScreenState extends State<AboutScreen>{
                 HeaderText(text: "Autor"),
                 ListCell.icon(
                   context: context,
-                    icon: Icons.person_outline,
+                    icon: Icons.person,
                     trailing: Icon(Icons.chevron_right),
                     title: "Aplicaciones libres",
                     subtitle: "Bien diseñadas y hechas con amor",
@@ -196,7 +196,7 @@ class _AboutScreenState extends State<AboutScreen>{
                     onTap: () => showDialog(
                       context: context,
                       builder: (context) => RoundDialog(
-                        title: "Con gratitud",
+                        title: "GRACIAS",
                         children: [
                           Padding(padding: EdgeInsets.only(left: 25, right: 25),
                             child: Text(Url.thanksToArtist, 

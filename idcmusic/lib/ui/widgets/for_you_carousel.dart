@@ -38,7 +38,7 @@ class _ForYouCarouselState extends State<ForYouCarousel>{
                   Navigator.push(context, 
                   SlideBottomRouteBuilder(SongsAllCarousel()));
                 },
-                child: Text("Ver todos",
+                child: Text("Ver todas",
                   style: GetTextStyle.M(context),
                 ),
               )
