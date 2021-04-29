@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/material.dart';
 
-List items = [
+List itemsAndroid = [
   {
     "header": "Usar el app",
     "description":
@@ -27,6 +29,45 @@ List items = [
     "image": "assets/images/screen3acamusic.png"
   },
   {
+    "header": "Con estilo",
+    "description":
+        "Puedes usar tus colores favoritos y crea tu propio estilo.",
+    "image": "assets/images/screen4acamusic.png"
+  },
+  {
+    "header": "Comparte",
+    "description":
+        "Comparte con tus amigos esta aplicación para que otros puedan ser bendecios a través de la música. ",
+    "image": "assets/images/3.png"
+  }
+];
+
+List itemsIOS = [
+  {
+    "header": "Usar el app",
+    "description":
+        "Esta app es completamente gratuita, podrás escuchar las canciones acapella de la Iglesia de Cristo, es probable que no estén algunas, por lo que si conoces algún artista, ayudanos a contactarnos.",
+    "image": "assets/images/1.png"
+  },
+  {
+    "header": "Contenido",
+    "description":
+        "Puedes bucar tu contenido por álbum, ver todas las canciones o por nombre en la barra de búsqueda.",
+    "image": "assets/images/screenshootiOS1.png"
+  },
+  {
+    "header": "Reproducción",
+    "description":
+        "Puedes descargar, agregar a favoritas o ver tu listado de reproducción.",
+    "image": "assets/images/screenshootiOS2.png"
+  },
+  {
+    "header": "Con estilo",
+    "description":
+        "Puedes usar tus colores favoritos y crea tu propio estilo.",
+    "image": "assets/images/screen4acamusic.png"
+  },
+  {
     "header": "Comparte",
     "description":
         "Comparte con tus amigos esta aplicación para que otros puedan ser bendecios a través de la música. ",
@@ -46,56 +87,10 @@ class _WelcomeScreen extends State<WelcomeScreen>{
   double currentPage = 0.0;
   final _pageViewController = new PageController(); 
 
-  List<Widget> slides = items
-      .map((item) => Container(
-        padding: EdgeInsets.symmetric(horizontal: 18.0),
-        child: Column( 
-          children: <Widget>[
-            Flexible(
-              flex: 1,
-              fit: FlexFit.tight,
-              child: Image.asset(
-                item['image'],
-                fit: BoxFit.fitWidth,
-                width: 300.0,
-                alignment: Alignment.bottomCenter,
-              ),
-            ),
-            Flexible(
-              flex: 1,
-              fit: FlexFit.tight,
-              child: Container( 
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
-                child: Column( 
-                  children: <Widget>[
-                    Text(item["header"], 
-                      style: TextStyle(  
-                        fontSize: 45.0, 
-                        fontWeight: FontWeight.w300, 
-                        height: 2.0
-                      ),
-                    ), 
-                    Center(
-                      child: Text(item["description"], 
-                        style: TextStyle(  
-                          color: Colors.grey, 
-                          letterSpacing: 1.2, 
-                          fontSize: 16.0, 
-                          height: 1.3
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ))
-      .toList();
+  
 
-  List<Widget> indicator() => List<Widget>.generate(
-    slides.length, 
+  List<Widget> indicator(int len) => List<Widget>.generate(
+    len, 
     (index) => Container(  
       margin: EdgeInsets.symmetric(horizontal: 3.0),
       height: 10.0,
@@ -111,6 +106,30 @@ class _WelcomeScreen extends State<WelcomeScreen>{
 
   @override
   Widget build(BuildContext context) {
+    List slides = [];
+    if(!Platform.isIOS){
+      slides = itemsAndroid;
+    }
+    else{
+      slides = itemsIOS;
+    }
+
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenAspectRatio = 300.0;
+    double textSizeHeader = 45.0;
+    if(screenHeight>800){
+      screenAspectRatio = 300.0;
+      textSizeHeader = 40.0;
+    }
+    else if(screenHeight>=600 && screenHeight <= 800){
+      screenAspectRatio = 260.0;
+      textSizeHeader = 30.0;
+    }
+    else if(screenHeight <= 600){
+      screenAspectRatio = 210.0;
+      textSizeHeader = 25.0;
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -127,7 +146,52 @@ class _WelcomeScreen extends State<WelcomeScreen>{
                         currentPage = _pageViewController.page;
                       });
                     });
-                    return slides[index];
+                    
+                    return Container(
+                      padding: EdgeInsets.symmetric(horizontal: 18.0),
+                      child: Column( 
+                        children: <Widget>[
+                          Flexible(
+                            flex: 1,
+                            fit: FlexFit.tight,
+                            child: Image.asset(
+                              slides[index]['image'],
+                              fit: BoxFit.fitWidth,
+                              width: screenAspectRatio,
+                              alignment: Alignment.bottomCenter,
+                            ),
+                          ),
+                          Flexible(
+                            flex: 1,
+                            fit: FlexFit.tight,
+                            child: Container( 
+                              padding: EdgeInsets.symmetric(horizontal: 30.0),
+                              child: Column( 
+                                children: <Widget>[
+                                  Text(slides[index]["header"], 
+                                    style: TextStyle(  
+                                      fontSize: textSizeHeader, 
+                                      fontWeight: FontWeight.w300, 
+                                      height: 2.0
+                                    ),
+                                  ), 
+                                  Center(
+                                    child: Text(slides[index]["description"], 
+                                      style: TextStyle(  
+                                        color: Colors.grey, 
+                                        letterSpacing: 1.2, 
+                                        fontSize: 16.0, 
+                                        height: 1.3
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                 ),
                 Align(
@@ -137,7 +201,7 @@ class _WelcomeScreen extends State<WelcomeScreen>{
                     padding: EdgeInsets.symmetric(vertical: 40.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: indicator(),
+                      children: indicator(slides.length),
                     ),
                   ),                   //  ),
                 ), 

@@ -13,15 +13,15 @@ class EmptyWidget extends StatelessWidget{
   Widget build(BuildContext context) {
     String path_image = "assets/images/no_data.png";  
     double screenHeight = MediaQuery.of(context).size.height;
-    double screenAspectRatio = 0;
+    double screenAspectRatio = 300.0;
     if(screenHeight>800){
-      screenAspectRatio = 300;
+      screenAspectRatio = 300.0;
     }
     else if(screenHeight>=600 && screenHeight <= 800){
-      screenAspectRatio = 260;
+      screenAspectRatio = 260.0;
     }
     else if(screenHeight <= 600){
-      screenAspectRatio = 210;
+      screenAspectRatio = 210.0;
     }
 
     Widget item =  Container(
