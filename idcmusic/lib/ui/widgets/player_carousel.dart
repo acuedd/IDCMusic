@@ -64,6 +64,7 @@ class PlayerState extends State<Player> {
       try{
         final songDuration = playingAudio.audio.duration;
         if (!mounted) return;
+        print("fuck current $playingAudio");
         setState(() {
           _duration = songDuration;
         });
@@ -78,10 +79,16 @@ class PlayerState extends State<Player> {
       });
     });
 
-    _audioPlayer.playlistAudioFinished.listen((Playing playing) {
+    _audioPlayer.playlistFinished.listen((event) {    
+      if(event){
+        next();
+      }      
+    });
+
+    _audioPlayer.playlistAudioFinished.listen((playing) {
       //print("fuck finish $playing");
       
-      next();
+      //next();
     });
 
     _audioPlayer.isPlaying.listen((isPlaying) {
@@ -134,6 +141,7 @@ class PlayerState extends State<Player> {
         await _audioPlayer.open( audio, 
                 showNotification: true, 
                 headPhoneStrategy: HeadPhoneStrategy.pauseOnUnplug, 
+                playInBackground: PlayInBackground.enabled,
                 notificationSettings: NotificationSettings(
                   customPrevAction: (player){
                     print("prevAction");
@@ -161,6 +169,7 @@ class PlayerState extends State<Player> {
       await _audioPlayer.open( audio, 
               showNotification: true, 
               headPhoneStrategy: HeadPhoneStrategy.pauseOnUnplug,
+              playInBackground: PlayInBackground.enabled,
               notificationSettings: NotificationSettings(
                   customPrevAction: (player){
                     print("prevAction");

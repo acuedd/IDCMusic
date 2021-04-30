@@ -15,7 +15,7 @@ class Url {
   static const String authorAppStore = "https://apps.apple.com/gt/developer/edward-guillermo-lopez/id1482988460";
   static const String apiContactMe = 'https://api.whatsapp.com/send?phone=50230468139&text=Hola%20me%20interesa%20apoyar%20en%20el%20app&source=&data=';
   static const String playStore = 'https://play.google.com/store/apps/details?id=gt.com.acuedd.idcmusic';
-  static const String appStore = "https://apps.apple.com/gt/app/idc-romanos-16-16/id1482988461";
+  static const String appStore = "https://apps.apple.com/gt/app/acapella-music-idc/id1564129767";
 
   static const Map<String, String> authorEmail = {
     'subject': "Acapella music app",
