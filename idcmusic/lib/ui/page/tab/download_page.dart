@@ -45,7 +45,7 @@ class _MusicPageState extends State<MusicPage> with TickerProviderStateMixin, Au
     final dir = await getApplicationDocumentsDirectory();
     List<FileSystemEntity> files = dir.listSync();
     for(var file in files){
-      print(file.path);
+      //print(file.path);
     }
     setState(() { });
   }
@@ -103,7 +103,7 @@ class _MusicPageState extends State<MusicPage> with TickerProviderStateMixin, Au
                           SongModel songModel = Provider.of(context, listen: false);
                           songModel.setSongs( new List<Song>.from(
                             downloadModel.downloadSong
-                          ));
+                          ), context);
                           songModel.setCurrentIndex(index);
                           Navigator.push(context,
                             MaterialPageRoute(builder: (_) => PlayPage( nowPlay: true,))
