@@ -91,8 +91,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
               }
 
               CollectionModel albums = homeModel?.albums ?? CollectionModel();
-              List<Song> foryou = homeModel?.forYou ?? List<Song>();
-              List<Song> songsRecently = homeModel?.songsRecently ?? List<Song>();
+              List<Song> foryou = homeModel?.forYou ?? [];
+              List<Song> songsRecently = homeModel?.songsRecently ?? [];
 
               return Column(children: <Widget>[
                 Padding( 

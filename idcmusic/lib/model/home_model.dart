@@ -26,7 +26,7 @@ class HomeModel extends ViewStateRefreshListModel{
 
     futures.add(BaseRepository.fetchCollections(randomSort: "true", limitFrom: "0", limitTo: "7"));
     futures.add(BaseRepository.fetchShongList(randomSort: "true", limitFrom: "0", limitTo: "10"));
-    futures.add(BaseRepository.fetchShongList(randomSort: "true", limitFrom: "0", limitTo: "3", recently: "Y"));
+    futures.add(BaseRepository.fetchShongList(randomSort: "true", recently: "Y"));
     
     //futures.add(BaseRepository.fetchCollections());
       var result = await Future.wait(futures);

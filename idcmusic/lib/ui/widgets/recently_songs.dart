@@ -21,7 +21,7 @@ class RecentlySongs extends StatefulWidget{
 }
 
 class _RecentlySongsState extends State<RecentlySongs>{
-  
+  final int intLimitShowRecently = 3;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _RecentlySongsState extends State<RecentlySongs>{
         shrinkWrap: true,
         physics: new NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
-        itemCount: widget.songs.length,
+        itemCount: intLimitShowRecently,
         itemBuilder: (BuildContext context, int index){
           Song data = widget.songs[index];
           return GestureDetector( 
