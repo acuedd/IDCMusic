@@ -4,6 +4,7 @@ import 'package:church_of_christ/model/collections_model.dart';
 import 'package:church_of_christ/ui/widgets/album_carousel.dart';
 import 'package:church_of_christ/ui/widgets/app_bar.dart';
 import 'package:church_of_christ/ui/widgets/item_collection.dart';
+import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/material.dart';
 
 class AlbumsPage extends StatefulWidget{
@@ -41,7 +42,7 @@ class _AlbumsPageState extends State<AlbumsPage>{
                         borderRadius: BorderRadius.circular(30.0),
                         child: (widget.image != null)
                           ? widget.image
-                          : Container(child: Image.network(widget.album.path_image),),
+                          : Container(child: Utils.image(widget.album.path_image),),
                       ),
                     ),
                   ), 

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-import 'package:flutter/material.dart';
-
 class MarqueeWidget extends StatefulWidget{
   final Widget child; 
   final Axis direction; 

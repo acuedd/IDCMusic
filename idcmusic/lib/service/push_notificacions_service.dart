@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 
@@ -26,9 +27,9 @@ class PushNotificationService{
   Future initialize() async {
     await Firebase.initializeApp();
     FirebaseMessaging.instance.getToken().then((token){
-      print('Token: $token');
+      debugPrint('Token: $token');
     }).catchError((e) {
-      print(e);
+      debugPrint( "Exception => $e");
     });
 
     FirebaseMessaging.instance.subscribeToTopic("new_releases");
@@ -37,8 +38,7 @@ class PushNotificationService{
         .getInitialMessage()
         .then((RemoteMessage message) {
       if (message != null) {
-        print("message:");
-        print(message);
+        debugPrint("message: ===> $message");
         /*Navigator.pushNamed(context, '/message',
             arguments: MessageArguments(message, true));*/
       }
@@ -67,7 +67,7 @@ class PushNotificationService{
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published!');
+      debugPrint('A new onMessageOpenedApp event was published!');
       /*Navigator.pushNamed(context, '/message',
           arguments: MessageArguments(message, true));*/
     });

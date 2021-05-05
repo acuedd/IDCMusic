@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 
@@ -79,15 +80,17 @@ class Connection {
     allParams.addAll(myParams);
     allParams.addAll(params);
     
-    print("URL --> ${Url.getURL()}/webservice.php");
+    debugPrint("URL --> ${Url.getURL()}/webservice.php");
+    debugPrint('---api-params----->${allParams}');
     //http.Response res = await http.post('${Url.getURL()}/webservice.php', body: allParams).timeout(const Duration(seconds: 30));
-    final response = await Dio().post('${Url.getURL()}/webservice.php', queryParameters: allParams);          
+    final response = await Dio().post('${Url.getURL()}/webservice.php', queryParameters: allParams);              
+    debugPrint('---api-response----->${response}');
     return response.data;      
   }
 
   // Fetches data & returns it
   Future fetchData(String url, {Map<dynamic, dynamic> parameters}) async {
-    print("URL --> ${url}");
+    debugPrint("URL --> ${url}");    
     final response = await Dio().get(url, queryParameters: parameters);
     return response.data;
   }
