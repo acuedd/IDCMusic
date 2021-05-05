@@ -1,8 +1,10 @@
 import 'dart:math';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/provider/view_state_refresh_list_model.dart';
 import 'package:church_of_christ/service/base_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AlbumListModel extends ViewStateRefreshListModel<Song>{
   final String input; 
@@ -35,22 +37,33 @@ class SongModel with ChangeNotifier{
     notifyListeners();
   }
 
-  AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.withId("idc"); 
+  AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer(); 
   AssetsAudioPlayer get audioPlayer => _audioPlayer; 
 
   List<Song> _songs; 
+  List<Audio> _songsAudio;
 
   bool _isPlaying = false; 
   bool get isPlaying => _isPlaying; 
   setPlaying(bool isPlaying){
     _isPlaying = isPlaying; 
-    notifyListeners();
+    //notifyListeners();
   }
 
-  bool _isRepeat = true; 
-  bool get isRepeat => _isRepeat; 
+  LoopMode _loopMode = LoopMode.none;
+  bool _isShuffle = false;
+  LoopMode get loopMode => _loopMode; 
+  bool get isShuffle => _isShuffle;
+  setLoopMode(LoopMode mode){
+    _loopMode = mode;
+    notifyListeners();
+  }
   changeRepeat(){
-    _isRepeat = !_isRepeat; 
+    _audioPlayer.toggleLoop();
+    notifyListeners();
+  }
+  changeSuffle(){
+    _isShuffle = !_isShuffle;
     notifyListeners();
   }
 
@@ -62,16 +75,61 @@ class SongModel with ChangeNotifier{
   }
 
   int _currentSongIndex = 0; 
+  int _nextSongIndex = 0;
+  int _previousSongIndex = 0;
 
   List<Song> get songs => _songs; 
-  setSongs(List<Song> songs){
+  List<Audio> get songsAudio => _songsAudio;
+  
+  setSongs(List<Song> songs, BuildContext context){
+    DownloadModel downloadModel = Provider.of(context, listen: false);
     _songs = songs; 
+    _songsAudio = convertListToAudioList(songs, downloadModel);
+    //print(_songsAudio);
     notifyListeners();
   }
 
-  addSongs(List<Song> songs){
+  addSongs(List<Song> songs, BuildContext context){
+    DownloadModel downloadModel = Provider.of(context);
     _songs.addAll(songs);
+    _songsAudio.addAll(convertListToAudioList(songs, downloadModel));
     notifyListeners();
+  }  
+
+  convertListToAudioList(List<Song> songs, downloadModel){
+    List<Audio> mySongAudio = [];
+    
+    for(var i = 0; i < songs.length; i++){
+      Song item = songs[i];
+      String url;
+      Audio audio;    
+      if (downloadModel.isDownload(item)) {
+        url = downloadModel.getDirectoryPath + '/${item.songid}.${item.ext}';
+        audio = Audio.file(
+            url, 
+            metas: Metas( 
+                title: item.title, 
+                artist: item.author, 
+                album: item.name_collection, 
+                //image: MetasImage.network(path)
+            )
+          );
+      }
+      else{
+        url = item.url;
+        audio = Audio.network(
+          url, 
+          metas: Metas( 
+              title: item.title, 
+              artist: item.author, 
+              album: item.name_collection,
+              image: MetasImage.network(item.pic)
+          )
+        );
+      }
+      mySongAudio.add(audio);
+    }
+    return mySongAudio;
   }
 
   int get length => _songs.length; 
@@ -82,47 +140,31 @@ class SongModel with ChangeNotifier{
     notifyListeners();
   }
 
+  setNextIndex(int index){
+    _nextSongIndex = index;
+    notifyListeners();
+  }
+
+  setPreviousIndex(int index){
+    _previousSongIndex = index;
+    notifyListeners();
+  }
+
   bool _playNow = false;
   bool get playNow => _playNow;
   setPlayNow(bool playNow){
     _playNow = playNow;
-    notifyListeners();
+    //notifyListeners();
   }
 
-  Song get currentSong => _songs[_currentSongIndex]; 
+  Song get currentSong => _songs[_currentSongIndex];    
+  int get currentSongIndex => _currentSongIndex;
+  int get nextSongIndex => _nextSongIndex;
+  int get prevSongIndex => _previousSongIndex;
 
-  Song get nextSong {
-    if(isRepeat){
-      if(_currentSongIndex < length){
-        _currentSongIndex++;
-      }
-      if(_currentSongIndex == length){
-        _currentSongIndex = 0; 
-      }      
-    }
-    else{
-      Random r = new Random();
-      _currentSongIndex = r.nextInt(_songs.length);
-    }
-    notifyListeners();
-    return songs[_currentSongIndex];
-  }
-
-  Song get prevSong{
-    if(isRepeat){
-      if(_currentSongIndex > 0){
-        _currentSongIndex--;         
-      }
-      if(_currentSongIndex == 0){
-        _currentSongIndex = length -1;
-      }
-    }
-    else{
-      Random r = new Random();
-      _currentSongIndex = r.nextInt(_songs.length);
-    }
-    notifyListeners();
-    return _songs[_currentSongIndex];
+  int get randomIndex{
+    Random r = new Random();
+    return r.nextInt(_songs.length);
   }
 
   Duration _position; 

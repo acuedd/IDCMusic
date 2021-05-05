@@ -56,7 +56,7 @@ class _ForYouCarouselState extends State<ForYouCarousel>{
               onTap: (){
                 if(null != data.url){
                   SongModel songModel = Provider.of(context, listen: false);
-                  songModel.setSongs(new List<Song>.from(widget.forYou));
+                  songModel.setSongs(new List<Song>.from(widget.forYou), context);
                   songModel.setCurrentIndex(index);
                   Navigator.push(
                     context,

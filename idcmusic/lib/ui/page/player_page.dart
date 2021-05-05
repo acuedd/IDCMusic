@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
@@ -64,7 +65,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
       //controllerPlayer.forward();
     } else {
       controllerPlayer.stop(canceled: false);
-    }
+    }    
 
     //To manage screen height looks of ui
     double screenHeight = MediaQuery.of(context).size.height;
@@ -114,18 +115,38 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                                     ),
                                   ),
                                   IconButton(
-                                    onPressed: () => songModel.changeRepeat(),
-                                    icon: songModel.isRepeat == true
+                                    onPressed: () => songModel.changeSuffle(),
+                                    icon: songModel.isShuffle == false
                                         ? Icon(
-                                            Icons.repeat,
+                                            Icons.shuffle,
                                             size: 25.0,
                                             color: Colors.grey,
                                           )
                                         : Icon(
                                             Icons.shuffle,
                                             size: 25.0,
-                                            color: Colors.grey,
+                                            color: Theme.of(context).accentColor
                                           ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () => songModel.changeRepeat(),
+                                    icon: songModel.loopMode == LoopMode.none
+                                        ? Icon(
+                                            Icons.repeat,
+                                            size: 25.0,
+                                            color: Colors.grey,
+                                          )
+                                        : songModel.loopMode == LoopMode.playlist
+                                          ? Icon(
+                                              Icons.repeat,
+                                              size: 25.0,
+                                              color: Theme.of(context).accentColor
+                                            )
+                                          : Icon(
+                                              Icons.repeat_one,
+                                              size: 25.0,
+                                              color: Theme.of(context).accentColor
+                                            )
                                   ),
                                   IconButton(
                                     onPressed: () => favouriteModel

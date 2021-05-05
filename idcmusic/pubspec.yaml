@@ -43,7 +43,7 @@ dependencies:
 
   #Audio
   #audioplayers: ^0.18.3
-  assets_audio_player: ^3.0.3+2
+  assets_audio_player: ^3.0.3+3
   #just_audio: ^0.7.4
   #audio_service: ^0.17.0
 

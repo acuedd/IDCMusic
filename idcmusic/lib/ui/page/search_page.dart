@@ -7,7 +7,6 @@ import 'package:church_of_christ/ui/widgets/app_bar.dart';
 import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/provider/provider_widget.dart';
 import 'package:church_of_christ/provider/view_state_widget.dart';
-import 'package:church_of_christ/ui/helper/refresh_helper.dart';
 import 'package:church_of_christ/ui/page/player_page.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -97,7 +96,7 @@ class _SearchPageState extends State<SearchPage>{
                           onTap: (){
                             if(null != data.url){
                               SongModel songModel = Provider.of(context, listen: false);
-                              songModel.setSongs(mylist);
+                              songModel.setSongs(mylist, context);
                               songModel.setCurrentIndex(index);
                               Navigator.push(
                                 context, 

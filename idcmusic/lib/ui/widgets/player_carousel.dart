@@ -47,10 +47,12 @@ class PlayerState extends State<Player> {
   @override
   void initState() {
     super.initState();
+    if (!mounted) return;
     _songData = widget.songData;
     _downloadData = widget.downloadData;
-    _initAudioPlayer(_songData);
+    _initAudioPlayer(_songData);    
     if (!_songData.isPlaying || widget.nowPlay) {
+      _songData.setPlayNow(widget.nowPlay);
       play(_songData.currentSong);
     }    
   }
@@ -58,47 +60,52 @@ class PlayerState extends State<Player> {
   void _initAudioPlayer(SongModel songData) {
     _audioPlayer = songData.audioPlayer;
     _position = _songData.position;
-    _duration = _songData.duration;
-    
+    _duration = _songData.duration;         
+
     _audioPlayer.current.listen((playingAudio) {
       try{
         final songDuration = playingAudio.audio.duration;
         if (!mounted) return;
-        print("fuck current $playingAudio");
+        //print("fuck current $playingAudio");
+        debugPrint("MSG - current index: ${playingAudio.playlist.currentIndex}");        
+        debugPrint("MSG - next index ${playingAudio.playlist.nextIndex}");
+        debugPrint("MSG - prev index ${playingAudio.playlist.previousIndex}");        
+        
         setState(() {
-          _duration = songDuration;
+          _duration = songDuration;                    
+          if(_songData.playNow){
+            _songData.setPlayNow(false);
+          }
+          else{
+            _songData.setCurrentIndex(playingAudio.playlist.currentIndex);
+          }
+          _songData.setNextIndex(playingAudio.playlist.nextIndex);
+          _songData.setPreviousIndex(playingAudio.playlist.previousIndex);
+          
         });
       }
       catch(t){ }      
     });
 
-    _audioPlayer.currentPosition.listen((position) {
+    _subscriptions.add( _audioPlayer.currentPosition.listen((position) {
       if (!mounted) return;
       setState(() {
         _position = position;
       });
-    });
+    }));
 
-    _audioPlayer.playlistFinished.listen((event) {    
-      if(event){
-        next();
-      }      
-    });
-
-    _audioPlayer.playlistAudioFinished.listen((playing) {
-      //print("fuck finish $playing");
-      
-      //next();
-    });
-
-    _audioPlayer.isPlaying.listen((isPlaying) {
-      //print("is playing $isPlaying");
+    _subscriptions.add( _audioPlayer.loopMode.listen((loopMode) {
       if (!mounted) return;
       setState(() {
-        //_audioPlayerState = state;
-        _songData.setPlaying(isPlaying);
+        _songData.setLoopMode(loopMode);
       });
-    });
+    }));
+
+    _subscriptions.add(_audioPlayer.isPlaying.listen((isPlaying) {
+      //print("is playing $isPlaying");
+      //
+      _songData.setPlaying(isPlaying);
+    }));
   }
 
   String getSongUrl(Song s) {
@@ -106,96 +113,24 @@ class PlayerState extends State<Player> {
     //return 'http://music.163.com/song/media/outer/url?id=${s.songid}.${s.ext}';
   }
 
-  void play(Song s) async {
-    String url;
-    bool isDownload;
-    Audio audio;    
-    if (_downloadData.isDownload(s)) {
-      isDownload = true;
-      url = _downloadData.getDirectoryPath + '/${s.songid}.${s.ext}';
-      audio = Audio.file(
-         url, 
-         metas: Metas( 
-            title: s.title, 
-            artist: s.author, 
-            album: s.name_collection, 
-            //image: MetasImage.network(path)
-         )
-      );
-    }
-    else {
-      isDownload = false;
-      url = getSongUrl(s);
-      audio = Audio.network(
-         url, 
-         metas: Metas( 
-            title: s.title, 
-            artist: s.author, 
-            album: s.name_collection,
-            image: MetasImage.network(s.pic)
-         )
-      );
-    }
-
-    if (url == _songData.url) {      
-        await _audioPlayer.open( audio, 
-                showNotification: true, 
-                headPhoneStrategy: HeadPhoneStrategy.pauseOnUnplug, 
-                playInBackground: PlayInBackground.enabled,
-                notificationSettings: NotificationSettings(
-                  customPrevAction: (player){
-                    print("prevAction");
-                    print(player);
-                  }, 
-                  customNextAction: (player){
-                    print("nextAction");
-                    print(player);
-                  }
-                )
-              );
-        _songData.setPlaying(true);
-        _audioPlayer.onErrorDo = (handler){
-          _songData.setPlaying(false);
-          if(isDownload){
-            Toast.show("Ha ocurrido un error, quita la canción de tus descargas e intenta nuevamente", context, gravity: Toast.BOTTOM);
-          }
-          else{
-            Toast.show("El audio no se puede cargar, revisa tu conexión", context, gravity: Toast.BOTTOM);
-          }
+  void play(Song s) async {      
+    _audioPlayer.open( Playlist(audios: _songData.songsAudio, startIndex: _songData.currentSongIndex), 
+      showNotification: true,
+      loopMode: LoopMode.none,
+      headPhoneStrategy: HeadPhoneStrategy.pauseOnUnplug,
+      playInBackground: PlayInBackground.enabled,
+      notificationSettings: NotificationSettings(
+        customPrevAction: (player){
+          debugPrint("MSG - prevAction");
+          previous();
+        }, 
+        customNextAction: (player){
+          debugPrint("MSG - nextAction");
           next();
-        };        
-    }
-    else {
-      await _audioPlayer.open( audio, 
-              showNotification: true, 
-              headPhoneStrategy: HeadPhoneStrategy.pauseOnUnplug,
-              playInBackground: PlayInBackground.enabled,
-              notificationSettings: NotificationSettings(
-                  customPrevAction: (player){
-                    print("prevAction");
-                    print(player);
-                    previous();
-                  }, 
-                  customNextAction: (player){
-                    print("nextAction");
-                    print(player);
-                    next();
-                  }
-                )
-            );
-      _songData.setPlaying(true);
-      _songData.setUrl(url);
-      _audioPlayer.onErrorDo = (handler){
-        _songData.setPlaying(false);
-        if(isDownload){
-          Toast.show("Ha ocurrido un error, quita la canción de tus descargas e intenta nuevamente", context, gravity: Toast.BOTTOM);
         }
-        else{
-          Toast.show("El audio no se puede cargar, revisa tu conexión", context, gravity: Toast.BOTTOM);
-        }
-        next();
-      };
-    }
+      )
+    );
+    setState(() => _songData.setPlaying(true));    
   }
 
   void pause() async {
@@ -203,33 +138,33 @@ class PlayerState extends State<Player> {
       await _audioPlayer.playOrPause();
       setState(() => _songData.setPlaying(false));
     }
-    catch(t){
-
-    }
+    catch(t){ }
   }
 
-  void resume() async {
+  void resume(){
     try{
-      await _audioPlayer.playOrPause();
+      _audioPlayer.playOrPause();
       setState(() => _songData.setPlaying(true));
     }
     catch(t){ }
   }
 
   void next() {
-    Song data = _songData.nextSong;
-    /*while (data.url == null) {
-      data = _songData.nextSong;
-    }*/
-    play(data);
+    if(_songData.isShuffle){
+      _audioPlayer.playlistPlayAtIndex(_songData.randomIndex);
+    }
+    else{
+      _audioPlayer.next();
+    }    
   }
 
   void previous() {
-    Song data = _songData.prevSong;
-    /*while (data.url == null) {
-      data = _songData.prevSong;
-    }*/
-    play(data);
+    if(_songData.isShuffle){
+      _audioPlayer.playlistPlayAtIndex(_songData.randomIndex);
+    }
+    else{
+      _audioPlayer.previous();
+    }      
   }
 
   String _formatDuration(Duration d) {
@@ -241,10 +176,7 @@ class PlayerState extends State<Player> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    if (_songData.playNow) {
-      play(_songData.currentSong);
-    }
+  Widget build(BuildContext context) {    
     return Column(    
       children: _controllers(context),
     );
@@ -317,17 +249,18 @@ class PlayerState extends State<Player> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Visibility(
-              visible: _songData.showList,
-              child: IconButton(
-                onPressed: () => _songData.setShowList(!_songData.showList),
-                icon: Icon(
-                  Icons.list,
-                  size: 25.0,
-                  color: Colors.grey,
+            if(_songData.showList)
+              Visibility(
+                visible: _songData.showList,
+                child: IconButton(
+                  onPressed: () => _songData.setShowList(!_songData.showList),
+                  icon: Icon(
+                    Icons.list,
+                    size: 25.0,
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-            ),
+              ),            
             IconButton(
               onPressed: () => previous(),
               icon: Icon(
@@ -341,20 +274,21 @@ class PlayerState extends State<Player> {
             ),
             ClipOval(
                 child: Container(
-              color: Theme.of(context).accentColor.withAlpha(30),
-              width: 70.0,
-              height: 70.0,
-              child: IconButton(
-                onPressed: () {
-                  _songData.isPlaying ? pause() : resume();
-                },
-                icon: Icon(
-                  _songData.isPlaying ? Icons.pause : Icons.play_arrow,
-                  size: 45.0,
-                  color: Theme.of(context).accentColor,
+                color: Theme.of(context).accentColor.withAlpha(30),
+                width: 70.0,
+                height: 70.0,
+                child: IconButton(
+                  onPressed: () {
+                    _songData.isPlaying ? pause() : resume();
+                  },
+                  icon: Icon(
+                    _songData.isPlaying ? Icons.pause : Icons.play_arrow,
+                    size: 45.0,
+                    color: Theme.of(context).accentColor,
+                  ),
                 ),
               ),
-            )),
+            ),
             IconButton(
               onPressed: () => next(),
               icon: Icon(
@@ -365,24 +299,7 @@ class PlayerState extends State<Player> {
                     ? Theme.of(context).accentColor
                     : Color(0xFF787878),
               ),
-            ),
-            Visibility(
-              visible: _songData.showList,
-              child: IconButton(
-                onPressed: () => _songData.changeRepeat(),
-                icon: _songData.isRepeat == true
-                    ? Icon(
-                        Icons.repeat,
-                        size: 25.0,
-                        color: Colors.grey,
-                      )
-                    : Icon(
-                        Icons.shuffle,
-                        size: 25.0,
-                        color: Colors.grey,
-                      ),
-              ),
-            ),
+            ),            
           ],
         ),
       ),

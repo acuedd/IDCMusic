@@ -1,3 +1,4 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:church_of_christ/config/routes.dart';
 import 'package:church_of_christ/config/storage_manager.dart';
 import 'package:church_of_christ/model/changelog_model.dart';
@@ -5,11 +6,9 @@ import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/service/push_notificacions_service.dart';
-//import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,6 +19,13 @@ void main() async{
   Provider.debugCheckInvalidValueType = null;
   WidgetsFlutterBinding.ensureInitialized();
   await StorageManager.init();
+
+   AssetsAudioPlayer.setupNotificationsOpenAction((notification) {
+    debugPrint("AssetAudioPlayer");
+    debugPrint(notification.audioId);
+    return true;
+  });
+
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
       runApp(MyApp());

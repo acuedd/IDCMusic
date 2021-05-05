@@ -56,7 +56,7 @@ class _RecentlySongsState extends State<RecentlySongs>{
               onTap: (){
                 if(null != data.url){
                   SongModel songModel = Provider.of(context, listen: false);
-                  songModel.setSongs(new List<Song>.from(widget.songs));
+                  songModel.setSongs(new List<Song>.from(widget.songs), context);
                   songModel.setCurrentIndex(index);
                   Navigator.push(
                     context,

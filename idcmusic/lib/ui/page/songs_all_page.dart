@@ -92,7 +92,7 @@ class _SongsAllCarouselState extends State<SongsAllCarousel>{
                           onTap: (){
                             if(null != data.url){
                               SongModel songModel = Provider.of(context, listen: false);
-                              songModel.setSongs(mylist);
+                              songModel.setSongs(mylist, context);
                               songModel.setCurrentIndex(index);
                               Navigator.push(
                                 context, 

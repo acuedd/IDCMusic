@@ -72,25 +72,25 @@ class _AlbumCarouselState extends State<AlbumCarousel>{
                 children: <Widget>[
                   Expanded( 
                     flex: 1,
-                    child: Container( 
-                      height: 70,
-                      margin: EdgeInsets.only( top: 20, bottom: 20, left: 20, right: 10),
-                      decoration: BoxDecoration( 
-                        border: Border.all(color: Colors.black12, width: 1), 
-                        borderRadius: BorderRadius.circular(20.0), 
-                      ),
-                      child: GestureDetector(
-                        onTap: (){
-                          SongModel songModel = Provider.of(context, listen: false); 
-                          songModel.setSongs(mylist);
-                          songModel.setCurrentIndex(0);
-                          Navigator.push(
-                            context, 
-                            MaterialPageRoute(builder: (_) => PlayPage(
-                              nowPlay: true,
-                            )),
-                          );
-                        },
+                    child: GestureDetector(                       
+                      onTap: (){
+                        SongModel songModel = Provider.of(context, listen: false); 
+                        songModel.setSongs(mylist, context);
+                        setState((){ songModel.setCurrentIndex(0); });
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (_) => PlayPage(
+                            nowPlay: true,
+                          )),
+                        );
+                      },
+                      child: Container(
+                        height: 70,
+                        margin: EdgeInsets.only( top: 20, bottom: 20, left: 20, right: 10),
+                        decoration: BoxDecoration( 
+                          border: Border.all(color: Colors.black12, width: 1), 
+                          borderRadius: BorderRadius.circular(20.0), 
+                        ),                        
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -121,7 +121,7 @@ class _AlbumCarouselState extends State<AlbumCarousel>{
                       onTap: (){
                         if(null != data.url){
                           SongModel songModel = Provider.of(context, listen: false); 
-                          songModel.setSongs(mylist);
+                          songModel.setSongs(mylist, context);
                           songModel.setCurrentIndex(index);
                           Navigator.push(
                             context, 
