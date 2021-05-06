@@ -1,7 +1,7 @@
 name: church_of_christ
 description: application for Acapella music
 
-version: 3.1.5+35
+version: 3.1.6+36
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -54,6 +54,7 @@ dependencies:
   row_collection: ^0.2.5
   flutter_markdown: ^0.6.1
   flutter_local_notifications: ^5.0.0+1
+  marquee: ^2.1.0
 
 
   #UI

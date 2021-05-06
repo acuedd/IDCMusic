@@ -8,3 +8,5 @@
 ##-dontwarn io.flutter.embedding.**
 -dontwarn android.**
 -ignorewarnings
+
+-keep public class io.flutter.embedding.android.FlutterSplashView.$SavedState { *; }

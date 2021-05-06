@@ -52,7 +52,7 @@ class PresentationDialog extends StatelessWidget{
       onPressed: onPressed,
       textButton: textButton,
       body: RowLayout(children: <Widget>[
-        Text("Agradecemos a nuestros sponsors del app",
+        Text("Agradecemos a nuestros patrocinadores del proyecto",
           style: Theme.of(context).textTheme.headline6.copyWith(
             fontWeight: FontWeight.normal,
             color: Theme.of(context).textTheme.caption.color,
