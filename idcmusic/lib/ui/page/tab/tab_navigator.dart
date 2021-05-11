@@ -71,13 +71,9 @@ class _TabNavigatorState extends State<Tabnavigator>{
             );
           }),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(5.0),
         decoration: BoxDecoration( 
           color: Theme.of(context).accentColor, 
-          borderRadius: BorderRadius.only( 
-            topLeft: Radius.circular(30.0), 
-            topRight: Radius.circular(30.0), 
-          ), 
         ),
         child: BubbleBottomBar( 
           currentIndex: _selectedIndex, 

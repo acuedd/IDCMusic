@@ -84,7 +84,7 @@ class PlayerState extends State<Player> {
           
         });
       }
-      catch(t){ }      
+      catch(t){ }
     });
 
     _subscriptions.add( _audioPlayer.currentPosition.listen((position) {
@@ -158,13 +158,8 @@ class PlayerState extends State<Player> {
     }    
   }
 
-  void previous() {
-    if(_songData.isShuffle){
-      _audioPlayer.playlistPlayAtIndex(_songData.randomIndex);
-    }
-    else{
-      _audioPlayer.previous();
-    }      
+  void previous() {    
+    _audioPlayer.previous();
   }
 
   String _formatDuration(Duration d) {
