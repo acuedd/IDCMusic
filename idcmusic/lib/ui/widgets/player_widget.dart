@@ -68,7 +68,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     
     if(widget._songData != null && widget._songData.songs != null){
       _subscriptions.add(widget._songData.audioPlayer.onReadyToPlay.listen((event) {
-        print("FUCK READY TO PLAY $event");
+        //print("FUCK READY TO PLAY $event");
         if(strTitle != event.audio.metas.title){
           if (!mounted) return;
           setState(() {          
