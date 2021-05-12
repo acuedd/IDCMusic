@@ -81,7 +81,7 @@ class PlayerState extends State<Player> {
           }
           _songData.setNextIndex(playingAudio.playlist.nextIndex);
           _songData.setPreviousIndex(playingAudio.playlist.previousIndex);
-          
+          _songData.setUrl(_songData.songs[_songData.currentSongIndex].url);
         });
       }
       catch(t){ }
@@ -105,7 +105,7 @@ class PlayerState extends State<Player> {
       //print("is playing $isPlaying");
       //
       _songData.setPlaying(isPlaying);
-    }));
+    }));    
   }
 
   String getSongUrl(Song s) {

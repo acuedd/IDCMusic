@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RotateRecord extends AnimatedWidget{
-
-  RotateRecord({Key key, Animation<double> animation})
+  String imagePath;
+  RotateRecord({Key key, Animation<double> animation, this.imagePath = null})
     : super(key: key, listenable: animation);
 
   @override
@@ -34,7 +34,9 @@ class RotateRecord extends AnimatedWidget{
               shape: BoxShape.circle, 
               image: DecorationImage( 
                 image: CachedNetworkImageProvider(songModel.songs != null
-                  ? songModel.currentSong.pic
+                  ? (imagePath != null)
+                    ? imagePath
+                    : songModel.currentSong.pic
                   : Utils.randomUrl()
                 ),
               )

@@ -180,6 +180,16 @@ class SongModel with ChangeNotifier{
     _duration = duration; 
     notifyListeners();
   }
+
+  void playNowIndex(){
+    _audioPlayer.playlistPlayAtIndex(_currentSongIndex);
+  }
+
+  bool changeSomething;
+  void setBoolChangeSomething(bool changed){
+    changeSomething = changed;
+    notifyListeners();
+  }
 }
 
 class Song {

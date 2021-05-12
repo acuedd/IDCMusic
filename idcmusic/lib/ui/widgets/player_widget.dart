@@ -20,42 +20,27 @@ class PlayerWidget extends StatefulWidget{
 
 }
 
-class _PlayerWidgetState extends State<PlayerWidget> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin{
+class _PlayerWidgetState extends State<PlayerWidget> {
   AnimationController controllerRecord; 
   Animation<double> animationRecord; 
   final _commonTween = new Tween<double>(begin: 0.0, end: 1.0); 
   final List<StreamSubscription> _subscriptions = [];
-  Song mySong;
-
-  @override
-  bool get wantKeepAlive => true;
+  String strTitle;
+  String strArtist;
+  String imagePath;
 
   @override
   void initState() {
      super.initState();
-     controllerRecord = new AnimationController(
-       duration: const Duration(milliseconds: 15000), vsync: this);
-     animationRecord = new CurvedAnimation(parent: controllerRecord, curve: Curves.linear);
-     animationRecord.addStatusListener((status) {
-       if(status == AnimationStatus.completed){
-         controllerRecord.repeat();
-       }
-       else if(status == AnimationStatus.dismissed ){
-         controllerRecord.forward();
-       }
-     });
   }
 
   @override
   void dispose() {
-    controllerRecord.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return _showPlayer(context);
-  }
+  Widget build(BuildContext context) => _showPlayer(context);
 
   Widget setIcon() {
     if (widget._songData.isPlaying)
@@ -80,14 +65,22 @@ class _PlayerWidgetState extends State<PlayerWidget> with TickerProviderStateMix
   }
 
   Widget _showPlayer(BuildContext context){    
-    if(widget._songData.isPlaying){
-      controllerRecord.forward();
-    }
-    else {
-      controllerRecord.stop(canceled: false);
+    
+    if(widget._songData != null && widget._songData.songs != null){
+      _subscriptions.add(widget._songData.audioPlayer.onReadyToPlay.listen((event) {
+        print("FUCK READY TO PLAY $event");
+        if(strTitle != event.audio.metas.title){
+          if (!mounted) return;
+          setState(() {          
+            strTitle = event.audio.metas.title;
+            strArtist = event.audio.metas.artist;
+            imagePath = event.audio.metas.image.path;
+          });   
+        }        
+      }));
     }
 
-    return widget._songData == null || widget._songData.songs == null 
+    return strTitle == null || widget._songData == null || widget._songData.songs == null
             ? SizedBox.shrink()
             : Container(
                 height: 60.0,
@@ -96,10 +89,11 @@ class _PlayerWidgetState extends State<PlayerWidget> with TickerProviderStateMix
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Container( 
-                      height: 55.0,
-                      width: 55.0,
-                      child: RotateRecord(
-                          animation: _commonTween.animate(controllerRecord),
+                      height: 50.0,
+                      width: 50.0,
+                      child: ClipRRect( 
+                        borderRadius: BorderRadius.circular(12.0),
+                        child: Utils.image(imagePath, fit: BoxFit.cover)
                       ),
                     ), 
                     SizedBox(width: 15.0,),
@@ -120,7 +114,7 @@ class _PlayerWidgetState extends State<PlayerWidget> with TickerProviderStateMix
                               MarqueeWidget(
                                 direction: Axis.horizontal,
                                 child: Text(
-                                  widget._songData.currentSong.title,
+                                  strTitle,
                                   style: GetTextStyle.M(context),
                                 ),
                               ),
@@ -128,7 +122,7 @@ class _PlayerWidgetState extends State<PlayerWidget> with TickerProviderStateMix
                               MarqueeWidget(
                                 direction: Axis.horizontal,
                                 child: Text( 
-                                  widget._songData.currentSong.author, 
+                                  strArtist, 
                                   style: GetTextStyle.S(context),
                                 ),
                               )
