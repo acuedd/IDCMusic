@@ -81,10 +81,10 @@ class PlayerState extends State<Player> {
           }
           _songData.setNextIndex(playingAudio.playlist.nextIndex);
           _songData.setPreviousIndex(playingAudio.playlist.previousIndex);
-          
+          _songData.setUrl(_songData.songs[_songData.currentSongIndex].url);
         });
       }
-      catch(t){ }      
+      catch(t){ }
     });
 
     _subscriptions.add( _audioPlayer.currentPosition.listen((position) {
@@ -105,7 +105,7 @@ class PlayerState extends State<Player> {
       //print("is playing $isPlaying");
       //
       _songData.setPlaying(isPlaying);
-    }));
+    }));    
   }
 
   String getSongUrl(Song s) {
@@ -158,13 +158,8 @@ class PlayerState extends State<Player> {
     }    
   }
 
-  void previous() {
-    if(_songData.isShuffle){
-      _audioPlayer.playlistPlayAtIndex(_songData.randomIndex);
-    }
-    else{
-      _audioPlayer.previous();
-    }      
+  void previous() {    
+    _audioPlayer.previous();
   }
 
   String _formatDuration(Duration d) {

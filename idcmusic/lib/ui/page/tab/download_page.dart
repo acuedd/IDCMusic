@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:church_of_christ/ui/widgets/empty_widget.dart';
+import 'package:church_of_christ/ui/widgets/player_widget.dart';
 import 'package:church_of_christ/ui/widgets/songItem.dart';
 import 'package:church_of_christ/utils/anims/page_route_anim.dart';
 import 'package:church_of_christ/utils/anims/record_anim.dart';
@@ -119,20 +120,8 @@ class _MusicPageState extends State<MusicPage> with TickerProviderStateMixin, Au
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: "downloadFAB",
-        onPressed: (){
-          SongModel songModel = Provider.of(context); 
-          if(songModel.songs != null){
-            Navigator.push( context,
-              SlideBottomRouteBuilder(PlayPage(nowPlay: false))
-            );
-          }
-        },
-        child: RotateRecord(
-            animation: _commonTween.animate(controllerRecord),
-        ),
-        backgroundColor: Colors.transparent,
+      bottomNavigationBar: BottomAppBar( 
+        child: PlayerWidget(songModel),
       ),
     );
   }

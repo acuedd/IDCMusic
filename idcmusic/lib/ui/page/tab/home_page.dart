@@ -9,6 +9,7 @@ import 'package:church_of_christ/ui/page/search_page.dart';
 import 'package:church_of_christ/ui/page/welcome_page.dart';
 import 'package:church_of_christ/ui/widgets/albums_carousel.dart';
 import 'package:church_of_christ/ui/widgets/for_you_carousel.dart';
+import 'package:church_of_christ/ui/widgets/player_widget.dart';
 import 'package:church_of_christ/ui/widgets/recently_songs.dart';
 import 'package:church_of_christ/utils/anims/page_route_anim.dart';
 import 'package:church_of_christ/utils/anims/record_anim.dart';
@@ -186,20 +187,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: "homeFAB",
-        onPressed: (){
-          SongModel songModel = Provider.of(context); 
-          if(songModel.songs != null){
-            Navigator.push( context,
-              SlideBottomRouteBuilder(PlayPage(nowPlay: false))
-            );
-          }
-        },
-        child: RotateRecord(
-            animation: _commonTween.animate(controllerRecord),
-        ),
-        backgroundColor: Colors.transparent,
+      bottomNavigationBar: BottomAppBar( 
+        child: PlayerWidget(songModel),
       ),
     );
   }
