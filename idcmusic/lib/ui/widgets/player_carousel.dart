@@ -1,10 +1,17 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:isolate';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
+import 'package:church_of_christ/ui/widgets/dialog_round.dart';
+import 'package:church_of_christ/ui/widgets/radio_cell.dart';
 import 'package:flutter/material.dart';
-import 'package:toast/toast.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 
 
 class Player extends StatefulWidget {
@@ -44,9 +51,13 @@ class PlayerState extends State<Player> {
   AssetsAudioPlayer _audioPlayer;
   //AudioPlayerState _audioPlayerState;
 
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  Future<int> intTimeToSleep;
+
   @override
   void initState() {
     super.initState();
+    AndroidAlarmManager.initialize();
     if (!mounted) return;
     _songData = widget.songData;
     _downloadData = widget.downloadData;
@@ -55,6 +66,10 @@ class PlayerState extends State<Player> {
       _songData.setPlayNow(widget.nowPlay);
       play(_songData.currentSong);
     }    
+
+    intTimeToSleep = _prefs.then((SharedPreferences prefs) {
+      return (prefs.getInt('goSleep') ?? 0);
+    });
   }
 
   void _initAudioPlayer(SongModel songData) {
@@ -251,11 +266,13 @@ class PlayerState extends State<Player> {
                   onPressed: () => _songData.setShowList(!_songData.showList),
                   icon: Icon(
                     Icons.list,
-                    size: 25.0,
+                    size: 30.0,
                     color: Colors.grey,
                   ),
                 ),
-              ),            
+              )   
+            else 
+              SizedBox(width: 30),
             IconButton(
               onPressed: () => previous(),
               icon: Icon(
@@ -294,14 +311,101 @@ class PlayerState extends State<Player> {
                     ? Theme.of(context).accentColor
                     : Color(0xFF787878),
               ),
-            ),            
+            ),  
+            IconButton(
+              icon: Icon(
+                Icons.nightlight_round,
+                size: 30.0,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Theme.of(context).accentColor
+                    : Color(0xFF787878),
+              ),   
+              onPressed: () => goToSleep(context),
+            )
           ],
         ),
       ),
     ];
   }
 
-  /*void _onComplete() {
-    setState(() => _songData.setPlayState(PlayState.stopped));
-  }*/
+  void goToSleep(BuildContext context) async{
+      return showDialog(
+        context: context, 
+        builder: (context) => RoundDialog(
+          title: "Detén el audio en:", 
+          children: <Widget>[
+            RadioCell(
+              title: "No detener",
+              groupValue: intTimeToSleep,
+              value: 0,
+              onChanged: (value) => setTimer(value),
+            ), 
+            RadioCell(
+              title: "1 minutos",
+              groupValue: intTimeToSleep,
+              value: 1,
+              onChanged: (value) => setTimer(value),
+            ), 
+            RadioCell(
+              title: "5 minutos",
+              groupValue: intTimeToSleep,
+              value: 5,
+              onChanged: (value) => setTimer(value),
+            ), 
+            RadioCell(
+              title: "10 minutos",
+              groupValue: intTimeToSleep,
+              value: 10,
+              onChanged: (value) => setTimer(value),
+            ), 
+            RadioCell(
+              title: "15 minutos",
+              groupValue: intTimeToSleep,
+              value: 15,
+              onChanged: (value) => setTimer(value),
+            ), 
+            RadioCell(
+              title: "30 minutos",
+              groupValue: intTimeToSleep,
+              value: 30,
+              onChanged: (value) => setTimer(value),
+            ), 
+            RadioCell(
+              title: "45 minutos",
+              groupValue: intTimeToSleep,
+              value: 45,
+              onChanged: (value) => setTimer(value),
+            ),
+            RadioCell(
+              title: "1 hora",
+              groupValue: intTimeToSleep,
+              value: 60,
+              onChanged: (value) => setTimer(value),
+            ), 
+            RadioCell(
+              title: "2 horas",
+              groupValue: intTimeToSleep,
+              value: 120,
+              onChanged: (value) => setTimer(value),
+            )
+          ]
+        )
+      );
+  }
+
+  void setTimer(timeValue) async{
+    var sharedPreferences = await SharedPreferences.getInstance();
+    
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+    String strDate = dateFormat.format(DateTime.now());
+
+    sharedPreferences.setInt("goSleep", timeValue);
+    sharedPreferences.setString("sleepSetTime", strDate);
+
+    print("TIME TO BED $timeValue");    
+    int intTimeToSleep = sharedPreferences.getInt("goSleep");  
+    print("CHECKED TIME TO BED $intTimeToSleep");    
+    Navigator.of(context).pop();
+  }  
+
 }

@@ -37,7 +37,7 @@ class SongModel with ChangeNotifier{
     notifyListeners();
   }
 
-  AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer(); 
+  AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.withId("macapella"); 
   AssetsAudioPlayer get audioPlayer => _audioPlayer; 
 
   List<Song> _songs; 

@@ -89,7 +89,7 @@ class ThemeModel with ChangeNotifier{
       primarySwatch: themeColor, 
       accentColor: accentColor, 
       scaffoldBackgroundColor: scaffoldBackgroundColor, 
-      fontFamily: fontValueList[fontIndex],
+      fontFamily: fontValueList[fontIndex],      
     );
 
     themeData = themeData.copyWith(
