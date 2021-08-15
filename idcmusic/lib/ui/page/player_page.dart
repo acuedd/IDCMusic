@@ -11,8 +11,10 @@ import 'package:church_of_christ/ui/widgets/player_carousel.dart';
 import 'package:church_of_christ/ui/widgets/song_list_carrousel.dart';
 import 'package:church_of_christ/utils/anims/player_anim.dart';
 import 'package:church_of_christ/utils/functions.dart';
+import 'package:church_of_christ/utils/url.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -53,6 +55,13 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
 
   String getSongUrl(Song s){
     return s.url;
+  }
+
+  Future<void> share(Song s) async {
+    await FlutterShare.share(
+        title: 'Acapella Music IDC',
+        text: 'Acapella Music IDC, escucha hoy ${s.title} de ${s.author}',
+        linkUrl: "${Url.getURL()}/track=${s.songid}");
   }
 
    @override
@@ -166,7 +175,24 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                                             color: Colors.grey,
                                           ),
                                   ),
-                                  if(!Platform.isIOS)
+                                  IconButton(
+                                    onPressed: () => share(songModel.currentSong),
+                                    icon: favouriteModel.isCollect(
+                                                songModel.currentSong) ==
+                                            true
+                                        ? Icon(
+                                            Icons.share,
+                                            size: 25.0,
+                                            color:
+                                                Theme.of(context).accentColor,
+                                          )
+                                        : Icon(
+                                            Icons.share_rounded,
+                                            size: 25.0,
+                                            color: Colors.grey,
+                                          ),
+                                  ),
+                                  if(true) //!Platform.isIOS)
                                     IconButton(
                                       onPressed: () async{
                                         var status = await Permission.storage.request();

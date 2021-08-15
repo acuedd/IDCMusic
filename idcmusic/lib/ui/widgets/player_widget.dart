@@ -83,7 +83,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     return strTitle == null || widget._songData == null || widget._songData.songs == null
             ? SizedBox.shrink()
             : Container(
-                height: 60.0,
+                height: 70.0,
                 padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 20.0),
                 child: Row( 
                   mainAxisAlignment: MainAxisAlignment.end,

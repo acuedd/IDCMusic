@@ -43,8 +43,7 @@ class ChangelogList extends StatelessWidget {
                       data: model.list["data"],                       
                       onTapLink: (text, url, title) async{
                         FlutterWebBrowser.openWebPage( 
-                          url:url, 
-                          androidToolbarColor: Theme.of(context).primaryColor,
+                          url:url,
                         );
                       },
                       styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith( 

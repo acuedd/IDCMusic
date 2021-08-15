@@ -67,13 +67,19 @@ class _AboutScreenState extends State<AboutScreen>{
                     if(Platform.isAndroid){
                         await FlutterWebBrowser.openWebPage(
                           url: Url.playStore,
-                          androidToolbarColor: Theme.of(context).primaryColor,
+                          customTabsOptions: CustomTabsOptions(
+                            toolbarColor: Theme.of(context).primaryColor,
+                            secondaryToolbarColor: Theme.of(context).accentColor
+                          )
                         ),
                       }
                       else{
                         await FlutterWebBrowser.openWebPage(
                           url: Url.appStore,
-                          androidToolbarColor: Theme.of(context).primaryColor,
+                          safariVCOptions: SafariViewControllerOptions(
+                            barCollapsingEnabled: true,
+                            preferredBarTintColor: Theme.of(context).accentColor,
+                          ),
                         ),
                       }
                   },
@@ -89,13 +95,19 @@ class _AboutScreenState extends State<AboutScreen>{
                       if(Platform.isAndroid){
                         await FlutterWebBrowser.openWebPage(
                           url: Url.authorStore,
-                          androidToolbarColor: Theme.of(context).primaryColor,
+                          customTabsOptions: CustomTabsOptions(
+                            toolbarColor: Theme.of(context).primaryColor,
+                            secondaryToolbarColor: Theme.of(context).accentColor
+                          )
                         ),
                       }
                       else{
                         await FlutterWebBrowser.openWebPage(
                           url: Url.authorAppStore,
-                          androidToolbarColor: Theme.of(context).primaryColor,
+                          safariVCOptions: SafariViewControllerOptions(
+                            barCollapsingEnabled: true,
+                            preferredBarTintColor: Theme.of(context).accentColor,
+                          ),
                         ),
                       }
                     }
@@ -111,8 +123,7 @@ class _AboutScreenState extends State<AboutScreen>{
                       builder: (context) => PresentationDialog.about(context, ()async{
                         Navigator.pop(context, true);
                         await FlutterWebBrowser.openWebPage(
-                          url: Url.apiContactMe,
-                          androidToolbarColor: Theme.of(context).primaryColor
+                          url: Url.apiContactMe
                         );
                       },
                       "Contáctame"
