@@ -1,10 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:church_of_christ/config/routes.dart';
+import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/ui/widgets/loader.dart';
+import 'package:church_of_christ/utils/url.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import "dart:math";
+
+import 'package:provider/provider.dart';
 
 Widget loadingIndicator() => Loader();
 
@@ -20,14 +24,19 @@ class Utils {
         .withOpacity(1.0);
   }
 
-  static Image image(String src, {height, width, fit}) {
+  static image(String src, {height, width, fit, justprovide}) {
     try{
       if(src != '') {
         if (src.startsWith('http')) {
-          return Image(image: CachedNetworkImageProvider(src),
+          if(justprovide == true){
+            return CachedNetworkImageProvider(src);
+          }
+          else{
+            return Image(image: CachedNetworkImageProvider(src),
               height: height,
               width: width,
               fit: fit);
+          }          
         }
         else{
           return Image.asset(src, height: height, width: width, fit: fit);
@@ -185,3 +194,42 @@ class IconFonts {
   static const pageNetworkError = Icons.perm_scan_wifi;//IconData(0xe65f, fontFamily: fontFamily);
   static const pageUnAuth = Icons.person_add_disabled;//IconData(0xe65f, fontFamily: fontFamily);
 }
+
+List<Song>  convertResponseToListSong(data){
+    List<Song> response = [];
+
+    for(var i = 0; i<data.length; i++){    
+      Map<dynamic,dynamic> mySong = Map<dynamic,dynamic>();
+      mySong["type"] = "netease";      
+      mySong["songid"] = data[i]["id_resource"];
+      mySong["title"] = data[i]["title_resource"];
+      mySong["author"] = data[i]["fullname"];
+      mySong["lrc"] = data[i]["duration"];
+      final String strUrl = "${data[i]["path"]}";
+      final String strImagePath = "${data[i]["path_image"]}";
+
+      if (strUrl.startsWith('http')) {
+        mySong["link"] = "${data[i]["path"]}";
+        mySong["url"] = "${data[i]["path"]}";
+      }
+      else{
+        mySong["url"] = "${Url.getURL()}/${data[i]["path"]}";
+        mySong["link"] = "${Url.getURL()}/${data[i]["path"]}";
+      }
+
+      if(strImagePath.startsWith('http')){
+        mySong["pic"] = "${data[i]["path_image"]}";
+      }
+      else{
+        mySong["pic"] = "${Url.getURL()}/${data[i]["path_image"]}";
+      }
+                  
+      mySong["sourcetype"] = data[i]["sourcetype"];
+      mySong["name_collection"] = data[i]["name_collection"];
+      mySong["ext"] = data[i]["ext"];
+      mySong["tags"] = data[i]["tags"];
+      response.add(Song.fromJsonMap(mySong));
+    }
+
+    return response;
+  }

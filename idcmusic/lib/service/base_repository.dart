@@ -1,6 +1,8 @@
 import 'package:church_of_christ/config/net/base_api.dart';
 import 'package:church_of_christ/model/song_model.dart';
+import 'package:church_of_christ/service/authenticate.dart';
 import 'package:church_of_christ/utils/url.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseRepository{
@@ -23,10 +25,14 @@ class BaseRepository{
 
     SharedPreferences prefsApi = await SharedPreferences.getInstance();
     String token = prefsApi.getString('token_user');
+    String userid = prefsApi.getString("userloged");
 
     Map params = Map<String, dynamic>();
-    if(token != null && token.isEmpty){
+    if(token != null && token.isNotEmpty){
       params["t"] = token;
+    }
+    if(userid != null && userid.toString().isNotEmpty){
+      params["allowhidden"] = userid;
     }
     if(nameAuthor != null && nameAuthor.toString().isNotEmpty){
       params["nameAuthor"] = nameAuthor;
@@ -68,10 +74,14 @@ class BaseRepository{
     Connection conn = new Connection();
     SharedPreferences prefsApi = await SharedPreferences.getInstance();
     String token = prefsApi.getString("token_user");
+    String userid = prefsApi.getString("userloged");
 
     Map params = Map<String, dynamic>();
     if(token != null && token.isNotEmpty){
       params["t"] = token;
+    }
+    if(userid != null && userid.toString().isNotEmpty){
+      params["allowhidden"] = userid;
     }
 
     if(nameAuthor != null && nameAuthor.toString().isNotEmpty){
@@ -99,7 +109,7 @@ class BaseRepository{
     //var response = await conn.con("collections", params);
     var response1 = await conn.connect("collections", params);
     return response1; 
-  }
+  }  
 
   static Future<Map<dynamic, dynamic>> fetchChangelog() async{
     Connection conn = new Connection();
@@ -109,5 +119,25 @@ class BaseRepository{
     myresponse["valido"] = 1; 
     myresponse["data"] = response; 
     return myresponse;
+  }
+
+  static Future<Map<dynamic, dynamic>> registerUser({
+    username, email, firstname, lastname, phone ,token
+  }) async{
+  
+    Connection conn = new Connection();
+
+    Map params = Map<String, dynamic>();
+    params["username"] = username;
+    params["email"] = email;
+    params["firstname"] = firstname;
+    params["lastname"] = lastname;    
+    if(phone != null)
+      params["iPhone"] = phone;
+    if(token != null)
+      params["activation_token"] = token;
+
+    var response = await conn.connect("registerUser", params);
+    return response;
   }
 }

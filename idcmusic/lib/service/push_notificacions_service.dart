@@ -1,99 +1,93 @@
-
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+class PushNotificationProvider{
+  static FirebaseMessaging messaging = FirebaseMessaging.instance;
+  static String token;
+  static StreamController<String> _mensajesStreamController = StreamController.broadcast();
+  static Stream<String> get mensajes => _mensajesStreamController.stream;
 
-class PushNotificationService{
+  static Future _backgroundHandler(RemoteMessage message) async{
+    print("-----onBackground----");
+    String argumento = "no-data";
+    String cuerpo = "no-data";
+    String modulo = "no-data";
+    String moduloParams = "no-data";
 
-  final _mensajesStreamController = StreamController<String>.broadcast();
-  Stream<String> get mensajes => _mensajesStreamController.stream;
-  /// Initialize the [FlutterLocalNotificationsPlugin] package.
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+    argumento = message.data['objeto'] ?? 'no-data';
+    cuerpo = message.data['cuerpo'] ?? 'no-data';
+    modulo = message.data['modulo'] ?? 'no-data';
 
-  /// Create a [AndroidNotificationChannel] for heads up notifications
-  final AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    'This channel is used for important notifications.', // description
-    importance: Importance.high,
-  );
+    _mensajesStreamController.sink.add(argumento + "&nbsp" + cuerpo + "&nbsp" + modulo);
+  }
 
-  PushNotificationService();
+  static Future _onMessageHandler(RemoteMessage message) async{
+    print('----- onResume -----');
+    String argumento = "no-data";
+    String cuerpo = "no-data";
+    String modulo = "no-data";
+    String moduloParams = "no-data";
 
-  Future initialize() async {
+    argumento = message.data['objeto'] ?? 'no-data';
+    cuerpo = message.data['cuerpo'] ?? 'no-data';
+    modulo = message.data['modulo'] ?? 'no-data';
+
+    _mensajesStreamController.sink.add(argumento + "&nbsp" + cuerpo + "&nbsp" + modulo);
+  }
+
+  static Future _onOpenHandler(RemoteMessage message) async{
+    String argumento = "no-data";
+    String cuerpo = "no-data";
+    String modulo = "no-data";
+    String moduloParams = "no-data";
+
+    if(message != null){
+      argumento = message.data['objeto'] ?? 'no-data';
+      cuerpo = message.data['cuerpo'] ?? 'no-data';
+      modulo = message.data['modulo'] ?? 'no-data';
+
+      _mensajesStreamController.sink.add(argumento + "&nbsp" + cuerpo + "&nbsp" + modulo);
+    }
+  }
+
+  static Future initialize() async{
     await Firebase.initializeApp();
-    FirebaseMessaging.instance.getToken().then((token){
-      debugPrint('Token: $token');
-    }).catchError((e) {
-      debugPrint( "Exception => $e");
-    });
+    await requestPermission();
+
+    token = await FirebaseMessaging.instance.getToken();
+    print(token);
 
     FirebaseMessaging.instance.subscribeToTopic("new_releases");
 
-    FirebaseMessaging.instance
-        .getInitialMessage()
-        .then((RemoteMessage message) {
-      if (message != null) {
-        debugPrint("message: ===> $message");
-        /*Navigator.pushNamed(context, '/message',
-            arguments: MessageArguments(message, true));*/
-      }
-    });
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification;
-      AndroidNotification android = message.notification?.android;
-
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                channel.description,
-                // TODO add a proper drawable resource to android, for now using
-                //      one that already exists in example app.
-                icon: 'launch_background',
-              ),
-            ));
-      }
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      debugPrint('A new onMessageOpenedApp event was published!');
-      /*Navigator.pushNamed(context, '/message',
-          arguments: MessageArguments(message, true));*/
-    });
-    
+    FirebaseMessaging.onBackgroundMessage( _backgroundHandler );
+    FirebaseMessaging.onMessage.listen( _onMessageHandler );
+    FirebaseMessaging.onMessageOpenedApp.listen( _onOpenHandler );
   }
 
-  dispose(){
+  static requestPermission() async {
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true
+    );
+        print('User push notification status ${ settings.authorizationStatus }');
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('User granted permission');
+    } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+      print('User granted provisional permission');
+    } else {
+      print('User declined or has not accepted permission');
+    }
+  }
+
+  static closeStreams(){
     _mensajesStreamController?.close();
   }
 
-}
-
-
-class PushNotification {
-  PushNotification({
-    this.title,
-    this.body,
-  });
-
-  String title;
-  String body;
-
-  factory PushNotification.fromJson(Map<dynamic, dynamic> json) {
-    return PushNotification(
-      title: json["notification"]["title"],
-      body: json["notification"]["body"],
-    );
-  }
 }

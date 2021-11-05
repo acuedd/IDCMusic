@@ -1,10 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:church_of_christ/model/download_model.dart';
+import 'package:church_of_christ/service/authenticate.dart';
+import 'package:church_of_christ/ui/page/user_library.dart';
 import 'package:church_of_christ/ui/widgets/empty_widget.dart';
 import 'package:church_of_christ/ui/widgets/player_widget.dart';
 import 'package:church_of_christ/ui/widgets/songItem.dart';
 import 'package:church_of_christ/utils/anims/page_route_anim.dart';
 import 'package:church_of_christ/utils/anims/record_anim.dart';
+import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
@@ -40,6 +43,7 @@ class _FavoritePageState extends State<FavoritePage> with TickerProviderStateMix
          controllerRecord.forward();
        }
      });
+     
   }
 
   @override
@@ -53,6 +57,8 @@ class _FavoritePageState extends State<FavoritePage> with TickerProviderStateMix
     super.build(context);
     DownloadModel downloadModel = Provider.of(context);
     SongModel songModel = Provider.of(context);
+    Authentication auth = Provider.of(context);
+
     if(songModel.isPlaying){
       controllerRecord.forward();
     }
@@ -75,7 +81,24 @@ class _FavoritePageState extends State<FavoritePage> with TickerProviderStateMix
                   letterSpacing: 1.2
                 ),
               ),
-            ), 
+            ),             
+            Consumer(
+            // ignore: missing_return
+            builder: (context, Authentication user, _) {
+              switch (user.status){
+                case Status.Authenticated: 
+                  return UserLibrary(login: true,);
+                case Status.Authenticating: 
+                  return loadingIndicator();
+                  break;
+                case Status.Unauthenticated:
+                  return UserLibrary(login: false,);
+                  break;
+                case Status.Uninitialized:
+                  return loadingIndicator();
+                  break;
+              }
+            }),
             Expanded( 
               child: favoriteModel.favoriteSong.length == 0 
                 ? Center(

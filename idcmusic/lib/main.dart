@@ -5,6 +5,7 @@ import 'package:church_of_christ/model/changelog_model.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
+import 'package:church_of_christ/service/authenticate.dart';
 import 'package:church_of_christ/service/push_notificacions_service.dart';
 //import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +14,6 @@ import 'package:flutter/services.dart';
 //import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import 'model/theme_model.dart';
 
@@ -28,6 +28,7 @@ void main() async{
     return true;
   });
 
+  await PushNotificationProvider.initialize();
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
       runApp(MyApp());
@@ -47,15 +48,12 @@ class _MyAppState extends State<MyApp> {
   
   void initState() {
     super.initState();
-    Firebase.initializeApp().whenComplete(() {     
-      setState(() {
-        final pushProvider = new PushNotificationService();
-        pushProvider.initialize();
-      });
+    PushNotificationProvider.mensajes.listen((argumento) {
+      
     });
-    
+
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -65,6 +63,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<DownloadModel>(create: (context) => DownloadModel()),
         ChangeNotifierProvider<SongModel>(create: (context) => SongModel()),
         ChangeNotifierProvider<ChangelogModel>(create: (context) => ChangelogModel()),
+        ChangeNotifierProvider<Authentication>(create: (context) => Authentication.instance()),
       ],
       child: Consumer<ThemeModel>(
         builder: (context, themeModel, child){

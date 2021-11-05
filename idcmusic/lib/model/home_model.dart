@@ -3,7 +3,7 @@ import 'package:church_of_christ/model/collections_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/provider/view_state_refresh_list_model.dart';
 import 'package:church_of_christ/service/base_repository.dart';
-import 'package:church_of_christ/utils/url.dart';
+import 'package:church_of_christ/utils/functions.dart';
 
 class HomeModel extends ViewStateRefreshListModel{
   static const albumValueList = [':(', '(TT_TT)', '(TT_TT)', '(TT_TT)', '(TT_TT)'];
@@ -50,27 +50,4 @@ class HomeModel extends ViewStateRefreshListModel{
       return result[2];
   }
 
-  List<Song>  convertResponseToListSong(data){
-    List<Song> response = [];
-
-    for(var i = 0; i<data.length; i++){
-
-      Map<dynamic,dynamic> mySong = Map<dynamic,dynamic>();
-      mySong["type"] = "netease";
-      mySong["link"] = "${Url.getURL()}/${data[i]["path"]}";
-      mySong["songid"] = data[i]["id_resource"];
-      mySong["title"] = data[i]["title_resource"];
-      mySong["author"] = data[i]["fullname"];
-      mySong["lrc"] = data[i]["duration"];
-      mySong["url"] = "${Url.getURL()}/${data[i]["path"]}";
-      mySong["pic"] = "${Url.getURL()}/${data[i]["path_image"]}";
-      mySong["sourcetype"] = data[i]["sourcetype"];
-      mySong["name_collection"] = data[i]["name_collection"];
-      mySong["ext"] = data[i]["ext"];
-      mySong["tags"] = data[i]["tags"];
-      response.add(Song.fromJsonMap(mySong));
-    }
-
-    return response;
-  }
 }

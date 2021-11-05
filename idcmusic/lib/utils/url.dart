@@ -68,6 +68,7 @@ class Connection {
   static const Map<String, String> myOperations = {
     "songs": "b6009cea-0500-11eb-b265-0242ac130002",
     "collections": "f0dd5ef2-04f5-11eb-b265-0242ac130002",
+    "registerUser":"75dc1db0-fe28-11eb-b128-e4434b7bc970",
   };
 
   Future connect(operation, params) async {

@@ -1,3 +1,4 @@
+import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
@@ -28,7 +29,7 @@ class _ForYouCarouselState extends State<SongListCarousel>{
                       child: Container(
                         width: 50,
                         height: 50,
-                        child: Image.network(data.pic),
+                        child: Utils.image(data.pic) //Image.network(data.pic),
                       ),
                     ),
                     SizedBox(width: 20.0,),
@@ -87,7 +88,7 @@ class _ForYouCarouselState extends State<SongListCarousel>{
               ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
                 child: Container(
-                  width: 50, height: 50, child: Image.network(data.pic),
+                  width: 50, height: 50, child: Utils.image(data.pic),
                 ),
               ),
               SizedBox(width: 20.0,),

@@ -23,7 +23,7 @@ class _AboutScreenState extends State<AboutScreen>{
 
   PackageInfo _packageInfo = PackageInfo( 
     version: "Unknown",
-    buildNumber: "Unknown",
+    buildNumber: "Unknown", appName: '', packageName: '',
   );
 
   @override
