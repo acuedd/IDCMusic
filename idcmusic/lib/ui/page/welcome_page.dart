@@ -5,15 +5,22 @@ import 'package:flutter/material.dart';
 
 List itemsAndroid = [
   {
+    "header": "Disclaimer",
+    "description":
+        "Esta app es completamente gratuita y no lucramos con el contenido. Para las canciones se ha solicitado el permiso para compartir a cada coro o artista. si alguna canción infringe en derechos de autor o no tiene los permisos para compartir, por favor reportala para hacer las gestiones pertinentes.",
+    "image": "assets/images/1.png"
+  },
+  {
     "header": "Usar el app",
     "description":
-        "Esta app es completamente gratuita, podrás escuchar las canciones acapella de la Iglesia de Cristo, es probable que no estén algunas, por lo que si conoces algún artista, ayudanos a contactarnos.",
+        "Podrás escuchar las canciones acapella de las Iglesias de Cristo." +
+        "Si conoces a algún coro que desee compartir su música mediante el app, ¡ayúdanos a contactarlo!. En el apartado de información del app puedes contactar con nosotros.",
     "image": "assets/images/1.png"
   },
   {
     "header": "Contenido",
     "description":
-        "Puedes bucar tu contenido por álbum, ver todas las canciones o por nombre en la barra de búsqueda.",
+        "Puedes bucar tu contenido por álbum, ver todas las canciones o busccar por palabra, album o nombre en la barra de búsqueda",
     "image": "assets/images/screen1acamusic.png"
   },
   {
@@ -37,23 +44,30 @@ List itemsAndroid = [
   {
     "header": "Comparte",
     "description":
-        "Comparte con tus amigos esta aplicación para que otros puedan ser bendecios a través de la música. ",
+        "Comparte con tus amigos ésta aplicación para que otros puedan ser bendecidos a través de la música. ",
     "image": "assets/images/3.png"
   }
 ];
 
 List itemsIOS = [
   {
+    "header": "Disclaimer",
+    "description":
+        "Esta app es completamente gratuita y no lucramos con el contenido. Para las canciones se ha solicitado el permiso para compartir a cada coro o artista. si alguna canción infringe en derechos de autor o no tiene los permisos para compartir, por favor reportala para hacer las gestiones pertinentes.",
+    "image": "assets/images/1.png"
+  },
+  {
     "header": "Usar el app",
     "description":
-        "Esta app es completamente gratuita, podrás escuchar las canciones acapella de la Iglesia de Cristo, es probable que no estén algunas, por lo que si conoces algún artista, ayudanos a contactarnos.",
+        "Podrás escuchar las canciones acapella de las Iglesias de Cristo." +
+        "Si conoces a algún coro que desee compartir su música mediante el app, ¡ayúdanos a contactarlo!. En el apartado de información del app puedes contactar con nosotros.",
     "image": "assets/images/1.png"
   },
   {
     "header": "Contenido",
     "description":
-        "Puedes bucar tu contenido por álbum, ver todas las canciones o por nombre en la barra de búsqueda.",
-    "image": "assets/images/screenshootiOS1.png"
+        "Puedes bucar tu contenido por álbum, ver todas las canciones o busccar por palabra, album o nombre en la barra de búsqueda",
+    "image": "assets/images/screen1acamusic.png"
   },
   {
     "header": "Reproducción",
@@ -70,7 +84,7 @@ List itemsIOS = [
   {
     "header": "Comparte",
     "description":
-        "Comparte con tus amigos esta aplicación para que otros puedan ser bendecios a través de la música. ",
+        "Comparte con tus amigos ésta aplicación para que otros puedan ser bendecidos a través de la música. ",
     "image": "assets/images/3.png"
   }
 ];
