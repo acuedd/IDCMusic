@@ -1,7 +1,6 @@
 
 import 'dart:io';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
@@ -11,10 +10,8 @@ import 'package:church_of_christ/ui/widgets/player_carousel.dart';
 import 'package:church_of_christ/ui/widgets/song_list_carrousel.dart';
 import 'package:church_of_christ/utils/anims/player_anim.dart';
 import 'package:church_of_christ/utils/functions.dart';
-import 'package:church_of_christ/utils/url.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_share/flutter_share.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -56,14 +53,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
   String getSongUrl(Song s){
     return s.url;
   }
-
-  Future<void> share(Song s) async {
-    await FlutterShare.share(
-        title: 'Acapella Music IDC',
-        text: 'Acapella Music IDC, escucha hoy ${s.title} de ${s.author}',
-        linkUrl: "${Url.getURL()}/track=${s.songid}");
-  }
-
+  
    @override
   Widget build(BuildContext context) {
     SongModel songModel = Provider.of(context);
@@ -122,41 +112,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                                       size: 25.0,
                                       color: Colors.grey,
                                     ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () => songModel.changeSuffle(),
-                                    icon: songModel.isShuffle == false
-                                        ? Icon(
-                                            Icons.shuffle,
-                                            size: 25.0,
-                                            color: Colors.grey,
-                                          )
-                                        : Icon(
-                                            Icons.shuffle,
-                                            size: 25.0,
-                                            color: Theme.of(context).accentColor
-                                          ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () => songModel.changeRepeat(),
-                                    icon: songModel.loopMode == LoopMode.none
-                                        ? Icon(
-                                            Icons.repeat,
-                                            size: 25.0,
-                                            color: Colors.grey,
-                                          )
-                                        : songModel.loopMode == LoopMode.playlist
-                                          ? Icon(
-                                              Icons.repeat,
-                                              size: 25.0,
-                                              color: Theme.of(context).accentColor
-                                            )
-                                          : Icon(
-                                              Icons.repeat_one,
-                                              size: 25.0,
-                                              color: Theme.of(context).accentColor
-                                            )
-                                  ),
+                                  ),                                  
                                   IconButton(
                                     onPressed: () => favouriteModel
                                         .collect(songModel.currentSong),
@@ -174,25 +130,8 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                                             size: 25.0,
                                             color: Colors.grey,
                                           ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () => share(songModel.currentSong),
-                                    icon: favouriteModel.isCollect(
-                                                songModel.currentSong) ==
-                                            true
-                                        ? Icon(
-                                            Icons.share,
-                                            size: 25.0,
-                                            color:
-                                                Theme.of(context).accentColor,
-                                          )
-                                        : Icon(
-                                            Icons.share_rounded,
-                                            size: 25.0,
-                                            color: Colors.grey,
-                                          ),
-                                  ),
-                                  if(true) //!Platform.isIOS)
+                                  ),                                  
+                                  if(!Platform.isIOS)
                                     IconButton(
                                       onPressed: () async{
                                         var status = await Permission.storage.request();
@@ -235,6 +174,14 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                                               color: Colors.grey,
                                             ),
                                     ),
+                                  IconButton(
+                                    onPressed: () => Utils.share(songModel.currentSong),
+                                    icon: Icon(
+                                            Icons.share_rounded,
+                                            size: 25.0,
+                                            color: Colors.grey,
+                                          ),
+                                  ),
                                 ]),
                             SizedBox(
                                 height:

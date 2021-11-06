@@ -6,9 +6,10 @@ import 'package:church_of_christ/utils/url.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_share/flutter_share.dart';
 import "dart:math";
+import 'dart:io';
 
-import 'package:provider/provider.dart';
 
 Widget loadingIndicator() => Loader();
 
@@ -71,10 +72,18 @@ class Utils {
         ));
   }
 
-  static String randomUrl(
-      {int width = 100, int height = 100, Object key = ''}) {
+  static String randomUrl({int width = 100, int height = 100, Object key = ''}) {
     //return 'http://placeimg.com/$width/$height/${key.hashCode.toString() + key.toString()}';
     return "https://idcrom.homelandplanet.com/var/configuration/theme/geniusAdminLTE/images/9792b824b81b23c8aa886df403278593c31ff90741e71e3403a38e42b56a3704.png";
+  }
+
+  static Future<void> share(Song s) async {
+    String finalUrl = (Platform.isIOS)?Url.appStore: Url.playStore;
+
+    await FlutterShare.share(
+        title: 'Acapella Music IDC',
+        text: 'Acapella Music IDC, escucha hoy *${s.title}* de ${s.author}',
+        linkUrl: "$finalUrl");
   }
 }
 

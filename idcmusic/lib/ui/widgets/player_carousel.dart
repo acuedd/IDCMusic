@@ -1,9 +1,14 @@
 import 'dart:async';
-
+import 'dart:io';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:church_of_christ/model/download_model.dart';
+import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
+import 'package:church_of_christ/utils/functions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 
@@ -41,7 +46,7 @@ class PlayerState extends State<Player> {
   DownloadModel _downloadData;
   bool _isSeeking = false;
   final List<StreamSubscription> _subscriptions = [];
-  AssetsAudioPlayer _audioPlayer;
+  AssetsAudioPlayer _audioPlayer;  
   //AudioPlayerState _audioPlayerState;
 
   @override
@@ -199,6 +204,8 @@ class PlayerState extends State<Player> {
   }
 
   List<Widget> _controllers(BuildContext context) {
+    DownloadModel downloadModel = Provider.of(context);
+    FavoriteModel favouriteModel = Provider.of(context);
     return [
       Visibility(
         visible: !_songData.showList,
@@ -239,62 +246,175 @@ class PlayerState extends State<Player> {
       ),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30),
-        child: new Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
+        child: new Column(
+          children: [
             if(_songData.showList)
-              Visibility(
-                visible: _songData.showList,
-                child: IconButton(
-                  onPressed: () => _songData.setShowList(!_songData.showList),
-                  icon: Icon(
-                    Icons.list,
-                    size: 25.0,
-                    color: Colors.grey,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisSize: MainAxisSize.max,
+              children: [              
+                Visibility(
+                  visible: _songData.showList,
+                  child: IconButton(
+                    onPressed: () => _songData.setShowList(!_songData.showList),
+                    icon: Icon(
+                      Icons.list,
+                      size: 25.0,
+                      color: Theme.of(context).accentColor,
+                    ),
                   ),
                 ),
-              ),            
-            IconButton(
-              onPressed: () => previous(),
-              icon: Icon(
-                //Icons.skip_previous,
-                Icons.skip_previous,
-                size: 40.0,
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? Theme.of(context).accentColor
-                    : Color(0xFF787878),
-              ),
-            ),
-            ClipOval(
-                child: Container(
-                color: Theme.of(context).accentColor.withAlpha(30),
-                width: 70.0,
-                height: 70.0,
-                child: IconButton(
-                  onPressed: () {
-                    _songData.isPlaying ? pause() : resume();
-                  },
+                IconButton(
+                  onPressed: () => favouriteModel
+                      .collect(_songData.currentSong),
+                  icon: favouriteModel.isCollect(
+                              _songData.currentSong) ==
+                          true
+                      ? Icon(
+                          Icons.favorite,
+                          size: 25.0,
+                          color:
+                              Theme.of(context).accentColor,
+                        )
+                      : Icon(
+                          Icons.favorite_border,
+                          size: 25.0,
+                          color: Colors.grey,
+                        ),
+                ),                
+                if(!Platform.isIOS)
+                  IconButton(
+                    onPressed: () async{
+                      var status = await Permission.storage.request();
+                      if (status.isGranted) {
+                        downloadModel
+                        .download(_songData.currentSong);
+                      }
+                      else{
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => CupertinoAlertDialog(
+                                title: Text('Permiso de almacenamiento'),
+                                content: Text(
+                                    'El app necesita permiso para poder guardar las canciones descargadas en el almacenamiento del dispositivo.'),
+                                actions: <Widget>[
+                                  CupertinoDialogAction(
+                                    child: Text('Deny'),
+                                    onPressed: () => Navigator.of(context).pop(),
+                                  ),
+                                  CupertinoDialogAction(
+                                    child: Text('Settings'),
+                                    onPressed: () => openAppSettings(),
+                                  ),
+                                ],
+                              )
+                          );
+                      }
+                    },
+                    icon: downloadModel
+                            .isDownload(_songData.currentSong)
+                        ? Icon(
+                            Icons.cloud_done,
+                            size: 25.0,
+                            color:
+                                Theme.of(context).accentColor,
+                          )
+                        : Icon(
+                            Icons.cloud_download,
+                            size: 25.0,
+                            color: Colors.grey,
+                          ),
+                  ),
+                IconButton(
+                  onPressed: () => Utils.share(_songData.currentSong),
                   icon: Icon(
-                    _songData.isPlaying ? Icons.pause : Icons.play_arrow,
-                    size: 45.0,
-                    color: Theme.of(context).accentColor,
+                          Icons.share_rounded,
+                          size: 25.0,
+                          color: Colors.grey,
+                        ),
+                ),                
+            ]),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[              
+                IconButton(
+                  onPressed: () => _songData.changeSuffle(),
+                  icon: _songData.isShuffle == false
+                      ? Icon(
+                          Icons.shuffle,
+                          size: 25.0,
+                          color: Colors.grey,
+                        )
+                      : Icon(
+                          Icons.shuffle,
+                          size: 25.0,
+                          color: Theme.of(context).accentColor
+                        ),
+                ),
+                IconButton(
+                  onPressed: () => previous(),
+                  icon: Icon(
+                    //Icons.skip_previous,
+                    Icons.skip_previous,
+                    size: 40.0,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Theme.of(context).accentColor
+                        : Color(0xFF787878),
                   ),
                 ),
-              ),
+                ClipOval(
+                    child: Container(
+                    color: Theme.of(context).accentColor.withAlpha(30),
+                    width: 70.0,
+                    height: 70.0,
+                    child: IconButton(
+                      onPressed: () {
+                        _songData.isPlaying ? pause() : resume();
+                      },
+                      icon: Icon(
+                        _songData.isPlaying ? Icons.pause : Icons.play_arrow,
+                        size: 45.0,
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => next(),
+                  icon: Icon(
+                    //Icons.skip_next,
+                    Icons.skip_next,
+                    size: 40.0,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Theme.of(context).accentColor
+                        : Color(0xFF787878),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => _songData.changeRepeat(),
+                  icon: _songData.loopMode == LoopMode.none
+                      ? Icon(
+                          Icons.repeat,
+                          size: 25.0,
+                          color: Colors.grey,
+                        )
+                      : _songData.loopMode == LoopMode.playlist
+                        ? Icon(
+                            Icons.repeat,
+                            size: 25.0,
+                            color: Theme.of(context).accentColor
+                          )
+                        : Icon(
+                            Icons.repeat_one,
+                            size: 25.0,
+                            color: Theme.of(context).accentColor
+                          )
+                ),
+              ],
             ),
-            IconButton(
-              onPressed: () => next(),
-              icon: Icon(
-                //Icons.skip_next,
-                Icons.skip_next,
-                size: 40.0,
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? Theme.of(context).accentColor
-                    : Color(0xFF787878),
-              ),
-            ),            
           ],
         ),
       ),
