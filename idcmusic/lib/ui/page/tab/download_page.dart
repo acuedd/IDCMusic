@@ -98,21 +98,9 @@ class _MusicPageState extends State<MusicPage> with TickerProviderStateMixin, Au
                   itemCount: downloadModel.downloadSong.length,
                   itemBuilder: (BuildContext context, int index){
                     Song data = downloadModel.downloadSong[index];
-                    return GestureDetector(
-                      onTap: (){
-                        if(null != data.url){
-                          SongModel songModel = Provider.of(context, listen: false);
-                          songModel.setSongs( new List<Song>.from(
+                    return SongItem(song: data,songs: new List<Song>.from(
                             downloadModel.downloadSong
-                          ), context);
-                          songModel.setCurrentIndex(index);
-                          Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => PlayPage( nowPlay: true,))
-                          );
-                        }
-                      },
-                      child: SongItem(song: data,),
-                    );
+                          ),index: index);
                   },
                 )
               ,

@@ -52,24 +52,7 @@ class _RecentlySongsState extends State<RecentlySongs>{
         itemCount: intLimitShowRecently,
         itemBuilder: (BuildContext context, int index){
           Song data = widget.songs[index];
-          return GestureDetector( 
-              onTap: (){
-                if(null != data.url){
-                  SongModel songModel = Provider.of(context, listen: false);
-                  songModel.setSongs(new List<Song>.from(widget.songs), context);
-                  songModel.setCurrentIndex(index);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => PlayPage(
-                        nowPlay: true,
-                      ),
-                    ),
-                  );
-                }
-              },
-              child: SongItem(song: data),
-            );
+          return SongItem(song: data, songs: new List<Song>.from(widget.songs),index: index);
         },
       ),
     ]);

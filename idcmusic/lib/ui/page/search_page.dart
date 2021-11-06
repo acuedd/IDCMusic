@@ -68,22 +68,7 @@ class _SearchPageState extends State<SearchPage>{
                       itemCount: mylist.length,
                       itemBuilder: (context, index){
                         Song data = mylist[index];
-                        return GestureDetector(
-                          onTap: (){
-                            if(null != data.url){
-                              SongModel songModel = Provider.of(context, listen: false);
-                              songModel.setSongs(mylist, context);
-                              songModel.setCurrentIndex(index);
-                              Navigator.push(
-                                context, 
-                                MaterialPageRoute(
-                                  builder: (_) => PlayPage(nowPlay: true,)
-                                )
-                              );
-                            }
-                          },
-                          child: SongItem(song:data),
-                        );
+                        return SongItem(song:data, songs: mylist,index: index);
                       },
                     ),                    
                   );

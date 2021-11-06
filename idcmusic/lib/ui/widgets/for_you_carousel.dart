@@ -52,24 +52,7 @@ class _ForYouCarouselState extends State<ForYouCarousel>{
           itemCount: widget.forYou.length,
           itemBuilder: (BuildContext context, int index){
             Song data = widget.forYou[index];
-            return GestureDetector( 
-              onTap: (){
-                if(null != data.url){
-                  SongModel songModel = Provider.of(context, listen: false);
-                  songModel.setSongs(new List<Song>.from(widget.forYou), context);
-                  songModel.setCurrentIndex(index);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => PlayPage(
-                        nowPlay: true,
-                      ),
-                    ),
-                  );
-                }
-              },
-              child: SongItem(song: data),
-            );
+            return SongItem(song: data, songs: new List<Song>.from(widget.forYou),index: index,);
           },
         )
       ],
