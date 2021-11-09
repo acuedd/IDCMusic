@@ -24,6 +24,7 @@ class SongItem extends StatelessWidget{
   Widget _buildSongItem(BuildContext context){
     FavoriteModel favoriteModel = Provider.of(context);
     DownloadModel downloadModel = Provider.of(context);
+    int showIndex = (index == 0)?index+1:index;
     
     return Padding( 
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -60,7 +61,7 @@ class SongItem extends StatelessWidget{
                           width: 50,
                           height: 50,
                           child: Center( 
-                            child: Text( '$index', 
+                            child: Text( '$showIndex', 
                               style: TextStyle( 
                                 color: Theme.of(context).accentColor, 
                               ),
