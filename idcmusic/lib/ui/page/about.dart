@@ -10,6 +10,7 @@ import 'package:church_of_christ/utils/url.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:package_info/package_info.dart';
 import 'package:row_collection/row_collection.dart';
 
@@ -64,24 +65,9 @@ class _AboutScreenState extends State<AboutScreen>{
                   title: "¿Disfrutando de la app?",
                   subtitle: "Deja tu experiencia de tienda",
                   onTap: () async =>{
-                    if(Platform.isAndroid){
-                        await FlutterWebBrowser.openWebPage(
-                          url: Url.playStore,
-                          customTabsOptions: CustomTabsOptions(
-                            toolbarColor: Theme.of(context).primaryColor,
-                            secondaryToolbarColor: Theme.of(context).accentColor
-                          )
-                        ),
-                      }
-                      else{
-                        await FlutterWebBrowser.openWebPage(
-                          url: Url.appStore,
-                          safariVCOptions: SafariViewControllerOptions(
-                            barCollapsingEnabled: true,
-                            preferredBarTintColor: Theme.of(context).accentColor,
-                          ),
-                        ),
-                      }
+                    await LaunchReview.launch(
+                      androidAppId: _packageInfo.packageName, 
+                      iOSAppId: Url.appStoreID),
                   },
                 ),
                 HeaderText(text: "Autor"),
