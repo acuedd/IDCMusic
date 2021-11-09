@@ -74,7 +74,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
           setState(() {          
             strTitle = event.audio.metas.title;
             strArtist = event.audio.metas.artist;
-            imagePath = widget._songData.currentSong.pic;
+            imagePath = event.audio.metas.extra["pic"];
           });   
         }        
       }));
