@@ -222,11 +222,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                     },
                     child: ListView(children: <Widget>[
                       SizedBox(height: 10,),
-                      AlbumsCarousel(albums.collections),
+                      ForYouCarousel(foryou),
                       (songsRecently.length >0)
                         ? RecentlySongs(songsRecently)
                         : SizedBox.shrink(),
-                      ForYouCarousel(foryou),
+                      AlbumsCarousel(albums.collections),
                     ]),
                   ),
                 ),

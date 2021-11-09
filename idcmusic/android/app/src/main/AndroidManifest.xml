@@ -15,7 +15,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Acapella music"
+        android:label="Acapella Music App"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/launcher_icon">
         <activity

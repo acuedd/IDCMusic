@@ -23,6 +23,7 @@ class Url {
     'subject': "Acapella music app",
     "address": "acuedd@gmail.com",
   };
+  static const String appName = "Acapella Music App";
 
   static var isDebug = false;
 
