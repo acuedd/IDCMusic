@@ -1,21 +1,30 @@
 
+import 'dart:io';
+
 import 'package:church_of_christ/model/collections_model.dart';
 import 'package:church_of_christ/model/home_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/provider/provider_widget.dart';
 import 'package:church_of_christ/provider/view_state_widget.dart';
+import 'package:church_of_christ/service/base_repository.dart';
 import 'package:church_of_christ/ui/page/player_page.dart';
 import 'package:church_of_christ/ui/page/search_page.dart';
 import 'package:church_of_christ/ui/page/welcome_page.dart';
 import 'package:church_of_christ/ui/widgets/albums_carousel.dart';
+import 'package:church_of_christ/ui/widgets/dialog_presentation.dart';
 import 'package:church_of_christ/ui/widgets/for_you_carousel.dart';
 import 'package:church_of_christ/ui/widgets/player_widget.dart';
 import 'package:church_of_christ/ui/widgets/recently_songs.dart';
 import 'package:church_of_christ/utils/anims/page_route_anim.dart';
 import 'package:church_of_christ/utils/anims/record_anim.dart';
+import 'package:church_of_christ/utils/url.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
+import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:launch_review/launch_review.dart'; 
 
 class HomePage extends StatefulWidget{
   @override
@@ -46,6 +55,46 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
          controllerRecord.forward();
        }
      });
+    
+    
+    Future.delayed(Duration.zero, () async {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+      String version = packageInfo.version;
+      String packageName = packageInfo.packageName;
+      String appName = packageInfo.appName;
+      String os = Platform.operatingSystem;
+      // Show the Register page
+      final SharedPreferences prefs = await SharedPreferences.getInstance();  
+      // First time app boots
+      if (prefs.getBool('register_seen') == null)
+        prefs.setBool('register_seen', false);
+      if (prefs.getString('register_date') == null)
+        prefs.setString(
+          'register_date',
+          DateTime.now().toIso8601String(),
+        );
+
+      BaseRepository.getLastVersionApp(os, packageName).then((value){
+                
+        if(value["valido"] != null && value["valido"] == 1){
+          if(version != value["version"]){
+            final datecheck = DateTime.parse(prefs.getString('register_date'));
+            final difference = DateTime.now().difference(datecheck).inDays;
+            if (difference >= 7) {
+              showDialog(
+                context: context,
+                builder: (context) => PresentationDialog.goStore(context, () => LaunchReview.launch(
+                      androidAppId: packageName, 
+                      iOSAppId: Url.appStoreID
+                    ), "Ir a la tienda",appName, false)
+              );
+            }            
+          }
+        }
+      });
+    });
+
   }
   
   @override
@@ -93,7 +142,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
 
               CollectionModel albums = homeModel?.albums ?? CollectionModel();
               List<Song> foryou = homeModel?.forYou ?? [];
-              List<Song> songsRecently = homeModel?.songsRecently ?? [];
+              List<Song> songsRecently = homeModel?.songsRecently ?? [];              
 
               return Column(children: <Widget>[
                 Padding( 

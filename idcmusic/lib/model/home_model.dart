@@ -13,15 +13,11 @@ class HomeModel extends ViewStateRefreshListModel{
   List<Song> _songsRecently;
   CollectionModel get albums => _albums;
   List<Song> get forYou => _forYou; 
-  List<Song> get songsRecently => _songsRecently; 
+  List<Song> get songsRecently => _songsRecently;
 
   @override
   Future<Map<dynamic, dynamic>> loadData({int pageNum}) async{
     List<Future> futures = []; 
-
-    //Random r = new Random();
-    //int _randomSongAlbum = r.nextInt(albumValueList.length);    
-    //String inputAlbums = albumValueList[_randomSongAlbum];
 
 
     futures.add(BaseRepository.fetchCollections(randomSort: "true", limitFrom: "0", limitTo: "7"));

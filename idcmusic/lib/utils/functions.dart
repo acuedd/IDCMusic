@@ -82,7 +82,7 @@ class Utils {
 
     await FlutterShare.share(
         title: 'Acapella Music IDC',
-        text: 'Acapella Music IDC, escucha hoy *${s.title}* de ${s.author}',
+        text: 'Escucha hoy *${s.title}* de ${s.author} solo en Acapella Music IDC',
         linkUrl: "$finalUrl");
   }
 }

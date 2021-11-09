@@ -66,7 +66,7 @@ class PlayerState extends State<Player> {
     _audioPlayer = songData.audioPlayer;
     _position = _songData.position;
     _duration = _songData.duration;         
-
+    
     _audioPlayer.current.listen((playingAudio) {
       try{
         final songDuration = playingAudio.audio.duration;
@@ -84,9 +84,9 @@ class PlayerState extends State<Player> {
           else{
             _songData.setCurrentIndex(playingAudio.playlist.currentIndex);
           }
-          _songData.setNextIndex(playingAudio.playlist.nextIndex);
+          _songData.setNextIndex(playingAudio.playlist.nextIndex);      
           _songData.setPreviousIndex(playingAudio.playlist.previousIndex);
-          _songData.setUrl(_songData.songs[_songData.currentSongIndex].url);
+          _songData.setUrl(_songData.songs[_songData.currentSongIndex].url);          
         });
       }
       catch(t){ }
@@ -98,6 +98,14 @@ class PlayerState extends State<Player> {
         _position = position;
       });
     }));
+
+    /*_subscriptions.add( _audioPlayer.playlistAudioFinished.listen((event) {
+      debugPrint("MSG - $event");
+      if(_songData.isShuffle){
+        _audioPlayer.stop();
+        _audioPlayer.playlistPlayAtIndex(_songData.randomIndex);
+      }
+    }));*/
 
     _subscriptions.add( _audioPlayer.loopMode.listen((loopMode) {
       if (!mounted) return;
@@ -118,10 +126,11 @@ class PlayerState extends State<Player> {
     //return 'http://music.163.com/song/media/outer/url?id=${s.songid}.${s.ext}';
   }
 
-  void play(Song s) async {      
+  void play(Song s) async {          
     _audioPlayer.open( Playlist(audios: _songData.songsAudio, startIndex: _songData.currentSongIndex), 
       showNotification: true,
       loopMode: LoopMode.none,
+    
       headPhoneStrategy: HeadPhoneStrategy.pauseOnUnplug,
       playInBackground: PlayInBackground.enabled,
       notificationSettings: NotificationSettings(

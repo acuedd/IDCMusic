@@ -94,7 +94,7 @@ class _UserLibraryState extends State<UserLibrary> {
     final String strMessage = "Guarda en línea tus canciones favoritas.";
 
     return  Card(
-      color: Colors.grey[300],
+      color: (Theme.of(context).brightness == Brightness.dark)? Colors.grey[600] : Colors.grey[300],
       elevation: 8.0,
       margin: EdgeInsets.symmetric(horizontal: 15.0),
       child: Container(

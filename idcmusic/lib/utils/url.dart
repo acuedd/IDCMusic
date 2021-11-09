@@ -17,6 +17,7 @@ class Url {
   static const String apiContactMe = 'https://api.whatsapp.com/send?phone=50230468139&text=Hola%20me%20interesa%20apoyar%20en%20el%20app&source=&data=';
   static const String playStore = 'https://play.google.com/store/apps/details?id=gt.com.acuedd.idcmusic';
   static const String appStore = "https://apps.apple.com/gt/app/acapella-music-idc/id1564129767";
+  static const String appStoreID = "1564129767";
 
   static const Map<String, String> authorEmail = {
     'subject': "Acapella music app",
@@ -69,6 +70,7 @@ class Connection {
     "songs": "b6009cea-0500-11eb-b265-0242ac130002",
     "collections": "f0dd5ef2-04f5-11eb-b265-0242ac130002",
     "registerUser":"75dc1db0-fe28-11eb-b128-e4434b7bc970",
+    "versionApp": "d9236557-3f5e-11ec-8c0c-0242ac120003",
   };
 
   Future connect(operation, params) async {

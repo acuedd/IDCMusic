@@ -9,17 +9,39 @@ const List<String> _patreons = [
 ];
 
 class PresentationDialog extends StatelessWidget{
-
+  final String title;
   final Widget body;
   final VoidCallback onPressed;
   final String textButton;
+  final bool showPatreon;
   const PresentationDialog({
     @required this.body,
     this.onPressed,
     this.textButton,
+    this.showPatreon = true,
+    this.title = "",
   });
-
   
+
+
+  factory PresentationDialog.goStore(BuildContext context, VoidCallback onPressed, String textButton, String title, bool showPatreon){
+    return PresentationDialog(
+      onPressed: onPressed,
+      textButton: textButton,
+      title: title,
+      showPatreon: showPatreon,
+      body: RowLayout(
+        padding: EdgeInsets.symmetric(horizontal: 24),
+        children: <Widget>[
+          Text("Existe una nueva actualización, para que tengas una mejor experiencia actualiza tu app",
+            style: Theme.of(context).textTheme.headline6.copyWith(
+              fontWeight: FontWeight.normal,
+              color: Theme.of(context).textTheme.caption.color,
+            ),),
+      ]),
+    );
+  }
+
   factory PresentationDialog.home(BuildContext context, VoidCallback onPressed, String textButton){
     return PresentationDialog(
       onPressed: onPressed,
@@ -72,6 +94,7 @@ class PresentationDialog extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    if(showPatreon)
     return RoundDialog(
       title: "Bendice a otros con tus aportes",
       children: <Widget>[
@@ -113,6 +136,40 @@ class PresentationDialog extends StatelessWidget{
         ),
       ],
     );
+    else 
+      return RoundDialog(
+      title: title,
+      children: <Widget>[
+        RowLayout(
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          children: <Widget>[
+            body, 
+            Align(
+              alignment: Alignment.centerRight,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      "MÁS TARDE",
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                    onPressed: ()=> Navigator.pop(context,false),
+                  ),
+                  OutlineButton(
+                    highlightedBorderColor: Theme.of(context).accentColor,
+                    borderSide: BorderSide(
+                      color: Theme.of(context).textTheme.headline6.color,
+                    ),
+                    child: Text(textButton),
+                    onPressed: onPressed,
+                  )
+                ],
+              ),
+            ),
+          ]
+        )                  
+      ]);
   }
 
 }

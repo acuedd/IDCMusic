@@ -37,7 +37,7 @@ class SongModel with ChangeNotifier{
     notifyListeners();
   }
 
-  AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer(); 
+  AssetsAudioPlayer _audioPlayer = AssetsAudioPlayer.withId("acapella_music"); 
   AssetsAudioPlayer get audioPlayer => _audioPlayer; 
 
   List<Song> _songs; 
@@ -64,6 +64,23 @@ class SongModel with ChangeNotifier{
   }
   changeSuffle(){
     _isShuffle = !_isShuffle;
+    /*_audioPlayer.toggleShuffle();
+    List<Song> newListSong = [];
+    _audioPlayer.playlist.audios.forEach((Audio element) {
+      
+      newListSong.add(new Song(
+        type: element.metas.extra["type"],
+        link: element.metas.extra["link"],
+        songid: element.metas.extra["songid"],
+        title: element.metas.extra["title"],
+        author: element.metas.extra["author"],
+        lrc: element.metas.extra["lrc"],
+        url: element.metas.extra["url"],
+        pic: element.metas.extra["pic"],
+        ext: element.metas.extra["ext"],
+      ));
+    });
+    _songs = newListSong;*/
     notifyListeners();
   }
 
@@ -104,26 +121,59 @@ class SongModel with ChangeNotifier{
       String url;
       Audio audio;    
       if (downloadModel.isDownload(item)) {
+        Map <String, dynamic> extras = new Map<String,dynamic>();
+        extras["author"] = item.author;
+        extras["ext"] = item.ext;
+        extras["link"] = item.link;
+        extras["lrc"] = item.lrc;
+        extras["name_collection"] = item.name_collection;
+        extras["pic"] = item.pic;
+        extras["songid"] = item.songid;
+        extras["sourcetype"] = item.sourcetype;
+        extras["tags"] = item.tags;
+        extras["title"] = item.title;
+        extras["type"] = item.type;
+        extras["url"] = item.url;
+
+
         url = downloadModel.getDirectoryPath + '/${item.songid}.${item.ext}';
         audio = Audio.file(
             url, 
-            metas: Metas( 
+            metas: Metas(
+                id: item.songid, 
                 title: item.title, 
                 artist: item.author, 
                 album: item.name_collection, 
                 //image: MetasImage.network(path)
+                extra: extras,
             )
           );
       }
       else{
+        Map <String, dynamic> extras = new Map<String,dynamic>();
+        extras["author"] = item.author;
+        extras["ext"] = item.ext;
+        extras["link"] = item.link;
+        extras["lrc"] = item.lrc;
+        extras["name_collection"] = item.name_collection;
+        extras["pic"] = item.pic;
+        extras["songid"] = item.songid;
+        extras["sourcetype"] = item.sourcetype;
+        extras["tags"] = item.tags;
+        extras["title"] = item.title;
+        extras["type"] = item.type;
+        extras["url"] = item.url;
+
         url = item.url;
         audio = Audio.network(
           url, 
-          metas: Metas( 
+          metas: Metas(
+              id: item.songid,  
               title: item.title, 
               artist: item.author, 
               album: item.name_collection,
-              image: MetasImage.network(item.pic)
+              image: MetasImage.network(item.pic),
+              extra: extras,
           )
         );
       }
@@ -206,6 +256,8 @@ class Song {
   dynamic name_collection;
   dynamic sourcetype;
   List<Tag> tags;
+
+  Song({this.type, this.link, this.songid, this.title, this.author, this.lrc, this.url, this.pic, this.ext});
 
   Song.fromJsonMap(Map<dynamic, dynamic> map)
       : type = map["type"],

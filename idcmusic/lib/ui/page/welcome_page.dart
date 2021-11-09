@@ -7,13 +7,13 @@ List itemsAndroid = [
   {
     "header": "Disclaimer",
     "description":
-        "Esta app es completamente gratuita y no lucramos con el contenido. Para las canciones se ha solicitado el permiso para compartir a cada coro o artista. si alguna canción infringe en derechos de autor o no tiene los permisos para compartir, por favor reportala para hacer las gestiones pertinentes.",
+        "Esta app es completamente gratuita y no lucramos con el contenido, los derechos de las canciones pertenecen a sus respectivos autores y asociados. Esta app no pretende adueñarse de ninguno de esos derechos, sin embargo, te motivamos a que apoyes con tus aportes a tus artistas para seguir creando contenido. Si alguna canción infringe en derechos de autor o no tiene los permisos para compartir, por favor reportala en nuestro apartado de 'Contáctanos' para hacer las gestiones pertinentes.",
     "image": "assets/images/1.png"
   },
   {
     "header": "Usar el app",
     "description":
-        "Podrás escuchar las canciones acapella de las Iglesias de Cristo." +
+        "Aquí podrás escuchar las canciones cristianas acapella." +
         "Si conoces a algún coro que desee compartir su música mediante el app, ¡ayúdanos a contactarlo!. En el apartado de información del app puedes contactar con nosotros.",
     "image": "assets/images/1.png"
   },
@@ -53,13 +53,13 @@ List itemsIOS = [
   {
     "header": "Disclaimer",
     "description":
-        "Esta app es completamente gratuita y no lucramos con el contenido. Para las canciones se ha solicitado el permiso para compartir a cada coro o artista. si alguna canción infringe en derechos de autor o no tiene los permisos para compartir, por favor reportala para hacer las gestiones pertinentes.",
+        "Esta app es completamente gratuita y no lucramos con el contenido, los derechos de las canciones pertenecen a sus respectivos autores y asociados. Esta app no pretende adueñarse de ninguno de esos derechos, sin embargo, te motivamos a que apoyes con tus aportes a tus artistas para seguir creando contenido. Si alguna canción infringe en derechos de autor o no tiene los permisos para compartir, por favor reportala en nuestro apartado de 'Contáctanos' para hacer las gestiones pertinentes.",
     "image": "assets/images/1.png"
   },
   {
     "header": "Usar el app",
     "description":
-        "Podrás escuchar las canciones acapella de las Iglesias de Cristo." +
+        "Aquí podrás escuchar las canciones cristianas acapella." +
         "Si conoces a algún coro que desee compartir su música mediante el app, ¡ayúdanos a contactarlo!. En el apartado de información del app puedes contactar con nosotros.",
     "image": "assets/images/1.png"
   },
@@ -175,34 +175,39 @@ class _WelcomeScreen extends State<WelcomeScreen>{
                               alignment: Alignment.bottomCenter,
                             ),
                           ),
-                          Flexible(
+                          Flexible( 
                             flex: 1,
                             fit: FlexFit.tight,
-                            child: Container( 
-                              padding: EdgeInsets.symmetric(horizontal: 30.0),
-                              child: Column( 
-                                children: <Widget>[
-                                  Text(slides[index]["header"], 
-                                    style: TextStyle(  
-                                      fontSize: textSizeHeader, 
-                                      fontWeight: FontWeight.w300, 
-                                      height: 2.0
-                                    ),
-                                  ), 
-                                  Center(
-                                    child: Text(slides[index]["description"], 
-                                      style: TextStyle(  
-                                        color: Colors.grey, 
-                                        letterSpacing: 1.2, 
-                                        fontSize: 16.0, 
-                                        height: 1.3
+                            child: SingleChildScrollView(
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center, 
+                                    children: <Widget>[
+                                      Text(slides[index]["header"], 
+                                        style: TextStyle(  
+                                          fontSize: textSizeHeader, 
+                                          fontWeight: FontWeight.w300, 
+                                          height: 2.0
+                                        ),
+                                      ), 
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Text(slides[index]["description"], 
+                                          style: TextStyle(  
+                                            color: Colors.grey, 
+                                            letterSpacing: 1.2, 
+                                            fontSize: 16.0, 
+                                            height: 1.3
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      SizedBox(height: 50,),
+                                    ]),
+                                    
                                   )
-                                ],
-                              ),
-                            ),
-                          ),
+                                ),
+                            )
                         ],
                       ),
                     );
