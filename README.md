@@ -1,6 +1,25 @@
 # IDCMusic
 a music app of IDC
 
+## [3.4.1] - Nov 8th, 2021
+* Adding improvement of user interface.
+* Adding option to share a name of song.
+* Improvement of cache manager of images when connection is limited. 
+* Adding authentication of users. 
+* Improve of general performance. 
+
+## [3.2.0] - May 17th, 2021
+* Fixing player widget to update data when play another song of playlist 
+* Fixing selection of playlist to play right song 
+* Change ui image to player widget, to improve performance it quit a record animation, in devices with small memory runs with delay, it's better quit and put a static image
+* Adding first attemp of widget player 
+* Adding widget player to Bottom Navigation Bar, above of tab navigator
+
+## [3.2.0] - April 30th, 2021
+* Fixing info about appstore
+* Adding next version in pubspect
+* Fixing version to iOS
+
 ## [3.0.1] - April 3rd, 2021
 * Adding support to change and load playliste witn user interaction
 * Adding suport to Audioplayers library 
@@ -74,3 +93,4 @@ a music app of IDC
 ## [0.1.0] - August 24th, 2019
 
 * First alpha release
+
