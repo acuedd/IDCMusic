@@ -47,7 +47,7 @@ class SongModel with ChangeNotifier{
   bool get isPlaying => _isPlaying; 
   setPlaying(bool isPlaying){
     _isPlaying = isPlaying; 
-    //notifyListeners();
+    notifyListeners();
   }
 
   LoopMode _loopMode = LoopMode.none;
@@ -136,7 +136,7 @@ class SongModel with ChangeNotifier{
         extras["url"] = item.url;
 
 
-        url = downloadModel.getDirectoryPath + '/${item.songid}.${item.ext}';
+        url = downloadModel.getDirectoryPath + '/${item.songid}';
         audio = Audio.file(
             url, 
             metas: Metas(

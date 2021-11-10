@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/ui/page/player_page.dart';
-import 'package:church_of_christ/ui/widgets/dialog_round.dart';
 import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,7 @@ class SongItem extends StatelessWidget{
   Widget _buildSongItem(BuildContext context){
     FavoriteModel favoriteModel = Provider.of(context);
     DownloadModel downloadModel = Provider.of(context);
-    int showIndex = (index == 0)?index+1:index;
+    int showIndex = index+1;
     
     return Padding( 
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),

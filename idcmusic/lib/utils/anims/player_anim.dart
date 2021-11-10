@@ -24,7 +24,6 @@ class RotatePlayer extends AnimatedWidget{
       screenAspectRatio = 0.4;
     }
 
-
     return GestureDetector( 
       onTap: (){},
       child: RotationTransition( 
@@ -33,7 +32,7 @@ class RotatePlayer extends AnimatedWidget{
           width: MediaQuery.of(context).size.width * screenAspectRatio,
           height: MediaQuery.of(context).size.width * screenAspectRatio,
           decoration: BoxDecoration( 
-            shape: BoxShape.circle, 
+            shape: BoxShape.rectangle, 
             image: DecorationImage( 
               image: CachedNetworkImageProvider(songModel.currentSong.pic), 
             ),

@@ -28,8 +28,7 @@ class SearchHistoryModel extends ViewStateListModel<String>{
 
 
   @override
-  Future<Map<dynamic, dynamic >> loadData() {
-    // TODO: implement loadData
+  Future<Map<dynamic, dynamic >> loadData() {    
     throw UnimplementedError();
   }
 }

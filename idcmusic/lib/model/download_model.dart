@@ -63,7 +63,7 @@ class DownloadModel with ChangeNotifier{
     final bytes = await readBytes(Uri.parse(getSongUrl(s)));
     final dir = await getApplicationDocumentsDirectory();
     setDirectoryPath(dir.path);
-    final file = File('${dir.path}/${s.songid}.${s.ext}');
+    final file = File('${dir.path}/${s.songid}');
 
     if(await file.exists()){
       return; 
@@ -77,6 +77,8 @@ class DownloadModel with ChangeNotifier{
     }
   }
 
+
+
   String _directoryPath; 
   String get getDirectoryPath => _directoryPath;
   setDirectoryPath(String directoryPath){
@@ -86,7 +88,7 @@ class DownloadModel with ChangeNotifier{
 
   Future removeFile(Song s) async{
     final dir = await getApplicationDocumentsDirectory(); 
-    final file = File('${dir.path}/${s.songid}.mp3');
+    final file = File('${dir.path}/${s.songid}');
     setDirectoryPath(dir.path); 
     if(await file.exists()){
       await file.delete();

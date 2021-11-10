@@ -61,7 +61,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
     FavoriteModel favouriteModel = Provider.of(context);
     if (songModel.isPlaying) {
       controllerPlayer.stop(canceled: false);
-      //controllerPlayer.forward();
+      controllerPlayer.forward();
     } else {
       controllerPlayer.stop(canceled: false);
     }    
