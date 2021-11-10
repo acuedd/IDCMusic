@@ -38,8 +38,8 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin{
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('Música acapella', style: GetTextStyle.XL(context),),
-                Text('de la Iglesia de Cristo', style: GetTextStyle.XL(context),),
+                Text('Música Cristiana', style: GetTextStyle.XL(context),),
+                Text('A capella', style: GetTextStyle.XL(context),),
                 SizedBox(height: 50,), 
                 Center( 
                   child: Image.asset( 

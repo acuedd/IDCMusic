@@ -11,7 +11,7 @@ class Url {
   
   
   // About page
-  static const String changelog = 'https://raw.githubusercontent.com/acuedd/chuchofChrist/master/CHANGELOG.md';
+  static const String changelog = 'https://raw.githubusercontent.com/acuedd/IDCMusic/main/idcmusic/CHANGELOG.md';
   static const String authorStore = 'https://play.google.com/store/apps/developer?id=acuedd';
   static const String authorAppStore = "https://apps.apple.com/gt/developer/edward-guillermo-lopez/id1482988460";
   static const String apiContactMe = 'https://api.whatsapp.com/send?phone=50230468139&text=Hola%20me%20interesa%20apoyar%20en%20el%20app&source=&data=';
