@@ -17,7 +17,7 @@ class BaseRepository{
 
   static Future fetchShongList({
     active, nameAuthor, nameTag, nameCollection, idCollection,titleResource,
-    lessTime, olderTime, randomSort, limitTo, limitFrom, recently
+    lessTime, olderTime, randomSort, limitTo, limitFrom, recently, idAuthor,
   }) async{
     Connection conn = new Connection();
 
@@ -59,10 +59,43 @@ class BaseRepository{
     if(recently == "Y"){
       params["recently"] = (recently == "Y")?"Y":"N";
     }
+    if(idAuthor != null && idAuthor.toString().isNotEmpty){
+      params["id_author"] = idAuthor;
+    }
+
     params["active"] = "Y";  
 
     var response = await conn.connect("songs", params);
     return response;
+  }
+
+  static Future fetchAuthors({
+    nameAuthor, randomSort, limitTo, limitFrom
+  })async{
+    Connection conn = new Connection();
+    SharedPreferences prefsApi = await SharedPreferences.getInstance();
+    String token = prefsApi.getString("token_user");
+    String userid = prefsApi.getString("userloged");
+
+    Map params = Map<String, dynamic>();
+    if(token != null && token.isNotEmpty){
+      params["t"] = token;
+    }
+    if(nameAuthor != null && nameAuthor.toString().isNotEmpty){
+      params["nameCollection"] = nameAuthor;
+    }
+    if(randomSort != null && randomSort.toString().isNotEmpty){
+      params["random_sort"] = randomSort;
+    }
+    if(limitFrom != null && limitFrom.toString().isNotEmpty){
+      params["limit_from"] = limitFrom;
+    }
+    if(limitTo != null && limitTo.toString().isNotEmpty){
+      params["limit_to"] = limitTo;
+    }
+
+    var response1 = await conn.connect("authors", params);
+    return response1;
   }
 
   static Future fetchCollections({
@@ -103,6 +136,7 @@ class BaseRepository{
     if(limitTo != null && limitTo.toString().isNotEmpty){
       params["limit_to"] = limitTo;
     }
+    params["activeCollection"] = "Y";  
 
     //var response = await conn.con("collections", params);
     var response1 = await conn.connect("collections", params);

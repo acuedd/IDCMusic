@@ -23,10 +23,11 @@ class _ForYouCarouselState extends State<ForYouCarousel>{
 
   @override
   Widget build(BuildContext context) {
+    final int intLimitShowRecently = 5;
     return Column( 
       children: <Widget>[
         Padding( 
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
           child: Row( 
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -49,7 +50,7 @@ class _ForYouCarouselState extends State<ForYouCarousel>{
           shrinkWrap: true,
           physics: new NeverScrollableScrollPhysics(),
           scrollDirection: Axis.vertical,
-          itemCount: widget.forYou.length,
+          itemCount: intLimitShowRecently,
           itemBuilder: (BuildContext context, int index){
             Song data = widget.forYou[index];
             return SongItem(song: data, songs: new List<Song>.from(widget.forYou),index: index,);

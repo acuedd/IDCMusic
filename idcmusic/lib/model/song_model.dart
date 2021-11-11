@@ -17,6 +17,18 @@ class AlbumListModel extends ViewStateRefreshListModel<Song>{
   }
 }
 
+class AuthorsListModel extends ViewStateRefreshListModel<Song>{
+  final String input;
+
+  AuthorsListModel({this.input});
+
+  @override
+  Future<Map<dynamic,dynamic>> loadData({int pageNum}) async{
+    
+    return await BaseRepository.fetchShongList(idAuthor: input);
+  }
+}
+
 class SongListModel extends ViewStateRefreshListModel<Song>{ 
   final String input;
   final bool recently; 

@@ -1,4 +1,5 @@
 
+import 'package:church_of_christ/model/artist_model.dart';
 import 'package:church_of_christ/model/collections_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/provider/view_state_refresh_list_model.dart';
@@ -10,10 +11,12 @@ class HomeModel extends ViewStateRefreshListModel{
 
   CollectionModel _albums; 
   CollectionModel _albums2;
+  AuthorModel _authors;
   List<Song> _forYou; 
   List<Song> _songsRecently;
   CollectionModel get albums => _albums;
   CollectionModel get albums2 => _albums2;
+  AuthorModel get authors => _authors;
   List<Song> get forYou => _forYou; 
   List<Song> get songsRecently => _songsRecently;
 
@@ -26,6 +29,7 @@ class HomeModel extends ViewStateRefreshListModel{
     futures.add(BaseRepository.fetchShongList(randomSort: "true", limitFrom: "0", limitTo: "10"));
     futures.add(BaseRepository.fetchShongList(randomSort: "true", recently: "Y"));
     futures.add(BaseRepository.fetchCollections(randomSort: "true", limitFrom: "0", limitTo: "7"));
+    futures.add(BaseRepository.fetchAuthors(randomSort: "true", limitFrom: "0", limitTo: "7"));
     
     //futures.add(BaseRepository.fetchCollections());
       var result = await Future.wait(futures);
@@ -39,6 +43,9 @@ class HomeModel extends ViewStateRefreshListModel{
       _albums = collectionModel;
       CollectionModel collectionModel2 = CollectionModel.fromJson(result[3]);
       _albums2 = collectionModel2;
+
+      AuthorModel authorsModel = AuthorModel.fromJson(result[4]);
+      _authors = authorsModel;
       
       if(tmpForYou.containsKey("resources")){
         _forYou = convertResponseToListSong(result[1]["resources"]);
