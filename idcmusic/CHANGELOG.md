@@ -1,3 +1,6 @@
+# IDCMusic
+a music app acapella songs of IDC
+
 ## [3.4.1] - Nov 8th, 2021
 * Adding improvement of user interface.
 * Adding option to share a name of song.
@@ -12,7 +15,7 @@
 * Adding first attemp of widget player 
 * Adding widget player to Bottom Navigation Bar, above of tab navigator
 
-## [3.2.0] - April 30th, 2021
+## [3.1.2] - April 30th, 2021
 * Fixing info about appstore
 * Adding next version in pubspect
 * Fixing version to iOS
