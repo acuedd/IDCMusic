@@ -1,15 +1,9 @@
-
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:church_of_christ/config/routes.dart';
-import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
-import 'package:church_of_christ/ui/page/player_page.dart';
 import 'package:church_of_christ/ui/page/songs_all_page.dart';
 import 'package:church_of_christ/ui/widgets/songItem.dart';
 import 'package:church_of_christ/utils/anims/page_route_anim.dart';
 import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ForYouCarousel extends StatefulWidget{
   final List<Song> forYou; 

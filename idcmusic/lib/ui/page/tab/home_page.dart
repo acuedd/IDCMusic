@@ -221,16 +221,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                       await homeModel.refresh();
                       homeModel.showErrorMessage(context);
                     },
-                    child: ListView(children: <Widget>[
-                      SizedBox(height: 8,),
-                      ArtistsCarousel(artists.authors),                      
+                    child: ListView(children: <Widget>[    
+                      SizedBox(height: 8,),                  
                       ForYouCarousel(foryou),
                       (songsRecently.length >0)
                         ? RecentlySongs(songsRecently)
                         : SizedBox.shrink(),
+                      ArtistsCarousel(artists.authors),
                       AlbumsCarousel(albums.collections),
-                      AlbumsCarousel(albums2.collections,showSeeAll: false,),
-                      
+                      AlbumsCarousel(albums2.collections,showSeeAll: false,),                      
                     ]),
                   ),
                 ),

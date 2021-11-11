@@ -29,8 +29,8 @@ class _ArtistsCarouselState extends State<ArtistsCarousel>{
               style: GetTextStyle.XL(context),
             ),
             GestureDetector(
-              onTap: (){
-                Navigator.of(context).pushNamed(RouteName.allCollections);
+              onTap: (){              
+                Navigator.of(context).pushNamed(RouteName.allArtists);
               },
               child: Text("Ver todos",
                 style: GetTextStyle.M(context),
