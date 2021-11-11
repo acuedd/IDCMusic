@@ -141,6 +141,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
               }
 
               CollectionModel albums = homeModel?.albums ?? CollectionModel();
+              CollectionModel albums2 = homeModel?.albums2 ?? CollectionModel();
               List<Song> foryou = homeModel?.forYou ?? [];
               List<Song> songsRecently = homeModel?.songsRecently ?? [];              
 
@@ -227,6 +228,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                         ? RecentlySongs(songsRecently)
                         : SizedBox.shrink(),
                       AlbumsCarousel(albums.collections),
+                      AlbumsCarousel(albums2.collections,showSeeAll: false,)
                     ]),
                   ),
                 ),

@@ -9,9 +9,11 @@ class HomeModel extends ViewStateRefreshListModel{
   static const albumValueList = [':(', '(TT_TT)', '(TT_TT)', '(TT_TT)', '(TT_TT)'];
 
   CollectionModel _albums; 
+  CollectionModel _albums2;
   List<Song> _forYou; 
   List<Song> _songsRecently;
   CollectionModel get albums => _albums;
+  CollectionModel get albums2 => _albums2;
   List<Song> get forYou => _forYou; 
   List<Song> get songsRecently => _songsRecently;
 
@@ -23,6 +25,7 @@ class HomeModel extends ViewStateRefreshListModel{
     futures.add(BaseRepository.fetchCollections(randomSort: "true", limitFrom: "0", limitTo: "7"));
     futures.add(BaseRepository.fetchShongList(randomSort: "true", limitFrom: "0", limitTo: "10"));
     futures.add(BaseRepository.fetchShongList(randomSort: "true", recently: "Y"));
+    futures.add(BaseRepository.fetchCollections(randomSort: "true", limitFrom: "0", limitTo: "7"));
     
     //futures.add(BaseRepository.fetchCollections());
       var result = await Future.wait(futures);
@@ -34,6 +37,8 @@ class HomeModel extends ViewStateRefreshListModel{
 
       CollectionModel collectionModel = CollectionModel.fromJson(result[0]);
       _albums = collectionModel;
+      CollectionModel collectionModel2 = CollectionModel.fromJson(result[3]);
+      _albums2 = collectionModel2;
       
       if(tmpForYou.containsKey("resources")){
         _forYou = convertResponseToListSong(result[1]["resources"]);

@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 
 class AlbumsCarousel extends StatefulWidget {
   final List<Collection> albums;
+  final bool showSeeAll;
 
-  AlbumsCarousel(this.albums);
+  AlbumsCarousel(this.albums, {this.showSeeAll = true});
 
   _AlbumsCarouselState createState() => _AlbumsCarouselState();
 }
@@ -18,6 +19,7 @@ class _AlbumsCarouselState extends State<AlbumsCarousel>{
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
+      if(widget.showSeeAll)
       Padding( 
         padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
         child: Row( 
