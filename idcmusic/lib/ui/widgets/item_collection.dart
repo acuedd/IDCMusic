@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:church_of_christ/model/collections_model.dart';
 import 'package:church_of_christ/ui/page/album_page.dart';
 import 'package:church_of_christ/utils/anims/page_route_anim.dart';
@@ -27,7 +27,7 @@ class itemCollection extends StatelessWidget{
       screenAspectRatio = 140.0;
     }
 
-    imageAlbum albumImage = imageAlbum(album.path_image, screenAspectRatio);
+    final albumImage = Utils.image(album.path_image, width: screenAspectRatio, height: screenAspectRatio, fit: BoxFit.cover);
     
     return GestureDetector(
       onTap: () => {
@@ -70,23 +70,4 @@ class itemCollection extends StatelessWidget{
     );
 
   }
-}
-
-class imageAlbum extends StatelessWidget{
-
-  final String path;
-  final double screenAspectRatio;
-
-  imageAlbum(this.path, this.screenAspectRatio);
-
-  @override
-  Widget build(BuildContext context) {
-    return Image(
-            height: screenAspectRatio,
-            width: screenAspectRatio,
-            image: CachedNetworkImageProvider(path),
-            fit: BoxFit.cover,
-          );
-  }
-  
 }

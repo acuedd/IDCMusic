@@ -1,6 +1,7 @@
 import 'package:church_of_christ/ui/page/about.dart';
 import 'package:church_of_christ/ui/page/after_fist_layout.dart';
 import 'package:church_of_christ/ui/page/album_full_page.dart';
+import 'package:church_of_christ/ui/page/artist_full_page.dart';
 import 'package:church_of_christ/ui/page/changelog.dart';
 import 'package:church_of_christ/ui/page/songs_all_page.dart';
 import 'package:church_of_christ/ui/page/splash_page.dart';
@@ -18,6 +19,7 @@ class RouteName{
   static const String allCollections = "allCollections";
   static const String allSongs = "allSongs";
   static const String afterFistLayout = "afterFist";
+  static const String allArtists = "allArtists";
 }
 
 //return MaterialPageRoute(builder: (_) => MainScreen());
@@ -35,6 +37,8 @@ class RouteIDC {
         return SlideLeftRouteBuilder(ChangelogList());
       case RouteName.allCollections: 
         return SlideBottomRouteBuilder(AlbumGridCarousel());
+      case RouteName.allArtists: 
+        return SlideBottomRouteBuilder(ArtistGridCarousel());
       case RouteName.allSongs: 
         return SlideBottomRouteBuilder(SongsAllCarousel());
       case RouteName.afterFistLayout: 

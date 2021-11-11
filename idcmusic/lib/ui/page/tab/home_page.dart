@@ -1,25 +1,24 @@
 
 import 'dart:io';
 
+import 'package:church_of_christ/model/artist_model.dart';
 import 'package:church_of_christ/model/collections_model.dart';
 import 'package:church_of_christ/model/home_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/provider/provider_widget.dart';
 import 'package:church_of_christ/provider/view_state_widget.dart';
 import 'package:church_of_christ/service/base_repository.dart';
-import 'package:church_of_christ/ui/page/player_page.dart';
 import 'package:church_of_christ/ui/page/search_page.dart';
 import 'package:church_of_christ/ui/page/welcome_page.dart';
 import 'package:church_of_christ/ui/widgets/albums_carousel.dart';
+import 'package:church_of_christ/ui/widgets/artists_carousel.dart';
 import 'package:church_of_christ/ui/widgets/dialog_presentation.dart';
 import 'package:church_of_christ/ui/widgets/for_you_carousel.dart';
 import 'package:church_of_christ/ui/widgets/player_widget.dart';
 import 'package:church_of_christ/ui/widgets/recently_songs.dart';
 import 'package:church_of_christ/utils/anims/page_route_anim.dart';
-import 'package:church_of_christ/utils/anims/record_anim.dart';
 import 'package:church_of_christ/utils/url.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -142,6 +141,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
 
               CollectionModel albums = homeModel?.albums ?? CollectionModel();
               CollectionModel albums2 = homeModel?.albums2 ?? CollectionModel();
+              AuthorModel artists = homeModel?.authors ?? AuthorModel();
               List<Song> foryou = homeModel?.forYou ?? [];
               List<Song> songsRecently = homeModel?.songsRecently ?? [];              
 
@@ -221,14 +221,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                       await homeModel.refresh();
                       homeModel.showErrorMessage(context);
                     },
-                    child: ListView(children: <Widget>[
-                      SizedBox(height: 10,),
+                    child: ListView(children: <Widget>[    
+                      SizedBox(height: 8,),                  
                       ForYouCarousel(foryou),
                       (songsRecently.length >0)
                         ? RecentlySongs(songsRecently)
                         : SizedBox.shrink(),
+                      ArtistsCarousel(artists.authors),
                       AlbumsCarousel(albums.collections),
-                      AlbumsCarousel(albums2.collections,showSeeAll: false,)
+                      AlbumsCarousel(albums2.collections,showSeeAll: false,),                      
                     ]),
                   ),
                 ),
