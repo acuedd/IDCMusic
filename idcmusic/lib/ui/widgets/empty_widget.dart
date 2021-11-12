@@ -75,7 +75,6 @@ class EmptyWidget extends StatelessWidget{
         ),
       );
 
-    // TODO: implement build
     return item;
   }
 }

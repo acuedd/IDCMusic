@@ -9,10 +9,12 @@ import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/provider/provider_widget.dart';
 import 'package:church_of_christ/provider/view_state_widget.dart';
 import 'package:church_of_christ/service/base_repository.dart';
+import 'package:church_of_christ/ui/page/player_page.dart';
 import 'package:church_of_christ/ui/page/search_page.dart';
 import 'package:church_of_christ/ui/page/welcome_page.dart';
 import 'package:church_of_christ/ui/widgets/albums_carousel.dart';
 import 'package:church_of_christ/ui/widgets/artists_carousel.dart';
+import 'package:church_of_christ/ui/widgets/dailymix_widget.dart';
 import 'package:church_of_christ/ui/widgets/dialog_presentation.dart';
 import 'package:church_of_christ/ui/widgets/for_you_carousel.dart';
 import 'package:church_of_christ/ui/widgets/player_widget.dart';
@@ -145,7 +147,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
               CollectionModel albums2 = homeModel?.albums2 ?? CollectionModel();
               AuthorModel artists = homeModel?.authors ?? AuthorModel();
               List<Song> foryou = homeModel?.forYou ?? [];
-              List<Song> songsRecently = homeModel?.songsRecently ?? [];              
+              List<Song> songsRecently = homeModel?.songsRecently ?? [];
+              List<Song> dailyMix0 = homeModel?.dailyMix0 ?? [];
+              List<Song> dailyMix1 = homeModel?.dailyMix1 ?? [];
+              List<Song> dailyMix2 = homeModel?.dailyMix2 ?? [];
+              List listDailyMix = [dailyMix0, dailyMix1, dailyMix2];
 
               return Column(children: <Widget>[
                 Padding( 
@@ -225,7 +231,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                     },
                     child: ListView(children: <Widget>[    
                       SizedBox(height: 8,),
-                      DailyMixes(),
+                      DailyMixes(mixes: listDailyMix,),
                       SizedBox(height: 10,),
                       ForYouCarousel(foryou),
                       (songsRecently.length >0)
@@ -248,80 +254,4 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
     );
   }
 
-}
-
-class DailyMixes extends StatelessWidget{
-  
-  DailyMixes();
-
-
-  @override
-  Widget build(BuildContext context) {
-    List colors = [Colors.red, Colors.green, Colors.blue[900]];
-    Random random = new Random();
-    int intRandNumber = random.nextInt(3);
-
-    List labels = ["25", "50", "100"];
-
-    return Column(
-      children: [
-      Padding( 
-        padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-        child: Row( 
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text("Descubrir música",
-              style: GetTextStyle.XL(context),
-            ),            
-          ],
-        ),
-      ),
-      Container(
-        height: 100,
-        alignment: Alignment.center,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemCount: 3,
-          itemBuilder: (BuildContext context, int index){
-            return Container( 
-              alignment: Alignment.center,
-              child: Padding(
-              padding: const EdgeInsets.only(left: 8.0),              
-                child: Material( 
-                  elevation: 8.0,
-                  color: colors[index],
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  clipBehavior: Clip.antiAlias,                
-                  child: InkWell(
-                    onTap: (){
-
-                    },
-                    child: 
-                        Container(
-                          height: 100,
-                          width: 100,
-                          alignment: Alignment.center,
-                          child: Column( 
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children:[
-                              Icon(
-                                Icons.play_arrow,
-                                size: 50.0,
-                                textDirection: TextDirection.ltr,
-                              ),
-                              Text("Daily mix ${labels[index]}"),
-                            ]                          
-                          )
-                        )
-                  ),
-                ),              
-              ),
-            )             ;
-          },
-        )        
-      )
-    ]);
-  }
 }

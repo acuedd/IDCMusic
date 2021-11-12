@@ -1,6 +1,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:church_of_christ/model/song_model.dart';
+import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,16 +29,15 @@ class RotatePlayer extends AnimatedWidget{
       onTap: (){},
       child: RotationTransition( 
         turns: animation,
-        child: Container( 
-          width: MediaQuery.of(context).size.width * screenAspectRatio,
-          height: MediaQuery.of(context).size.width * screenAspectRatio,
-          decoration: BoxDecoration( 
-            shape: BoxShape.rectangle, 
-            image: DecorationImage( 
-              image: CachedNetworkImageProvider(songModel.currentSong.pic), 
+        child: Center( 
+          child: Container( 
+            width: MediaQuery.of(context).size.width * screenAspectRatio,
+            child: ClipRRect( 
+              borderRadius: BorderRadius.circular(30.0),
+              child: Container(child: Utils.image(songModel.currentSong.pic),),
             ),
           ),
-        ),
+        ),                       
       ),
     );
   }

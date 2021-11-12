@@ -59,7 +59,7 @@ class SongModel with ChangeNotifier{
   bool get isPlaying => _isPlaying; 
   setPlaying(bool isPlaying){
     _isPlaying = isPlaying; 
-    notifyListeners();
+    //notifyListeners();
   }
 
   LoopMode _loopMode = LoopMode.none;

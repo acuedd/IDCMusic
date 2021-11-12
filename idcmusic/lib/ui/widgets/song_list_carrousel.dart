@@ -11,7 +11,7 @@ class SongListCarousel extends StatefulWidget{
 }
 
 class _ForYouCarouselState extends State<SongListCarousel>{
-  Widget _buildSongItem(Song data){
+  Widget _buildSongItem(Song data, int index){
     FavoriteModel favoriteModel = Provider.of(context);
     SongModel songModel = Provider.of(context);
     return data.songid == songModel.currentSong.songid
@@ -84,51 +84,71 @@ class _ForYouCarouselState extends State<SongListCarousel>{
         : Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 30.0),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,        
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12.0),
-                child: Container(
-                  width: 50, height: 50, child: Utils.image(data.pic),
-                ),
-              ),
-              SizedBox(width: 20.0,),
               Expanded(
-                child:Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      data.title,
-                      style: data.url == null
-                          ? TextStyle(
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.grey,
-                      )
-                          : TextStyle(
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w600,
+                child: InkWell( 
+                  onTap: (){
+                    if(null != data.url){
+                      songModel.setCurrentIndex(index);
+                      songModel.setPlayNow(true);
+                      songModel.playNowIndex();
+                      Future.delayed(new Duration(milliseconds: 100), () {
+                        songModel.setPlayNow(false);
+                      });
+                    }
+                  }, 
+                  child: Row(  
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12.0),
+                        child: Container(
+                          width: 50, height: 50, child: Utils.image(data.pic),
+                        ),
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      data.author,
-                      style: data.url == null
-                          ? TextStyle(
-                        fontSize: 10.0,
-                        color: Colors.grey,
-                      )
-                          : TextStyle(
-                        fontSize: 10.0,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ]),
-              ),
+                      SizedBox(width: 20.0,),
+                      Expanded(
+                        child:Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              data.title,
+                              style: data.url == null
+                                  ? TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey,
+                              )
+                                  : TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              data.author,
+                              style: data.url == null
+                                  ? TextStyle(
+                                fontSize: 10.0,
+                                color: Colors.grey,
+                              )
+                                  : TextStyle(
+                                fontSize: 10.0,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ]),
+                      ),                      
+                    ]
+                  )
+                )
+              ),                            
               IconButton(
                   onPressed: () => favoriteModel.collect(data),
                   icon: data.url == null
@@ -161,19 +181,7 @@ class _ForYouCarouselState extends State<SongListCarousel>{
         itemCount: songModel.songs.length,
         itemBuilder: (BuildContext context, int index){
           Song data = songModel.songs[index];
-          return GestureDetector(
-            onTap: (){
-              if(null != data.url){
-                songModel.setCurrentIndex(index);
-                songModel.setPlayNow(true);
-                songModel.playNowIndex();
-                Future.delayed(new Duration(milliseconds: 100), () {
-                  songModel.setPlayNow(false);
-                });
-              }
-            },
-            child: _buildSongItem(data),
-          );
+          return _buildSongItem(data, index);
         },
       ),
     );
