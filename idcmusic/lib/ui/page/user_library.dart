@@ -92,6 +92,13 @@ class _UserLibraryState extends State<UserLibrary> {
     final myUser = Provider.of<Authentication>(context);
     final keyTooltip = GlobalKey<State<Tooltip>>();
     final String strMessage = "Guarda en línea tus canciones favoritas.";
+    final int intLenName = myUser.user.displayName.length;
+    debugPrint("LEN $intLenName");
+    double c_width = MediaQuery.of(context).size.width;
+    String displayName = myUser.user.displayName;
+    if(intLenName > 18){
+      displayName = myUser.user.displayName.substring(0,18) + "...";
+    }
 
     return  Card(
       color: (Theme.of(context).brightness == Brightness.dark)? Colors.grey[600] : Colors.grey[300],
@@ -100,7 +107,8 @@ class _UserLibraryState extends State<UserLibrary> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
         height: 100,
-        alignment: Alignment.centerLeft,
+        alignment: Alignment.center,
+        width: c_width,
         child: Column(  
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -119,21 +127,23 @@ class _UserLibraryState extends State<UserLibrary> {
                 Tooltip(
                   key: keyTooltip,
                   message: strMessage, 
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
+                  child: InkWell(
                     onTap: () => _onTap(keyTooltip),
                     child:   Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,              
+                      crossAxisAlignment: CrossAxisAlignment.start,                    
                       children: [
                         Container(
                           child: Text(
-                            "Hola ",
-                            style: GetTextStyle.LXL(context),
+                            "Hola, Dios te bendiga ",
+                            style: GetTextStyle.L(context),
                           ),
-                        ),                    
+                        ),   
                         Text(
-                          "${myUser.user.displayName}" ,
-                          style: GetTextStyle.LXL(context),
+                          "$displayName" ,
+                          maxLines: 1,
+                          softWrap: true,
+                          overflow: TextOverflow.fade,
+                          style:GetTextStyle.L(context)                            
                         ),
                       ]
                     ),
