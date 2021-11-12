@@ -29,7 +29,7 @@ class itemCollection extends StatelessWidget{
 
     final albumImage = Utils.image(album.path_image, width: screenAspectRatio, height: screenAspectRatio, fit: BoxFit.cover);
     
-    return GestureDetector(
+    return InkWell(
       onTap: () => {
         Navigator.push(context, SlideLeftRouteBuilder(AlbumsPage(album, image: albumImage,)))
       },

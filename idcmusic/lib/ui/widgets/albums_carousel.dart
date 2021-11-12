@@ -28,7 +28,7 @@ class _AlbumsCarouselState extends State<AlbumsCarousel>{
             Text("Albums",
               style: GetTextStyle.XL(context),
             ),
-            GestureDetector(
+            InkWell(
               onTap: (){
                 Navigator.of(context).pushNamed(RouteName.allCollections);
               },

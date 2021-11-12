@@ -28,7 +28,7 @@ class _ArtistsCarouselState extends State<ArtistsCarousel>{
             Text("Artistas",
               style: GetTextStyle.XL(context),
             ),
-            GestureDetector(
+            InkWell(
               onTap: (){              
                 Navigator.of(context).pushNamed(RouteName.allArtists);
               },

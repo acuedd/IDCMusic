@@ -21,7 +21,7 @@ class RecentlySongs extends StatefulWidget{
 }
 
 class _RecentlySongsState extends State<RecentlySongs>{
-  final int intLimitShowRecently = 3;
+  final int intLimitShowRecently = 4;
 
   @override
   Widget build(BuildContext context) {
