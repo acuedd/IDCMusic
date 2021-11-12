@@ -88,46 +88,52 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                 child: Row( 
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    Container( 
-                      height: 50.0,
-                      width: 50.0,
-                      child: ClipRRect( 
-                        borderRadius: BorderRadius.circular(12.0),
-                        child: Utils.image(imagePath, fit: BoxFit.cover)
-                      ),
-                    ), 
-                    SizedBox(width: 15.0,),
-                    Expanded(                       
-                      child: GestureDetector( 
-                      onTap: (){
-                        if(widget._songData.songs != null){
-                          Navigator.push( context,
-                            MaterialPageRoute(builder: (_) => PlayPage(nowPlay: false)),
-                          );
-                        }
-                      }, 
-                      child:Container(
-                          padding: EdgeInsets.symmetric(vertical: 10.0),
-                          child: Column(                         
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              MarqueeWidget(
-                                direction: Axis.horizontal,
-                                child: Text(
-                                  strTitle,
-                                  style: GetTextStyle.M(context),
-                                ),
+                    Expanded( 
+                      child: InkWell(  
+                        onTap: (){
+                          if(widget._songData.songs != null){
+                            Navigator.push( context,
+                              MaterialPageRoute(builder: (_) => PlayPage(nowPlay: false)),
+                            );
+                          }
+                        }, 
+                        child: Row(  
+                          children: [
+                            Container( 
+                              height: 50.0,
+                              width: 50.0,
+                              child: ClipRRect( 
+                                borderRadius: BorderRadius.circular(12.0),
+                                child: Utils.image(imagePath, fit: BoxFit.cover)
                               ),
-                              SizedBox(height: 3.0,),
-                              MarqueeWidget(
-                                direction: Axis.horizontal,
-                                child: Text( 
-                                  strArtist, 
-                                  style: GetTextStyle.S(context),
-                                ),
-                              )
-                            ],
-                          ),
+                            ), 
+                            SizedBox(width: 15.0,),
+                            Expanded(                       
+                              child:Container(
+                                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                                  child: Column(                         
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      MarqueeWidget(
+                                        direction: Axis.horizontal,
+                                        child: Text(
+                                          strTitle,
+                                          style: GetTextStyle.M(context),
+                                        ),
+                                      ),
+                                      SizedBox(height: 3.0,),
+                                      MarqueeWidget(
+                                        direction: Axis.horizontal,
+                                        child: Text( 
+                                          strArtist, 
+                                          style: GetTextStyle.S(context),
+                                        ),
+                                      )
+                                    ],
+                                  ),                      
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

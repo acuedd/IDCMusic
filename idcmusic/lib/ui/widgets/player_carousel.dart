@@ -4,6 +4,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
+import 'package:church_of_christ/ui/page/player_page.dart';
 import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -350,7 +351,13 @@ class PlayerState extends State<Player> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[              
                 IconButton(
-                  onPressed: () => _songData.changeSuffle(),
+                  onPressed: (){
+                    /*final List<Song> shuffleSongs = Utils.shuffle(_songData.songs);
+                    _songData.setSongs(shuffleSongs, context);
+                    _songData.setCurrentIndex(0);
+                    PlayPage(nowPlay: true);*/
+                    _songData.changeSuffle();
+                  },
                   icon: _songData.isShuffle == false
                       ? Icon(
                           Icons.shuffle,
