@@ -86,7 +86,7 @@ class _ProviderWidgetState2<A extends ChangeNotifier, B extends ChangeNotifier>
 
   @override
   void dispose() {
-    if (widget.autoDispose) {
+    if ((widget.autoDispose !=null) && widget.autoDispose) {
       model1.dispose();
       model2.dispose();
     }

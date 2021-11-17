@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/service/authenticate.dart';
@@ -81,7 +83,8 @@ class _FavoritePageState extends State<FavoritePage> with TickerProviderStateMix
                   letterSpacing: 1.2
                 ),
               ),
-            ),             
+            ),  
+            if(!Platform.isIOS)           
             Consumer(
             // ignore: missing_return
             builder: (context, Authentication user, _) {

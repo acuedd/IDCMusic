@@ -49,7 +49,19 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     PushNotificationProvider.mensajes.listen((argumento) {
-      
+      String named; 
+      var modulo = argumento.split("&nbsp");
+      String push = modulo[2].toString();
+      switch(push){
+        case "playsong": named = 'playSong'; break;
+        default: named = '/notifications'; break;
+      }
+      if(named=="/notifications"){
+        navigatorKey.currentState?.pushNamed('/notifications', arguments: argumento);
+      }
+      else{
+        navigatorKey.currentState?.pushNamed('/notifications', arguments: argumento);
+      }
     });
 
   }

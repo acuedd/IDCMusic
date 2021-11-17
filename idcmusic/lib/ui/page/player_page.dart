@@ -70,7 +70,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
     double screenHeight = MediaQuery.of(context).size.height;
     double screenAspectRatio = 0;
     if(screenHeight>800){
-      screenAspectRatio = 0.05;
+      screenAspectRatio = 0.03;
     }
     else if(screenHeight>=600 && screenHeight <= 800){
       screenAspectRatio = 0.03;

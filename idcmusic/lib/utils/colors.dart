@@ -24,4 +24,5 @@ const blackDividerColor = const Color(0xFF323232);
 const firstColor = Color(0xFFFFBC02D);
 const secondColor = Color(0xFFAF1055);
 const logoTintColor = Color(0xFFFCE3E0);
+const purpleColor = Color(0x753188);
 

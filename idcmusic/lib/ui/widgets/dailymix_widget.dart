@@ -79,7 +79,7 @@ class _DailyMixesState extends State<DailyMixes>{
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children:[
-                              Text("Daily Mix", style: GetTextStyle.L(context),),
+                              Text("Mix Diario", style: GetTextStyle.L(context),),
                               Icon(
                                 Icons.play_arrow,
                                 size: 50.0,

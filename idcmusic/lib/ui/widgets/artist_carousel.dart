@@ -43,10 +43,10 @@ class _ArtistCarouselState extends State<ArtistCarousel>{
           : Column(
             children: [
               Row( 
-                children: <Widget>[
+                children: <Widget>[                  
                   Expanded( 
                     flex: 1,
-                    child: GestureDetector(                       
+                    child: InkWell(                       
                       onTap: (){
                         SongModel songModel = Provider.of(context, listen: false); 
                         songModel.setSongs(mylist, context);
@@ -65,20 +65,31 @@ class _ArtistCarouselState extends State<ArtistCarousel>{
                           border: Border.all(color: Colors.black12, width: 1), 
                           borderRadius: BorderRadius.circular(20.0), 
                         ),                        
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                          Icon( 
-                            Icons.play_arrow, 
-                            color: Theme.of(context).accentColor,
-                          ), 
-                          SizedBox(width: 5,), 
-                          Text( 
-                            'Play', 
-                            style: TextStyle( color: Theme.of(context).accentColor),
-                          )
-                        ])
-                      ),                        
+                        child: Ink(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Color(0xff374ABE), Color(0xff64B6FF)],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                              ),
+                              borderRadius: BorderRadius.circular(15.0)),
+                          child:Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                            Icon( 
+                              Icons.play_arrow, 
+                              color: (Brightness.dark == Theme.of(context).brightness) 
+                                ? Theme.of(context).bottomAppBarColor
+                                : Theme.of(context).bottomAppBarColor,
+                            ), 
+                            SizedBox(width: 5,), 
+                            Text( 
+                              'Play', 
+                              style: GetTextStyle.LXL(context, color: Theme.of(context).bottomAppBarColor),
+                            )
+                          ])
+                        )
+                      ),
                     ),
                   ),
                 ],

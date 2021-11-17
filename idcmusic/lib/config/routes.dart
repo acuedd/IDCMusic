@@ -3,6 +3,7 @@ import 'package:church_of_christ/ui/page/after_fist_layout.dart';
 import 'package:church_of_christ/ui/page/album_full_page.dart';
 import 'package:church_of_christ/ui/page/artist_full_page.dart';
 import 'package:church_of_christ/ui/page/changelog.dart';
+import 'package:church_of_christ/ui/page/notification_screen.dart';
 import 'package:church_of_christ/ui/page/songs_all_page.dart';
 import 'package:church_of_christ/ui/page/splash_page.dart';
 import 'package:church_of_christ/ui/page/tab/tab_navigator.dart';
@@ -25,7 +26,7 @@ class RouteName{
 //return MaterialPageRoute(builder: (_) => MainScreen());
 class RouteIDC {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    //final args = settings.arguments;
+    final args = settings.arguments;
     switch (settings.name) {      
       case RouteName.tab:
         return NoAnimRouteBuilder(Tabnavigator());
@@ -43,6 +44,11 @@ class RouteIDC {
         return SlideBottomRouteBuilder(SongsAllCarousel());
       case RouteName.afterFistLayout: 
         return NoAnimRouteBuilder(AfterFist());
+      case '/notifications':
+        if(args is String){
+          return MaterialPageRoute(builder: (_) => NotificationScreen(argumento: args));
+        }
+        break;
       default:
         return _errorRoute();
     }

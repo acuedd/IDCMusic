@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class AppBarCarrousel extends StatelessWidget{
   final String title;
   final bool iconBottom;
-  const AppBarCarrousel({Key key, this.title, this.iconBottom = false});
+  final VoidCallback onPressed;
+  const AppBarCarrousel({Key key, this.title, this.iconBottom = false, this.onPressed,});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +23,13 @@ class AppBarCarrousel extends StatelessWidget{
               color: Colors.grey,
             ),
             onPressed: () => {
-              FocusScope.of(context).unfocus(),
-              Navigator.pop(context),
+              if(onPressed != null){
+                onPressed()
+              }
+              else{
+                FocusScope.of(context).unfocus(),
+                Navigator.pop(context),
+              }              
             },
           ),
           Padding(

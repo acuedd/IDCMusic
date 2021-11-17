@@ -5,6 +5,7 @@ import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/ui/widgets/app_bar.dart';
 import 'package:church_of_christ/ui/widgets/artist_carousel.dart';
 import 'package:church_of_christ/ui/widgets/player_widget.dart';
+import 'package:church_of_christ/utils/colors.dart';
 import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,9 @@ class _ArtistPageState extends State<ArtistPage>{
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
     SongModel songModel = Provider.of(context);
     return Scaffold(
       body: SafeArea( 
@@ -35,25 +39,91 @@ class _ArtistPageState extends State<ArtistPage>{
             Expanded( 
               child: ListView(  
                 children: <Widget>[
-                  Center( 
-                    child: Container( 
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      height: MediaQuery.of(context).size.width * 0.5,
-                      child: ClipRRect( 
-                        borderRadius: BorderRadius.circular(30.0),
-                        child: (widget.image != null)
-                          ? widget.image
-                          : Container(child: Utils.image(widget.author.path_image),),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                    child:Container( 
+                        height: height * 0.43,
+                        width: width,                        
+                        child: LayoutBuilder( 
+                          builder: (context, constraints){
+                            double innerHeight = constraints.maxHeight;
+                            double innerWidth = constraints.maxWidth;
+                            return Stack( 
+                              fit: StackFit.expand,                              
+                              children: [
+                                Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: Container( 
+                                    height: innerHeight * 0.72,
+                                    width: innerWidth,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [secondColor, Color(0xff64B6FF)],
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                      ),
+                                      borderRadius: BorderRadius.circular(30),
+                                      color: (Brightness.dark == Theme.of(context).brightness)
+                                        ? secondColor
+                                        : Colors.black45,
+                                    ),
+                                    child: Column( 
+                                      children: [
+                                        SizedBox(
+                                          height: 110,
+                                        ),
+                                        Text(
+                                          widget.author.fullname,
+                                          style: GetTextStyle.LXL(context),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Row( 
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                /*Positioned(
+                                  top: 110,
+                                  right: 20,
+                                  child: Icon(
+                                    AntDesign.setting,
+                                    color: Colors.grey[700],
+                                    size: 30,
+                                  ),
+                                ),*/
+                                Positioned(
+                                  top: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: Center(
+                                    child: Container( 
+                                      width: MediaQuery.of(context).size.width * 0.5,
+                                      height: MediaQuery.of(context).size.width * 0.5,
+                                      child: ClipRRect( 
+                                        borderRadius: BorderRadius.circular(30.0),
+                                        child: (widget.image != null)
+                                        ? widget.image
+                                        : Container(child: Utils.image(widget.author.path_image),),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ), 
-                  SizedBox(height: 20.0,), 
-                  Center( 
-                    child: Text( 
-                      widget.author.fullname,
-                      style: TextStyle(fontSize: 12.0),
-                    ),
-                  ),
+                  ),                  
                   ArtistCarousel(input: widget.author.id,),
                 ]
               ),

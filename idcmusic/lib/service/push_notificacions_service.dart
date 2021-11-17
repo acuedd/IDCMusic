@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -56,9 +57,16 @@ class PushNotificationProvider{
     await requestPermission();
 
     token = await FirebaseMessaging.instance.getToken();
+    FirebaseMessaging.instance.subscribeToTopic("new_releases");    
+    if(Platform.isIOS){
+      FirebaseMessaging.instance.subscribeToTopic("new_releases_ios");
+    }
+    else{
+      FirebaseMessaging.instance.subscribeToTopic("new_releases_android");
+    }
     print(token);
 
-    FirebaseMessaging.instance.subscribeToTopic("new_releases");
+    
 
     FirebaseMessaging.onBackgroundMessage( _backgroundHandler );
     FirebaseMessaging.onMessage.listen( _onMessageHandler );

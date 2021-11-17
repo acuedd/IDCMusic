@@ -1,6 +1,7 @@
 import 'package:church_of_christ/config/net/base_api.dart';
 import 'package:church_of_christ/model/song_model.dart';
 import 'package:church_of_christ/utils/url.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BaseRepository{
@@ -173,11 +174,15 @@ class BaseRepository{
     return response;
   }
 
-  static Future<Map<dynamic, dynamic>> getLastVersionApp(os, appname) async{
+  static Future<Map<dynamic, dynamic>> getLastVersionApp(os, appname, {version}) async{
     Connection conn = new Connection();
     Map params = Map<String, dynamic>();
     params["os"] = os;
     params["app"] = appname;
+    if(version != null && version.toString().isNotEmpty){
+      params["versionapp"] = version;
+    }
+    debugPrint("VERSIONAPP ${params}");
     var response = await conn.connect("versionApp", params);
     return response;
   }

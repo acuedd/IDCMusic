@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
           DateTime.now().toIso8601String(),
         );
 
-      BaseRepository.getLastVersionApp(os, packageName).then((value){
+      BaseRepository.getLastVersionApp(os, packageName, version: version).then((value){
                 
         if(value["valido"] != null && value["valido"] == 1){
           if(version != value["version"]){
@@ -95,6 +95,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
             }            
           }
         }
+        else{
+          showDialog(
+            context: context,
+            builder: (context) => PresentationDialog.goStore(context, () => LaunchReview.launch(
+                  androidAppId: packageName, 
+                  iOSAppId: Url.appStoreID
+                ), "Ir a la tienda",appName, false)
+          );
+        }
       });
     });
 
@@ -104,8 +113,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
   void dispose() {
     super.dispose();
     _inputController.dispose();
-    controllerRecord.dispose();
-    super.dispose();
+    controllerRecord.dispose();    
   }
 
   @override
