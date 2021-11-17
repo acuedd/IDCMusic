@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:church_of_christ/utils/functions.dart';
+import 'package:church_of_christ/utils/url.dart';
 import 'package:flutter/material.dart';
 
 List itemsAndroid = [
   {
     "header": "Disclaimer",
-    "description":
-        "Esta app es completamente gratuita y no lucramos con el contenido, los derechos de las canciones pertenecen a sus respectivos autores y asociados. Esta app no pretende adueñarse de ninguno de esos derechos, sin embargo, te motivamos a que apoyes con tus aportes a tus artistas para seguir creando contenido. Si alguna canción infringe en derechos de autor o no tiene los permisos para compartir, por favor reportala en nuestro apartado de 'Contáctanos' para hacer las gestiones pertinentes.",
+    "description": Url.disclaimer,
     "image": "assets/images/1.png"
   },
   {
@@ -52,8 +52,7 @@ List itemsAndroid = [
 List itemsIOS = [
   {
     "header": "Disclaimer",
-    "description":
-        "Esta app es completamente gratuita y no lucramos con el contenido, los derechos de las canciones pertenecen a sus respectivos autores y asociados. Esta app no pretende adueñarse de ninguno de esos derechos, sin embargo, te motivamos a que apoyes con tus aportes a tus artistas para seguir creando contenido. Si alguna canción infringe en derechos de autor o no tiene los permisos para compartir, por favor reportala en nuestro apartado de 'Contáctanos' para hacer las gestiones pertinentes.",
+    "description": Url.disclaimer,        
     "image": "assets/images/1.png"
   },
   {

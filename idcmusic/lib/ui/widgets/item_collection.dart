@@ -24,7 +24,7 @@ class itemCollection extends StatelessWidget{
       screenAspectRatio = 145.0;
     }
     else if(screenHeight <= 600){
-      screenAspectRatio = 140.0;
+      screenAspectRatio = 120.0;
     }
 
     final albumImage = Utils.image(album.path_image, width: screenAspectRatio, height: screenAspectRatio, fit: BoxFit.cover);

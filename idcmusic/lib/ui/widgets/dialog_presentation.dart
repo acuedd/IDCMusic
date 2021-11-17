@@ -94,81 +94,127 @@ class PresentationDialog extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    bool screenAspectRatio = true;    
+    if(screenWidth <= 350){
+      screenAspectRatio = false;
+    }   
+
     if(showPatreon)
-    return RoundDialog(
-      title: "Bendice a otros con tus aportes",
-      children: <Widget>[
-        RowLayout(
-          padding: EdgeInsets.symmetric(horizontal: 24),
-          children: <Widget>[
-            Text(
-              Url.patreon,
-              textAlign: TextAlign.justify,
-              style: Theme.of(context).textTheme.subtitle1.copyWith(
-                color: Theme.of(context).textTheme.caption.color,
+      return RoundDialog(
+        title: "Bendice a otros con tus aportes",
+        children: <Widget>[
+          RowLayout(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            children: <Widget>[
+              Text(
+                Url.patreon,
+                textAlign: TextAlign.justify,
+                style: Theme.of(context).textTheme.subtitle1.copyWith(
+                  color: Theme.of(context).textTheme.caption.color,
+                ),
               ),
-            ),
-            body, 
-            Align(
-              alignment: Alignment.centerRight,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  FlatButton(
-                    child: Text(
-                      "MÁS TARDE",
-                      style: Theme.of(context).textTheme.caption,
+              body, 
+              Align(
+                alignment: Alignment.centerRight,
+                child: 
+                  (screenAspectRatio) ?
+                  Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    TextButton(
+                      child: Text(
+                        "MÁS TARDE",
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                      onPressed: ()=> Navigator.pop(context,false),
                     ),
-                    onPressed: ()=> Navigator.pop(context,false),
-                  ),
-                  OutlineButton(
-                    highlightedBorderColor: Theme.of(context).accentColor,
-                    borderSide: BorderSide(
-                      color: Theme.of(context).textTheme.headline6.color,
+                    OutlineButton(
+                      highlightedBorderColor: Theme.of(context).accentColor,
+                      borderSide: BorderSide(
+                        color: Theme.of(context).textTheme.headline6.color,
+                      ),
+                      child: Text(textButton),
+                      onPressed: onPressed,
+                    )
+                  ],
+                )
+                : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[                    
+                    OutlineButton(
+                      highlightedBorderColor: Theme.of(context).accentColor,
+                      borderSide: BorderSide(
+                        color: Theme.of(context).textTheme.headline6.color,
+                      ),
+                      child: Text(textButton),
+                      onPressed: onPressed,
                     ),
-                    child: Text(textButton),
-                    onPressed: onPressed,
-                  )
-                ],
+                    FlatButton(
+                      child: Text(
+                        "MÁS TARDE",
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                      onPressed: ()=> Navigator.pop(context,false),
+                    ),
+                  ],
+                )
               ),
-            ),
-          ],
-        ),
-      ],
-    );
+            ],
+          ),
+        ],
+      );
     else 
       return RoundDialog(
       title: title,
-      children: <Widget>[
+      children: <Widget>[        
         RowLayout(
-          padding: EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(horizontal: 5),
           children: <Widget>[
-            body, 
-            Align(
-              alignment: Alignment.centerRight,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  FlatButton(
-                    child: Text(
-                      "MÁS TARDE",
-                      style: Theme.of(context).textTheme.caption,
+            body,             
+              Align(
+                alignment: Alignment.centerRight,
+                child:
+                  (screenAspectRatio) ?
+                  Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text(
+                        "MÁS TARDE",
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                      onPressed: ()=> Navigator.pop(context,false),
                     ),
-                    onPressed: ()=> Navigator.pop(context,false),
-                  ),
-                  OutlineButton(
-                    highlightedBorderColor: Theme.of(context).accentColor,
-                    borderSide: BorderSide(
-                      color: Theme.of(context).textTheme.headline6.color,
+                    OutlineButton(
+                      highlightedBorderColor: Theme.of(context).accentColor,
+                      borderSide: BorderSide(
+                        color: Theme.of(context).textTheme.headline6.color,
+                      ),
+                      child: Text(textButton),
+                      onPressed: onPressed,
+                    )
+                  ],
+                )
+                : Column(children: [
+                    FlatButton(
+                      child: Text(
+                        "MÁS TARDE",
+                        style: Theme.of(context).textTheme.caption,
+                      ),
+                      onPressed: ()=> Navigator.pop(context,false),
                     ),
-                    child: Text(textButton),
-                    onPressed: onPressed,
-                  )
-                ],
+                    OutlineButton(
+                      highlightedBorderColor: Theme.of(context).accentColor,
+                      borderSide: BorderSide(
+                        color: Theme.of(context).textTheme.headline6.color,
+                      ),
+                      child: Text(textButton),
+                      onPressed: onPressed,
+                    )
+                ]),
               ),
-            ),
-          ]
-        )                  
+          ] 
+        )   
       ]);
   }
 

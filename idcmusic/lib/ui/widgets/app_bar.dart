@@ -9,6 +9,15 @@ class AppBarCarrousel extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    bool screenAspectRatio = false;
+    if(screenHeight>800){
+      screenAspectRatio = true;
+    }    
+    else if(screenHeight <= 600){
+      screenAspectRatio = false;
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Row(
@@ -36,7 +45,7 @@ class AppBarCarrousel extends StatelessWidget{
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0),
             child: Text(this.title,
               textAlign: TextAlign.left,
-              style: GetTextStyle.XL(context),
+              style: (screenAspectRatio)?GetTextStyle.XL(context):GetTextStyle.L(context),
             ),
           ),
           IconButton(

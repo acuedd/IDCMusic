@@ -64,6 +64,10 @@ class Url {
   static const String patreon = "Publicar para iOS y mantener los servidores tienen un costo, si deseas colaborar para que todo siga siendo completamente gratis, pínchale en \"Contáctame.\""+
                                 "\n\n" +
                                 "Si quieres formar parte del equipo y apoyar con tiempo, mantenimiento o nuevas ideas también pínchale a \"Contáctame\"";
+
+  static const String disclaimer = "Esta app es completamente gratuita y no lucramos con el contenido, los derechos de las canciones pertenecen a sus respectivos autores y asociados" +
+                "y esta app no pretende adueñarse de ninguno de esos derechos. \nNo almacenamos los archivos de audio de la música en nuestros servidores, la extraemos de lugares donde los creadores la han colocado como pública.\n"+
+                "Esta aplicación solamente hace una recopilación de canciones acapella que se encuentran públicas. \n\nSi alguna canción infringe en derechos de autor o no tiene los permisos para compartir, por favor repórtala en nuestro apartado de 'Contáctanos' para hacer las gestiones pertinentes y evitar procesos legales";
 }
 
 class Connection {

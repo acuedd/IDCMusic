@@ -58,6 +58,27 @@ class _AboutScreenState extends State<AboutScreen>{
                   onTap: () => Navigator.of(context).pushNamed("/changelog"),
                 ), 
                 Separator.divider(indent: 72),
+                  ListCell.icon(
+                    context: context,
+                    icon: AntDesign.infocirlce,
+                    trailing: Icon(Icons.chevron_right),
+                    title: "Disclaimer",
+                    subtitle: "Importante sobre la música",
+                    onTap: () => showDialog(
+                      context: context,
+                      builder: (context) => RoundDialog(
+                        title: "DISCLAIMER",
+                        children: [
+                          Padding(padding: EdgeInsets.only(left: 25, right: 25),
+                            child: Text(Url.disclaimer, 
+                            textAlign: TextAlign.justify,
+                            style: GetTextStyle.subtitle1(context)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),                  
+                Separator.divider(indent: 72),
                 ListCell.icon( 
                   context: context,
                   icon: Icons.star,
@@ -144,7 +165,7 @@ class _AboutScreenState extends State<AboutScreen>{
                   HeaderText(text: "Agradecimientos"),
                   ListCell.icon(
                     context: context,
-                    icon: Icons.favorite,
+                    icon: Icons.home_filled,
                     trailing: Icon(Icons.chevron_right),
                     title: "Iglesia de Cristo GT",
                     subtitle: "Iglesia de Cristo en Mixco Nueva Jerusalén",
@@ -161,7 +182,7 @@ class _AboutScreenState extends State<AboutScreen>{
                         ],
                       ),
                     ),
-                  ),                  
+                  ),
                   Separator.divider(indent: 72),
                   ListCell.icon(
                     context: context,

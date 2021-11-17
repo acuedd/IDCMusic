@@ -15,13 +15,13 @@ class EmptyWidget extends StatelessWidget{
     double screenHeight = MediaQuery.of(context).size.height;
     double screenAspectRatio = 300.0;
     if(screenHeight>800){
-      screenAspectRatio = 300.0;
+      screenAspectRatio = 280.0;
     }
     else if(screenHeight>=600 && screenHeight <= 800){
-      screenAspectRatio = 260.0;
+      screenAspectRatio = 240.0;
     }
     else if(screenHeight <= 600){
-      screenAspectRatio = 210.0;
+      screenAspectRatio = 180.0;
     }
 
     Widget item =  Container(
@@ -42,13 +42,13 @@ class EmptyWidget extends StatelessWidget{
               flex: 1,
               fit: FlexFit.tight,
               child: Container( 
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column( 
                   children: <Widget>[
                     Text(title, 
                       textAlign: TextAlign.center,
                       style: TextStyle(  
-                        fontSize: 35.0, 
+                        fontSize: 30.0, 
                         fontWeight: FontWeight.w300, 
                         height: 1.5,
                         letterSpacing: 0.5,
