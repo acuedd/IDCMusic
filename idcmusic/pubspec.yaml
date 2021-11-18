@@ -1,7 +1,7 @@
 name: church_of_christ
 description: application for Acapella music
 
-version: 3.5.2+43
+version: 3.5.4+43
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
