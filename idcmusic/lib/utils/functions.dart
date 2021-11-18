@@ -110,7 +110,7 @@ class GetTextStyle{
       fontSize: 10, 
       color: Colors.grey,
       fontWeight: FontWeight.w700,
-      fontFamily: "Lato",      
+      fontFamily: "Lato",        
     );    
   }
 

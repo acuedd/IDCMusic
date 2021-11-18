@@ -67,7 +67,7 @@ class _UserLibraryState extends State<UserLibrary> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                        'Sign in with Google',
+                        'Login con Google',
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.black54,
@@ -89,6 +89,12 @@ class _UserLibraryState extends State<UserLibrary> {
   }
 
   Widget userProfile(){
+    double screenWidth = MediaQuery.of(context).size.width;
+    bool screenAspectRatio = true;    
+    if(screenWidth <= 350){
+      screenAspectRatio = false;
+    }
+
     final myUser = Provider.of<Authentication>(context);
     final keyTooltip = GlobalKey<State<Tooltip>>();
     final String strMessage = "Guarda en línea tus canciones favoritas.";
@@ -97,7 +103,8 @@ class _UserLibraryState extends State<UserLibrary> {
     double c_width = MediaQuery.of(context).size.width;
     String displayName = myUser.user.displayName;
     if(intLenName > 18){
-      displayName = myUser.user.displayName.substring(0,18) + "...";
+      int limitLen = (screenAspectRatio)?18:12;
+      displayName = myUser.user.displayName.substring(0,limitLen) + "...";
     }
 
     return  Card(
@@ -134,7 +141,7 @@ class _UserLibraryState extends State<UserLibrary> {
                       children: [
                         Container(
                           child: Text(
-                            "Hola, Dios te bendiga ",
+                            "¡Hola! \nDios te bendiga ",
                             style: GetTextStyle.L(context),
                           ),
                         ),   
@@ -143,7 +150,7 @@ class _UserLibraryState extends State<UserLibrary> {
                           maxLines: 1,
                           softWrap: true,
                           overflow: TextOverflow.fade,
-                          style:GetTextStyle.L(context)                            
+                          style:GetTextStyle.L(context),
                         ),
                       ]
                     ),
@@ -151,7 +158,7 @@ class _UserLibraryState extends State<UserLibrary> {
                 ),
                 IconButton(
                   onPressed: () => myUser.signOut(),                   
-                  icon: Icon( 
+                  icon: Icon(                     
                     Icons.logout
                   )
                 ),

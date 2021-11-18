@@ -15,15 +15,26 @@ class itemAuthor extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     double screenAspectRatio = 0;
     if(screenHeight>800){
       screenAspectRatio = 150.0;
     }
     else if(screenHeight>=600 && screenHeight <= 800){
-      screenAspectRatio = 145.0;
+      if(screenWidth <= 350){
+        screenAspectRatio = 125.0;
+      }
+      else{
+        screenAspectRatio = 145.0;
+      }      
     }
     else if(screenHeight <= 600){
-      screenAspectRatio = 140.0;
+      if(screenWidth <= 350){
+        screenAspectRatio = 95.0;
+      }
+      else{
+        screenAspectRatio = 120.0;
+      }      
     }
 
     final image = Utils.image(author.path_image, width: screenAspectRatio, height: screenAspectRatio, fit: BoxFit.cover);  

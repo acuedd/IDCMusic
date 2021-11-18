@@ -33,7 +33,7 @@ class PresentationDialog extends StatelessWidget{
       body: RowLayout(
         padding: EdgeInsets.symmetric(horizontal: 24),
         children: <Widget>[
-          Text("Existe una nueva actualización, para que tengas una mejor experiencia actualiza tu app",
+          Text("¡Existe una nueva actualización! \n\nPara que tengas una mejor experiencia actualiza tu app",
             style: Theme.of(context).textTheme.headline6.copyWith(
               fontWeight: FontWeight.normal,
               color: Theme.of(context).textTheme.caption.color,
@@ -98,7 +98,7 @@ class PresentationDialog extends StatelessWidget{
     bool screenAspectRatio = true;    
     if(screenWidth <= 350){
       screenAspectRatio = false;
-    }   
+    }
 
     if(showPatreon)
       return RoundDialog(
@@ -116,7 +116,7 @@ class PresentationDialog extends StatelessWidget{
               ),
               body, 
               Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.centerLeft,
                 child: 
                   (screenAspectRatio) ?
                   Row(
@@ -140,7 +140,7 @@ class PresentationDialog extends StatelessWidget{
                   ],
                 )
                 : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[                    
                     OutlineButton(
                       highlightedBorderColor: Theme.of(context).accentColor,

@@ -40,7 +40,7 @@ class _AlbumsCarouselState extends State<AlbumsCarousel>{
         ),
       ),       
       Container(
-        height: 200,
+        height: 190,
         child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,

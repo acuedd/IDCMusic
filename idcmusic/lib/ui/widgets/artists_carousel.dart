@@ -40,7 +40,7 @@ class _ArtistsCarouselState extends State<ArtistsCarousel>{
         ),
       ),
       Container(
-        height: 200,
+        height: 170,
         child: ListView.builder(
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,

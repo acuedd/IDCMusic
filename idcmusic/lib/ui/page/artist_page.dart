@@ -42,7 +42,7 @@ class _ArtistPageState extends State<ArtistPage>{
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                     child:Container( 
-                        height: height * 0.43,
+                        height: height * 0.35,
                         width: width,                        
                         child: LayoutBuilder( 
                           builder: (context, constraints){
@@ -70,9 +70,10 @@ class _ArtistPageState extends State<ArtistPage>{
                                         : Colors.black45,
                                     ),
                                     child: Column( 
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         SizedBox(
-                                          height: 110,
+                                          height: 120,
                                         ),
                                         Text(
                                           widget.author.fullname,

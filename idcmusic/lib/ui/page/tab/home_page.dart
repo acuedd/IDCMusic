@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                 builder: (context) => PresentationDialog.goStore(context, () => LaunchReview.launch(
                       androidAppId: packageName, 
                       iOSAppId: Url.appStoreID
-                    ), "Ir a la tienda",appName, false)
+                    ), "Actualizar",appName, false)
               );
             }            
           }
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
             builder: (context) => PresentationDialog.goStore(context, () => LaunchReview.launch(
                   androidAppId: packageName, 
                   iOSAppId: Url.appStoreID
-                ), "Ir a la tienda",appName, false)
+                ), "Actualizar",appName, false)
           );
         }
       });
@@ -245,7 +245,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                       (songsRecently.length >0)
                         ? RecentlySongs(songsRecently)
                         : SizedBox.shrink(),
+                      SizedBox(height: 10,),
                       ArtistsCarousel(artists.authors),
+                      SizedBox(height: 10,),
                       AlbumsCarousel(albums.collections),                      
                     ]),
                   ),

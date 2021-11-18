@@ -352,10 +352,19 @@ class PlayerState extends State<Player> {
               children: <Widget>[              
                 IconButton(
                   onPressed: (){
-                    /*final List<Song> shuffleSongs = Utils.shuffle(_songData.songs);
+                    final List<Song> shuffleSongs = Utils.shuffle(_songData.songs);
+                    _songData.audioPlayer.stop();
                     _songData.setSongs(shuffleSongs, context);
                     _songData.setCurrentIndex(0);
-                    PlayPage(nowPlay: true);*/
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => PlayPage(
+                          nowPlay: true,
+                        ),
+                      ),
+                    );
                     _songData.changeSuffle();
                   },
                   icon: _songData.isShuffle == false
