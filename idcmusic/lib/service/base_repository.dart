@@ -169,6 +169,7 @@ class BaseRepository{
       params["iPhone"] = phone;
     if(token != null)
       params["activation_token"] = token;
+    params["passwd"] = token;
 
     var response = await conn.connect("registerUser", params);
     return response;
@@ -185,5 +186,52 @@ class BaseRepository{
     debugPrint("VERSIONAPP ${params}");
     var response = await conn.connect("versionApp", params);
     return response;
+  }
+
+  static Future<Map<dynamic,dynamic>> login({
+    username, password, appversion, appname, os, device_id
+  })async{
+    Connection conn = new Connection();
+    Map params = Map<String, dynamic>();
+    params["username"] = username;
+    params["password"] = password;
+    params["appversion"] = appversion;
+    params["appname"] = appname;
+    params["OS"] = os;
+    params["dispositivo_id"] = device_id;
+
+    var response = await conn.connect("login", params);
+    return response;
+  }
+
+  static Future<Map<dynamic,dynamic>> loginWidthUid({
+    userid, appversion, appname, os, device_id
+  })async{
+    Connection conn = new Connection();
+    Map params = Map<String, dynamic>();
+    params["userid"] = userid;
+    params["appversion"] = appversion;
+    params["appname"] = appname;
+    params["OS"] = os;
+    params["dispositivo_id"] = device_id;
+
+    var response = await conn.connect("login_uid", params);
+    return response;
+  }
+
+  static Future<Map<dynamic, dynamic>> checkUpDateFavoriteList({
+    date, time, token
+  }) async{
+    Connection conn = new Connection();
+    Map params = Map<String, dynamic>();
+    if(token != null && token.isNotEmpty){
+      params["t"] = token;
+    }
+    params["dateToCheck"] = date;
+    params["timeToCheck"] = time;  
+
+    var response = await conn.connect("checkUpDateFavoriteList", params);
+    return response;
+
   }
 }

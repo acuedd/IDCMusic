@@ -1,11 +1,13 @@
 
 
+import 'dart:io';
+
 import 'package:church_of_christ/service/base_repository.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart';
+import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
@@ -59,10 +61,10 @@ class Authentication with ChangeNotifier {
         final email = myUser.email.split("@");
 
         Map<dynamic, dynamic> response = await BaseRepository.registerUser(
-                username: email[0].toString(),  
+                username: email[0].toString(),
                 email: myUser.email,
-                firstname: myUser.displayName, 
-                lastname: myUser.displayName, 
+                firstname: myUser.displayName,
+                lastname: myUser.displayName,
                 phone: myUser.phoneNumber,
                 token: myUser.uid,
               );        
@@ -70,6 +72,29 @@ class Authentication with ChangeNotifier {
         if(response["valido"] == 1){
           var sharedPreferences = await SharedPreferences.getInstance();
           sharedPreferences.setString("userloged", response["userid"]); 
+          sharedPreferences.setString("googleUID", myUser.uid); 
+
+          PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+          String version = packageInfo.version;
+          String packageName = packageInfo.packageName;
+          String appName = packageInfo.appName;
+          String os = Platform.operatingSystem;
+          String device_id = await _getId();
+
+
+          Map<dynamic, dynamic> responseLogin = await BaseRepository.login(
+            username: email[0].toString(), 
+            password: myUser.uid, 
+            appversion: version, 
+            appname: packageName, 
+            os: os,
+            device_id: device_id
+          );
+          
+          if(responseLogin["valido"] == 1){
+            sharedPreferences.setString("tokenGenius", responseLogin["udid"]); 
+          }
         }
         
       });
@@ -85,6 +110,17 @@ class Authentication with ChangeNotifier {
     }
 
     return boleano;
+  }
+
+  Future<String> _getId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) { // import 'dart:io'
+      var iosDeviceInfo = await deviceInfo.iosInfo;
+      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+    } else {
+      var androidDeviceInfo = await deviceInfo.androidInfo;
+      return androidDeviceInfo.androidId; // unique ID on Android
+    }
   }
 
   Future signOut() async {

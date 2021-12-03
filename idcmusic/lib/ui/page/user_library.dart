@@ -1,9 +1,17 @@
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:io';
+import 'package:church_of_christ/model/favorite_model.dart';
+import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
+
 import 'package:church_of_christ/service/authenticate.dart';
+import 'package:church_of_christ/service/base_repository.dart';
 import 'package:church_of_christ/utils/functions.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserLibrary extends StatefulWidget{
   
@@ -19,7 +27,71 @@ class _UserLibraryState extends State<UserLibrary> {
 
   @override
   void initState() {
-  
+    super.initState();
+    checkUserLoginGenius();    
+  }
+
+  Future checkUserLoginGenius() async{
+    var sharedPreferences = await SharedPreferences.getInstance();
+    String tokenGenius = sharedPreferences.get("tokenGenius") ?? "";
+    if(tokenGenius != null && tokenGenius.isEmpty){
+      String userid = sharedPreferences.get("userloged") ?? "";
+
+      if(userid != null && userid.isNotEmpty){
+        PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+        String version = packageInfo.version;
+        String packageName = packageInfo.packageName;
+        String appName = packageInfo.appName;
+        String os = Platform.operatingSystem;
+        String device_id = await _getId();
+
+        Map<dynamic, dynamic> responseLogin = await BaseRepository.loginWidthUid(
+          userid: userid,
+          appversion: version, 
+          appname: packageName, 
+          os: os,
+          device_id: device_id
+        );
+        if(responseLogin["valido"] == 1){
+            sharedPreferences.setString("tokenGenius", responseLogin["udid"]); 
+          }
+      }      
+    }
+  }
+
+  Future syncSongsPerUser() async{
+    var sharedPreferences = await SharedPreferences.getInstance();
+    String tokenGenius = sharedPreferences.get("tokenGenius") ?? "";
+    if(tokenGenius != null && tokenGenius.isNotEmpty){
+      DateTime _now = DateTime.now();
+      var formatter = new DateFormat('yyyy-MM-dd');
+      String formattedDate = formatter.format(_now);
+      var formater2 = new DateFormat('hh:mm:ss');
+      String formatterDate = formater2.format(_now);
+      Map<dynamic, dynamic> response = await BaseRepository.checkUpDateFavoriteList(
+          token: tokenGenius,
+          date: formattedDate,
+          time: formatterDate,
+        );
+      if(response!= null && response["valido"] == 1 && response["needUpdate"] == true){
+        FavoriteModel favoriteModel = Provider.of(context, listen: false);
+        if(favoriteModel.favoriteSong.length > 0){
+          debugPrint("${favoriteModel.favoriteSong.length}");
+        }
+      }
+    }    
+  }
+
+  Future<String> _getId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) { // import 'dart:io'
+      var iosDeviceInfo = await deviceInfo.iosInfo;
+      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+    } else {
+      var androidDeviceInfo = await deviceInfo.androidInfo;
+      return androidDeviceInfo.androidId; // unique ID on Android
+    }
   }
 
   @override
@@ -105,7 +177,7 @@ class _UserLibraryState extends State<UserLibrary> {
     if(intLenName > 18){
       int limitLen = (screenAspectRatio)?18:12;
       displayName = myUser.user.displayName.substring(0,limitLen) + "...";
-    }
+    }    
 
     return  Card(
       color: (Theme.of(context).brightness == Brightness.dark)? Colors.grey[600] : Colors.grey[300],

@@ -77,6 +77,9 @@ class Connection {
     "registerUser":"75dc1db0-fe28-11eb-b128-e4434b7bc970",
     "authors": "2bcaa998-04f1-11eb-b265-0242ac130002",
     "versionApp": "d9236557-3f5e-11ec-8c0c-0242ac120003",
+    "login": "42be2e78-69d3-11e8-84ec-286ed488d291",
+    "login_uid": "3d600078-53f0-11ec-980c-0242ac190003",
+    "checkUpDateFavoriteList":"583cb499-53d0-11ec-980c-0242ac190003",
   };
 
   Future connect(operation, params) async {
