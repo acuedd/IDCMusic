@@ -62,5 +62,18 @@
 	<false/>
 	<key>com.apple.security.network.client</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<!-- TODO Replace this value: -->
+				<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
+				<string>com.googleusercontent.apps.108403745549-fkcpbk3kb3d1dus8i4ds4g9rh2hp4mia</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

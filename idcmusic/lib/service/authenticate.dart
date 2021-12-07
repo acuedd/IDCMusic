@@ -57,6 +57,7 @@ class Authentication with ChangeNotifier {
         print(value);
         print("here voy");
         User myUser = value.user;
+        debugPrint("$myUser");
 
         final email = myUser.email.split("@");
 
@@ -124,6 +125,10 @@ class Authentication with ChangeNotifier {
   }
 
   Future signOut() async {
+    var sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.remove("userloged"); 
+    sharedPreferences.remove("googleUID"); 
+    sharedPreferences.remove("tokenGenius"); 
     _auth.signOut();
     _googleSignIn.signOut();
     _status = Status.Unauthenticated;

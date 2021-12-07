@@ -82,6 +82,9 @@ class BaseRepository{
     if(token != null && token.isNotEmpty){
       params["t"] = token;
     }
+    if(userid != null && userid.toString().isNotEmpty){
+      params["allowhidden"] = userid;
+    }    
     if(nameAuthor != null && nameAuthor.toString().isNotEmpty){
       params["nameCollection"] = nameAuthor;
     }
@@ -232,6 +235,21 @@ class BaseRepository{
 
     var response = await conn.connect("checkUpDateFavoriteList", params);
     return response;
+
+  }
+
+  static Future<Map<dynamic, dynamic>> saveFavoriteList({
+    token, List<Song> songs, 
+  })async{
+    Connection conn = new Connection();
+    Map params = Map<String, dynamic>();
+    if(token != null && token.isNotEmpty){
+      params["t"] = token;
+    }
+
+    final data = songs.map((s) => s.toJson()).toList();
+    //var response = await conn.connect("");
+    
 
   }
 }
