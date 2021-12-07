@@ -28,7 +28,8 @@ class _UserLibraryState extends State<UserLibrary> {
   @override
   void initState() {
     super.initState();
-    checkUserLoginGenius();    
+    checkUserLoginGenius();
+    syncSongsPerUser();
   }
 
   Future checkUserLoginGenius() async{
@@ -77,7 +78,9 @@ class _UserLibraryState extends State<UserLibrary> {
       if(response!= null && response["valido"] == 1 && response["needUpdate"] == true){
         FavoriteModel favoriteModel = Provider.of(context, listen: false);
         if(favoriteModel.favoriteSong.length > 0){
-          debugPrint("${favoriteModel.favoriteSong.length}");
+          debugPrint("fuck ${favoriteModel.favoriteSong.length}");
+          Map<dynamic, dynamic> response = await BaseRepository.saveFavoriteList(
+            token:tokenGenius, songs: favoriteModel.favoriteSong );
         }
       }
     }    
@@ -87,7 +90,7 @@ class _UserLibraryState extends State<UserLibrary> {
     var deviceInfo = DeviceInfoPlugin();
     if (Platform.isIOS) { // import 'dart:io'
       var iosDeviceInfo = await deviceInfo.iosInfo;
-      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+      return iosDeviceInfo.identifierForVendor; 
     } else {
       var androidDeviceInfo = await deviceInfo.androidInfo;
       return androidDeviceInfo.androidId; // unique ID on Android

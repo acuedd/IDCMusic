@@ -14,15 +14,32 @@ class RotatePlayer extends AnimatedWidget{
     SongModel songModel = Provider.of(context, listen: false);
     
     double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
     double screenAspectRatio = 0;
+    double widthScreenAspectRatio = 0;
     if(screenHeight>800){
       screenAspectRatio = 0.8;
+      widthScreenAspectRatio = 190.0;
     }
     else if(screenHeight>=600 && screenHeight <= 800){
       screenAspectRatio = 0.6;
+
+      if(screenWidth <= 350){
+        widthScreenAspectRatio = 175.0;
+      }
+      else{
+        widthScreenAspectRatio = 190.0;
+      }      
     }
     else if(screenHeight <= 600){
       screenAspectRatio = 0.4;
+
+      if(screenWidth <= 350){
+        widthScreenAspectRatio = 105.0;
+      }
+      else{
+        widthScreenAspectRatio = 175.0;
+      }      
     }
 
     return GestureDetector( 
@@ -30,11 +47,13 @@ class RotatePlayer extends AnimatedWidget{
       child: RotationTransition( 
         turns: animation,
         child: Center( 
-          child: Container( 
-            width: MediaQuery.of(context).size.width * screenAspectRatio,
-            child: ClipRRect( 
-              borderRadius: BorderRadius.circular(30.0),
-              child: Container(child: Utils.image(songModel.currentSong.pic),),
+          child: ClipRRect( 
+            borderRadius: BorderRadius.circular(30.0),
+            child: Container(
+              child: Utils.image(songModel.currentSong.pic, 
+                width: widthScreenAspectRatio, 
+                height: widthScreenAspectRatio, 
+                fit: BoxFit.cover),
             ),
           ),
         ),                       

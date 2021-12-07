@@ -82,7 +82,7 @@ class Connection {
     "checkUpDateFavoriteList":"583cb499-53d0-11ec-980c-0242ac190003",
   };
 
-  Future connect(operation, params) async {
+  Future connect(operation, params, {boolIsJson = false}) async {
     var myParams = Map<String, dynamic>();
     myParams["o"] = myOperations[operation];
     myParams["f"] = "json";
@@ -95,7 +95,18 @@ class Connection {
     debugPrint("URL --> ${Url.getURL()}/webservice.php");
     debugPrint('---api-params----->${allParams}');
     //http.Response res = await http.post('${Url.getURL()}/webservice.php', body: allParams).timeout(const Duration(seconds: 30));
-    final response = await Dio().post('${Url.getURL()}/webservice.php', queryParameters: allParams);              
+    var response;
+    if(boolIsJson){
+      response = await Dio().post('${Url.getURL()}/webservice.php',
+        options: Options(headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+        }), 
+        data: jsonEncode(params)
+      );
+    }
+    else{
+      response = await Dio().post('${Url.getURL()}/webservice.php', queryParameters: allParams);              
+    }    
     debugPrint('---api-response----->${response}');
     return response.data;      
   }

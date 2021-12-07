@@ -1,19 +1,15 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/service/authenticate.dart';
 import 'package:church_of_christ/ui/page/user_library.dart';
 import 'package:church_of_christ/ui/widgets/empty_widget.dart';
 import 'package:church_of_christ/ui/widgets/player_widget.dart';
 import 'package:church_of_christ/ui/widgets/songItem.dart';
-import 'package:church_of_christ/utils/anims/page_route_anim.dart';
-import 'package:church_of_christ/utils/anims/record_anim.dart';
 import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
-import 'package:church_of_christ/ui/page/player_page.dart';
 import 'package:provider/provider.dart';
 
 class FavoritePage extends StatefulWidget{
@@ -84,7 +80,7 @@ class _FavoritePageState extends State<FavoritePage> with TickerProviderStateMix
                 ),
               ),
             ),  
-            if(!Platform.isIOS)           
+            //if(!Platform.isIOS)           
             Consumer(
             // ignore: missing_return
             builder: (context, Authentication user, _) {
