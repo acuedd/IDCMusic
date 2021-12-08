@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/favorite_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
+import 'package:church_of_christ/service/base_repository.dart';
 import 'package:church_of_christ/ui/widgets/app_bar.dart';
 import 'package:church_of_christ/ui/widgets/marquee_widget.dart';
 import 'package:church_of_christ/ui/widgets/player_carousel.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:markdown_widget/markdown_widget.dart';
 
 class PlayPage extends StatefulWidget{
    final bool nowPlay; 
@@ -79,147 +81,178 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
     else if(screenHeight <= 600){
       screenAspectRatio = 0.01;
     }
+
+    var _future =  BaseRepository.fetchAnnotations(idResource: songModel.currentSong.songid);
     
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                children: <Widget>[
-                  Column(
+        child: SingleChildScrollView(
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                              
+                AppBarCarrousel(title: "", iconBottom: true,),
+                SizedBox(
+                    height:
+                        MediaQuery.of(context).size.height * screenAspectRatio),
+                RotatePlayer(
+                    animation:
+                        _commonTween.animate(controllerPlayer)),
+                SizedBox(
+                    height:
+                        MediaQuery.of(context).size.height * screenAspectRatio),
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment:
+                        MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      AppBarCarrousel(title: "", iconBottom: true,),
-                      SizedBox(
-                          height:
-                              MediaQuery.of(context).size.height * screenAspectRatio),
-                      RotatePlayer(
-                          animation:
-                              _commonTween.animate(controllerPlayer)),
-                      SizedBox(
-                          height:
-                              MediaQuery.of(context).size.height * screenAspectRatio),
-                      Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment:
-                              MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Theme(
-                              data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
-                              child: ModalTrigger(),
-                            ),                                  
-                            IconButton(
-                              onPressed: () => favouriteModel
-                                  .collect(songModel.currentSong),
-                              icon: favouriteModel.isCollect(
-                                          songModel.currentSong) ==
-                                      true
-                                  ? Icon(
-                                      Icons.favorite,
-                                      size: 25.0,
-                                      color:
-                                          Theme.of(context).accentColor,
-                                    )
-                                  : Icon(
-                                      Icons.favorite_border,
-                                      size: 25.0,
-                                      color: Colors.grey,
-                                    ),
-                            ),                                  
-                            if(!Platform.isIOS)
-                              IconButton(
-                                onPressed: () async{
-                                  var status = await Permission.storage.request();
-                                  if (status.isGranted) {
-                                    downloadModel
-                                    .download(songModel.currentSong);
-                                  }
-                                  else{
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) => CupertinoAlertDialog(
-                                            title: Text('Permiso de almacenamiento'),
-                                            content: Text(
-                                                'El app necesita permiso para poder guardar las canciones descargadas en el almacenamiento del dispositivo.'),
-                                            actions: <Widget>[
-                                              CupertinoDialogAction(
-                                                child: Text('Deny'),
-                                                onPressed: () => Navigator.of(context).pop(),
-                                              ),
-                                              CupertinoDialogAction(
-                                                child: Text('Settings'),
-                                                onPressed: () => openAppSettings(),
-                                              ),
-                                            ],
-                                          )
-                                      );
-                                  }
-                                },
-                                icon: downloadModel
-                                        .isDownload(songModel.currentSong)
-                                    ? Icon(
-                                        Icons.cloud_done,
-                                        size: 25.0,
-                                        color:
-                                            Theme.of(context).accentColor,
-                                      )
-                                    : Icon(
-                                        Icons.cloud_download,
-                                        size: 25.0,
-                                        color: Colors.grey,
-                                      ),
+                      Theme(
+                        data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
+                        child: ModalTrigger(),
+                      ),
+                      IconButton(
+                        onPressed: () => favouriteModel
+                            .collect(songModel.currentSong),
+                        icon: favouriteModel.isCollect(
+                                    songModel.currentSong) ==
+                                true
+                            ? Icon(
+                                Icons.favorite,
+                                size: 25.0,
+                                color:
+                                    Theme.of(context).accentColor,
+                              )
+                            : Icon(
+                                Icons.favorite_border,
+                                size: 25.0,
+                                color: Colors.grey,
                               ),
-                            IconButton(
-                              onPressed: () => Utils.share(songModel.currentSong),
-                              icon: Icon(
-                                      Icons.share_rounded,
-                                      size: 25.0,
-                                      color: Colors.grey,
-                                    ),
-                            ),
-                          ]),
-                      SizedBox(
-                          height:
-                              MediaQuery.of(context).size.height * 0.02),
-                      Text(
-                        songModel.currentSong.author,
-                        style:
-                            TextStyle(color: Colors.grey, fontSize: 15.0),
-                      ),
-                      SizedBox(
-                          height:
-                              MediaQuery.of(context).size.height * 0.01),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: MarqueeWidget(
-                          direction: Axis.horizontal,
-                          child: Text(
-                            songModel.currentSong.title,
-                            style: GetTextStyle.L(context),
-                          ),
+                      ),                                  
+                      if(!Platform.isIOS)
+                        IconButton(
+                          onPressed: () async{
+                            var status = await Permission.storage.request();
+                            if (status.isGranted) {
+                              downloadModel
+                              .download(songModel.currentSong);
+                            }
+                            else{
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => CupertinoAlertDialog(
+                                      title: Text('Permiso de almacenamiento'),
+                                      content: Text(
+                                          'El app necesita permiso para poder guardar las canciones descargadas en el almacenamiento del dispositivo.'),
+                                      actions: <Widget>[
+                                        CupertinoDialogAction(
+                                          child: Text('Deny'),
+                                          onPressed: () => Navigator.of(context).pop(),
+                                        ),
+                                        CupertinoDialogAction(
+                                          child: Text('Settings'),
+                                          onPressed: () => openAppSettings(),
+                                        ),
+                                      ],
+                                    )
+                                );
+                            }
+                          },
+                          icon: downloadModel
+                                  .isDownload(songModel.currentSong)
+                              ? Icon(
+                                  Icons.cloud_done,
+                                  size: 25.0,
+                                  color:
+                                      Theme.of(context).accentColor,
+                                )
+                              : Icon(
+                                  Icons.cloud_download,
+                                  size: 25.0,
+                                  color: Colors.grey,
+                                ),
                         ),
+                      IconButton(
+                        onPressed: () => Utils.share(songModel.currentSong),
+                        icon: Icon(
+                                Icons.share_rounded,
+                                size: 25.0,
+                                color: Colors.grey,
+                              ),
                       ),
-                      Text(
-                        songModel.currentSong.name_collection,
-                        style: GetTextStyle.M(context),
-                      ),
-                    ],
+                    ]),
+                SizedBox(
+                    height:
+                        MediaQuery.of(context).size.height * 0.02),
+                Text(
+                  songModel.currentSong.author,
+                  style:
+                      TextStyle(color: Colors.grey, fontSize: 15.0),
+                ),
+                SizedBox(
+                    height:
+                        MediaQuery.of(context).size.height * 0.01),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: MarqueeWidget(
+                    direction: Axis.horizontal,
+                    child: Text(
+                      songModel.currentSong.title,
+                      style: GetTextStyle.L(context),
+                    ),
                   ),
-                ],
-              ),
+                ),
+                Text(
+                  songModel.currentSong.name_collection,
+                  style: GetTextStyle.M(context),
+                ),
+            
+                Player(
+                  songData: songModel,
+                  downloadData: downloadModel,
+                  nowPlay: widget.nowPlay,
+                ),
+                if(songModel.currentSong.annotation1 == "Y")
+                   FutureBuilder(
+                    future: _future,
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      try {
+                        if (snapshot.data != null) {
+                          if(snapshot.data["valido"] == 1){
+                            String annotation = snapshot.data["first_annotation"];
+                            String parseAnnotation =  annotation.replaceAll("\\n", "</br>");                            
+
+                            debugPrint("fuck fuck -> $parseAnnotation");
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                              child: Container(
+                                  height: 300,
+                                  width: 300,                                  
+                                  color: Theme.of(context).backgroundColor,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),                                  
+                                    child: MarkdownWidget( 
+                                      data: parseAnnotation,                                
+                                    ),
+                                  ),
+                              ),
+                            );
+                          }
+                        }
+                      }
+                      catch(Error){
+
+                      }
+                      return Container();
+                    }
+                   )                
+              ],
             ),
-            Player(
-              songData: songModel,
-              downloadData: downloadModel,
-              nowPlay: widget.nowPlay,
-            ),
-          ],
-        ),
+          ),
       ),
     );
   }
 }
-
 
 class ModalTrigger extends StatelessWidget{
 

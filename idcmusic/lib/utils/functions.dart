@@ -276,6 +276,10 @@ List<Song>  convertResponseToListSong(data){
       mySong["name_collection"] = data[i]["name_collection"];
       mySong["ext"] = data[i]["ext"];
       mySong["tags"] = data[i]["tags"];
+      mySong["enabledownload"] = data[i]["specialaccess"];
+      mySong["specialaccess"] = data[i]["specialaccess"];
+      mySong["has_annotation1"] = data[i]["has_annotation1"];
+      mySong["has_annotation2"] = data[i]["has_annotation2"];
       response.add(Song.fromJsonMap(mySong));
     }
 

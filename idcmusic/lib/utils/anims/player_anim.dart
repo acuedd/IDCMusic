@@ -19,16 +19,26 @@ class RotatePlayer extends AnimatedWidget{
     double widthScreenAspectRatio = 0;
     if(screenHeight>800){
       screenAspectRatio = 0.8;
-      widthScreenAspectRatio = 190.0;
+      widthScreenAspectRatio = 300.0;
     }
-    else if(screenHeight>=600 && screenHeight <= 800){
+    else if(screenHeight>=600 && screenHeight < 700){
+      if(screenWidth <= 350){
+        widthScreenAspectRatio = 175.0;
+      }
+      else{
+       //iphone 8
+        widthScreenAspectRatio = 220.0;
+      }      
+    }
+    else if(screenHeight>=700 && screenHeight <= 800){
       screenAspectRatio = 0.6;
 
       if(screenWidth <= 350){
         widthScreenAspectRatio = 175.0;
       }
       else{
-        widthScreenAspectRatio = 190.0;
+        //my samsung
+        widthScreenAspectRatio = 300.0;
       }      
     }
     else if(screenHeight <= 600){

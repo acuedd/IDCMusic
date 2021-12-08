@@ -80,6 +80,7 @@ class Connection {
     "login": "42be2e78-69d3-11e8-84ec-286ed488d291",
     "login_uid": "3d600078-53f0-11ec-980c-0242ac190003",
     "checkUpDateFavoriteList":"583cb499-53d0-11ec-980c-0242ac190003",
+    "getAnnotations": "0675d959-57c6-11ec-a43c-0242ac190002",
   };
 
   Future connect(operation, params, {boolIsJson = false}) async {

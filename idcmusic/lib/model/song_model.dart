@@ -264,6 +264,9 @@ class Song {
   String url;
   String pic;
   String ext;
+  String annotation1;
+  String annotation2;
+
   // ignore: non_constant_identifier_names
   dynamic name_collection;
   dynamic sourcetype;
@@ -281,6 +284,8 @@ class Song {
         url = map["url"],
         pic = map["pic"],
         ext = map["ext"],
+        annotation1 = map["has_annotation1"], 
+        annotation2 = map["has_annotation2"],
         name_collection = map["name_collection"], 
         sourcetype = map["sourcetype"];
         //tags = List<Tag>.from(map["tags"] ?? [].map((x) => Tag.fromJson(x)));
@@ -296,6 +301,8 @@ class Song {
     data['url'] = url;
     data['pic'] = pic;
     data["ext"] = ext;
+    data["has_annotation1"] = annotation1 ; 
+    data["has_annotation2"] = annotation2;
     data["name_collection"] = name_collection;
     data["sourcetype"] = sourcetype;
     return data;

@@ -252,4 +252,18 @@ class BaseRepository{
     
 
   }
+
+  static Future<Map<dynamic, dynamic>> fetchAnnotations({
+    idResource, token
+  }) async{
+    Connection conn = new Connection();
+    Map params = Map<String, dynamic>();
+    if(token != null && token.isNotEmpty){
+      params["t"] = token;      
+    }
+    params["id-resource"] = idResource;
+
+    var response = await conn.connect("getAnnotations", params);
+      return response;
+  }
 }

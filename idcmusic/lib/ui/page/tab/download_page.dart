@@ -1,15 +1,11 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:church_of_christ/ui/widgets/empty_widget.dart';
 import 'package:church_of_christ/ui/widgets/player_widget.dart';
 import 'package:church_of_christ/ui/widgets/songItem.dart';
-import 'package:church_of_christ/utils/anims/page_route_anim.dart';
-import 'package:church_of_christ/utils/anims/record_anim.dart';
 import 'package:flutter/material.dart';
 import 'package:church_of_christ/model/download_model.dart';
 import 'package:church_of_christ/model/song_model.dart';
-import 'package:church_of_christ/ui/page/player_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
