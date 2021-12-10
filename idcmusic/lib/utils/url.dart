@@ -14,10 +14,12 @@ class Url {
   static const String changelog = 'https://raw.githubusercontent.com/acuedd/IDCMusic/main/idcmusic/CHANGELOG.md';
   static const String authorStore = 'https://play.google.com/store/apps/developer?id=acuedd';
   static const String authorAppStore = "https://apps.apple.com/gt/developer/edward-guillermo-lopez/id1482988460";
-  static const String apiContactMe = 'https://api.whatsapp.com/send?phone=50230468139&text=Hola%20me%20interesa%20apoyar%20en%20el%20app&source=&data=';
   static const String playStore = 'https://play.google.com/store/apps/details?id=gt.com.acuedd.idcmusic';
   static const String appStore = "https://apps.apple.com/gt/app/acapella-music-idc/id1564129767";
   static const String appStoreID = "1564129767";
+  static const String apiTelegramChannel = "https://t.me/AcapellaMusicApp";
+  static const String apiTelegramGroup = "https://t.me/+0ym98NT24I1mM2Fh";
+  static const String apiInstagram = "https://instagram.com/acuedd";
 
   static const Map<String, String> authorEmail = {
     'subject': "Acapella music app",
@@ -67,7 +69,7 @@ class Url {
 
   static const String disclaimer = "Esta app es completamente gratuita y no lucramos con el contenido, los derechos de las canciones pertenecen a sus respectivos autores y asociados" +
                 "y esta app no pretende adueñarse de ninguno de esos derechos. \nNo almacenamos los archivos de audio de la música en nuestros servidores, la extraemos de lugares donde los creadores la han colocado como pública.\n"+
-                "Esta aplicación solamente hace una recopilación de canciones acapella que se encuentran públicas. \n\nSi alguna canción infringe en derechos de autor o no tiene los permisos para compartir, por favor repórtala en nuestro apartado de 'Contáctanos' para hacer las gestiones pertinentes y evitar procesos legales";
+                "Esta aplicación solamente hace una recopilación de canciones acapella que se encuentran públicas. \n\nSi alguna canción infringe en derechos de autor o no tiene los permisos para compartir, por favor repórtala en nuestro apartado de 'Platiquemos del app' para hacer las gestiones pertinentes y evitar procesos legales";
 }
 
 class Connection {

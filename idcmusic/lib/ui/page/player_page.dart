@@ -14,6 +14,7 @@ import 'package:church_of_christ/utils/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:markdown_widget/markdown_widget.dart';
@@ -211,41 +212,54 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                   songData: songModel,
                   downloadData: downloadModel,
                   nowPlay: widget.nowPlay,
-                ),
-                if(songModel.currentSong.annotation1 == "Y")
-                   FutureBuilder(
-                    future: _future,
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      try {
-                        if (snapshot.data != null) {
-                          if(snapshot.data["valido"] == 1){
-                            String annotation = snapshot.data["first_annotation"];
-                            String parseAnnotation =  annotation.replaceAll("\\n", "</br>");                            
+                ),                
+                FutureBuilder(
+                  future: _future,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    try {
+                      if (snapshot.data != null) {
+                        if(snapshot.data["valido"] == 1){
+                          String annotation = snapshot.data["first_annotation"];
+                          String parseAnnotation =  annotation.replaceAll("\\n", "\n");
+                          //String parseAnnotation =  parseAnnotationPre.replaceAll("\n", "\r");
 
-                            debugPrint("fuck fuck -> $parseAnnotation");
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                              child: Container(
-                                  height: 300,
-                                  width: 300,                                  
-                                  color: Theme.of(context).backgroundColor,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),                                  
-                                    child: MarkdownWidget( 
-                                      data: parseAnnotation,                                
+                          debugPrint("fuck fuck -> $parseAnnotation");
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                            child: Container(
+                                height: 300,
+                                width: 300,                                  
+                                color: Theme.of(context).backgroundColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),                                  
+                                  child: Markdown( 
+                                    data: parseAnnotation,                                
+                                    styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+                                      blockSpacing: 12, 
+                                      h2: TextStyle( 
+                                        fontSize: 17, 
+                                        fontWeight: FontWeight.bold, 
+                                        color: Theme.of(context).textTheme.headline6.color, 
+                                        fontFamily: "ProductSans", 
+                                      ), 
+                                      p: TextStyle( 
+                                        fontSize: 15, 
+                                        color: Theme.of(context).textTheme.caption.color,
+                                      )
                                     ),
                                   ),
-                              ),
-                            );
-                          }
+                                ),
+                            ),
+                          );
                         }
                       }
-                      catch(Error){
-
-                      }
-                      return Container();
                     }
-                   )                
+                    catch(Error){
+
+                    }
+                    return Container();
+                  }
+                )                
               ],
             ),
           ),

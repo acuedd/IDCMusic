@@ -74,6 +74,11 @@ class PresentationDialog extends StatelessWidget{
       onPressed: onPressed,
       textButton: textButton,
       body: RowLayout(children: <Widget>[
+        Text("También reporta fallos o solicita nuevas funciones",
+          style: Theme.of(context).textTheme.headline6.copyWith(
+            fontWeight: FontWeight.normal,
+            color: Theme.of(context).textTheme.caption.color,
+        ),),
         Text("Agradecemos a nuestros patrocinadores del proyecto",
           style: Theme.of(context).textTheme.headline6.copyWith(
             fontWeight: FontWeight.normal,

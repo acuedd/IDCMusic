@@ -60,7 +60,7 @@ class _AboutScreenState extends State<AboutScreen>{
                 Separator.divider(indent: 72),
                   ListCell.icon(
                     context: context,
-                    icon: AntDesign.infocirlce,
+                    icon: AntDesign.copyright,
                     trailing: Icon(Icons.chevron_right),
                     title: "Disclaimer",
                     subtitle: "Importante sobre la música",
@@ -121,16 +121,16 @@ class _AboutScreenState extends State<AboutScreen>{
                   ),
                   ListCell.icon(
                     context: context,
-                    icon: Icons.cake,
+                    icon: AntDesign.slack,
                     trailing: Icon(Icons.chevron_right),
-                    title: "Apoya la iniciativa",
-                    subtitle: "Escríbeme en whatsapp",
+                    title: "Platiquemos del app",
+                    subtitle: "Agrégate al grupo en Telegram",
                     onTap: () => showDialog(
                       context: context,
                       builder: (context) => PresentationDialog.about(context, ()async{
                         Navigator.pop(context, true);
                         await FlutterWebBrowser.openWebPage(
-                          url: Url.apiContactMe
+                          url: Url.apiTelegramGroup
                         );
                       },
                       "Contáctame"
@@ -140,26 +140,14 @@ class _AboutScreenState extends State<AboutScreen>{
                   Separator.divider(indent: 72),
                   ListCell.icon(
                     context: context,
-                    icon: Icons.mail,
+                    icon: AntDesign.instagram,
                     trailing: Icon(Icons.chevron_right),
-                    title: "Envíame un correo",
-                    subtitle: "Reporta fallos o solicita nuevas funciones",
+                    title: "Conóceme",
+                    subtitle: "Contácta al autor",
                     onTap: () async {
-                      if (Platform.isIOS) {
-                        final bool canSend = await FlutterMailer.canSendMail();
-                        if (!canSend) {
-                          const SnackBar snackbar =
-                              const SnackBar(content: Text('No hay aplicación de email disponible', textAlign: TextAlign.center,),);
-                          _scaffoldKey.currentState.showSnackBar(snackbar);
-                          return;
-                        }
-                      }
-                      await FlutterMailer.send(MailOptions(
-                        isHTML: true,
-                        subject: Url.authorEmail['subject'],
-                        recipients: [Url.authorEmail['address']],
-                      ));
-                    
+                      await FlutterWebBrowser.openWebPage(
+                          url: Url.apiInstagram
+                        );                    
                     },
                   ),
                   HeaderText(text: "Agradecimientos"),
@@ -225,7 +213,18 @@ class _AboutScreenState extends State<AboutScreen>{
                       ),
                     ),
                   ),
+
               ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 30, 5, 20),
+              child: Center(
+                child: Text(
+                  "Hecho con ♥ por Ed Acu 👽",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ),
             ),
           ],
         ),

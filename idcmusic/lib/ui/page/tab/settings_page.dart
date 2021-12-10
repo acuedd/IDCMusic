@@ -45,6 +45,16 @@ class _SettingsPage extends State<SettingsPage>
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(5, 30, 5, 20),
+              child: Center(
+                child: Text(
+                  "Hecho con ♥ por Ed Acu 👽",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ),
+            ),
           ],
         ),
       ),
