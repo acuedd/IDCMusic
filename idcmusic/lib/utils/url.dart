@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 
 class Url {
-  static const debug = "https://idcrom.homelandplanet.com";
-  static const release = "https://idcrom.homelandplanet.com";
+  static const debug = "https://acaplayer.info";
+  static const release = "https://acaplayer.info";
   
   
   // About page
