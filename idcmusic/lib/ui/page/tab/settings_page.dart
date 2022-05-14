@@ -66,7 +66,7 @@ class listOptionWidget extends StatelessWidget{
     
   @override
   Widget build(BuildContext context) {
-    var iconColor = Theme.of(context).accentColor; 
+    var iconColor = Theme.of(context).colorScheme.secondary; 
     
     return ListTileTheme( 
       contentPadding: const EdgeInsets.symmetric(horizontal: 20),
@@ -91,7 +91,7 @@ class listOptionWidget extends StatelessWidget{
               ),
             ),
             trailing: CupertinoSwitch( 
-              activeColor: Theme.of(context).accentColor,
+              activeColor: Theme.of(context).colorScheme.secondary,
               value: Theme.of(context).brightness == Brightness.dark,
               onChanged: (value){
                 switchDarkMode(context);
@@ -148,7 +148,7 @@ class SettingThemeWidget extends StatelessWidget{
       ),
       leading: Icon( 
         Icons.color_lens, 
-        color: Theme.of(context).accentColor,
+        color: Theme.of(context).colorScheme.secondary,
       ),
       children: <Widget>[
         Padding( 
@@ -183,13 +183,13 @@ class SettingThemeWidget extends StatelessWidget{
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         border:
-                            Border.all(color: Theme.of(context).accentColor)),
+                            Border.all(color: Theme.of(context).colorScheme.secondary)),
                     width: 40,
                     height: 40,
                     child: Text(
                       "?",
                       style: TextStyle(
-                          fontSize: 20, color: Theme.of(context).accentColor),
+                          fontSize: 20, color: Theme.of(context).colorScheme.secondary),
                     ),
                   ),
                 ),

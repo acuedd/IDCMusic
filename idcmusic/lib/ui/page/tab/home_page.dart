@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                         child: Container( 
                           margin: EdgeInsets.symmetric(horizontal: 20.0),
                           decoration: BoxDecoration( 
-                            color: Theme.of(context).accentColor.withAlpha(50), 
+                            color: Theme.of(context).colorScheme.secondary.withAlpha(50), 
                             borderRadius: BorderRadius.circular(30.0),                            
                           ),
                           child: TextField( 
@@ -210,7 +210,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin, Auto
                         padding: const EdgeInsets.only(right: 10.0),
                         child: IconButton( 
                           icon: Icon(Icons.device_unknown),
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).colorScheme.secondary,
                           iconSize: 30.0,
                           onPressed: (){
                             Navigator.push(

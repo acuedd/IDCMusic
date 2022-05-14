@@ -104,7 +104,7 @@ class _AboutScreenState extends State<AboutScreen>{
                           url: Url.authorStore,
                           customTabsOptions: CustomTabsOptions(
                             toolbarColor: Theme.of(context).primaryColor,
-                            secondaryToolbarColor: Theme.of(context).accentColor
+                            secondaryToolbarColor: Theme.of(context).colorScheme.secondary
                           )
                         ),
                       }
@@ -113,7 +113,7 @@ class _AboutScreenState extends State<AboutScreen>{
                           url: Url.authorAppStore,
                           safariVCOptions: SafariViewControllerOptions(
                             barCollapsingEnabled: true,
-                            preferredBarTintColor: Theme.of(context).accentColor,
+                            preferredBarTintColor: Theme.of(context).colorScheme.secondary,
                           ),
                         ),
                       }
@@ -213,19 +213,18 @@ class _AboutScreenState extends State<AboutScreen>{
                       ),
                     ),
                   ),
-
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(5, 30, 5, 20),
+                    child: Center(
+                      child: Text(
+                        "Hecho con ♥ por Ed Acu 👽",
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ),
               ]),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5, 30, 5, 20),
-              child: Center(
-                child: Text(
-                  "Hecho con ♥ por Ed Acu 👽",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 12),
-                ),
-              ),
-            ),
+            ),            
           ],
         ),
       ),

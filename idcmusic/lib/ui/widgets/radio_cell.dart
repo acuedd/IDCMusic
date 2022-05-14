@@ -24,7 +24,7 @@ class RadioCell<T> extends StatelessWidget{
       ),
       dense: true,
       groupValue: groupValue,
-      activeColor: Theme.of(context).accentColor,
+      activeColor: Theme.of(context).colorScheme.secondary,
       value: value,
       onChanged: onChanged,
     );

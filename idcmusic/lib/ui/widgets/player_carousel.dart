@@ -242,7 +242,7 @@ class PlayerState extends State<Player> {
                   _position.inSeconds < _duration.inSeconds)
               ? _position.inSeconds / _duration.inSeconds
               : 0.0,
-          activeColor: Theme.of(context).accentColor,
+          activeColor: Theme.of(context).colorScheme.secondary,
         ),
       ),
       Visibility(
@@ -271,7 +271,7 @@ class PlayerState extends State<Player> {
                     icon: Icon(
                       Icons.list,
                       size: 25.0,
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                 ),
@@ -285,7 +285,7 @@ class PlayerState extends State<Player> {
                           Icons.favorite,
                           size: 25.0,
                           color:
-                              Theme.of(context).accentColor,
+                              Theme.of(context).colorScheme.secondary,
                         )
                       : Icon(
                           Icons.favorite_border,
@@ -328,7 +328,7 @@ class PlayerState extends State<Player> {
                             Icons.cloud_done,
                             size: 25.0,
                             color:
-                                Theme.of(context).accentColor,
+                                Theme.of(context).colorScheme.secondary,
                           )
                         : Icon(
                             Icons.cloud_download,
@@ -376,7 +376,7 @@ class PlayerState extends State<Player> {
                       : Icon(
                           Icons.shuffle,
                           size: 25.0,
-                          color: Theme.of(context).accentColor
+                          color: Theme.of(context).colorScheme.secondary
                         ),
                 ),
                 IconButton(
@@ -386,13 +386,13 @@ class PlayerState extends State<Player> {
                     Icons.skip_previous,
                     size: 40.0,
                     color: Theme.of(context).brightness == Brightness.dark
-                        ? Theme.of(context).accentColor
+                        ? Theme.of(context).colorScheme.secondary
                         : Color(0xFF787878),
                   ),
                 ),
                 ClipOval(
                     child: Container(
-                    color: Theme.of(context).accentColor.withAlpha(30),
+                    color: Theme.of(context).colorScheme.secondary.withAlpha(30),
                     width: 70.0,
                     height: 70.0,
                     child: IconButton(
@@ -402,7 +402,7 @@ class PlayerState extends State<Player> {
                       icon: Icon(
                         _songData.isPlaying ? Icons.pause : Icons.play_arrow,
                         size: 45.0,
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                     ),
                   ),
@@ -414,7 +414,7 @@ class PlayerState extends State<Player> {
                     Icons.skip_next,
                     size: 40.0,
                     color: Theme.of(context).brightness == Brightness.dark
-                        ? Theme.of(context).accentColor
+                        ? Theme.of(context).colorScheme.secondary
                         : Color(0xFF787878),
                   ),
                 ),
@@ -430,12 +430,12 @@ class PlayerState extends State<Player> {
                         ? Icon(
                             Icons.repeat,
                             size: 25.0,
-                            color: Theme.of(context).accentColor
+                            color: Theme.of(context).colorScheme.secondary
                           )
                         : Icon(
                             Icons.repeat_one,
                             size: 25.0,
-                            color: Theme.of(context).accentColor
+                            color: Theme.of(context).colorScheme.secondary
                           )
                 ),
               ],

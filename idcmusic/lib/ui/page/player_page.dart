@@ -122,7 +122,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                                 Icons.favorite,
                                 size: 25.0,
                                 color:
-                                    Theme.of(context).accentColor,
+                                    Theme.of(context).colorScheme.secondary,
                               )
                             : Icon(
                                 Icons.favorite_border,
@@ -165,7 +165,7 @@ class _PlayPageState extends State<PlayPage> with TickerProviderStateMixin{
                                   Icons.cloud_done,
                                   size: 25.0,
                                   color:
-                                      Theme.of(context).accentColor,
+                                      Theme.of(context).colorScheme.secondary,
                                 )
                               : Icon(
                                   Icons.cloud_download,

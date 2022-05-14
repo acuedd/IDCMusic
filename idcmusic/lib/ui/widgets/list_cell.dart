@@ -55,7 +55,7 @@ class ListCell extends StatelessWidget {
     VoidCallback onTap,
   }) {
     
-    var iconColor = Theme.of(context).accentColor; 
+    var iconColor = Theme.of(context).colorScheme.secondary; 
     return ListCell(
       leading: Icon(icon, size: 30, color: iconColor,),
       trailing: trailing,

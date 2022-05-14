@@ -55,14 +55,14 @@ class SongItem extends StatelessWidget{
                         borderRadius: BorderRadius.circular(12.0),
                         child: Container( 
                           decoration: BoxDecoration( 
-                            color: Theme.of(context).accentColor.withAlpha(30), 
+                            color: Theme.of(context).colorScheme.secondary.withAlpha(30), 
                           ),
                           width: 50,
                           height: 50,
                           child: Center( 
                             child: Text( '$showIndex', 
                               style: TextStyle( 
-                                color: Theme.of(context).accentColor, 
+                                color: Theme.of(context).colorScheme.secondary, 
                               ),
                             ),
                           ),
@@ -113,7 +113,7 @@ class SongItem extends StatelessWidget{
                   : favoriteModel.isCollect(song)
                       ? Icon(
                           Icons.favorite,
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).colorScheme.secondary,
                           size: 20.0,
                         )
                       : Icon(
@@ -152,7 +152,7 @@ class SongItem extends StatelessWidget{
               icon: downloadModel.isDownload(song)
                 ? Icon(
                 Icons.cloud_done,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).colorScheme.secondary,
                 size: 20.0,
                 )
                     : Icon(

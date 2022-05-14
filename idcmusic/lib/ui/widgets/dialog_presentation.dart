@@ -107,7 +107,7 @@ class PresentationDialog extends StatelessWidget{
 
     if(showPatreon)
       return RoundDialog(
-        title: "Bendice a otros con tus aportes",
+        title: "Seamos comunidad",
         children: <Widget>[
           RowLayout(
             padding: EdgeInsets.symmetric(horizontal: 24),
@@ -135,7 +135,7 @@ class PresentationDialog extends StatelessWidget{
                       onPressed: ()=> Navigator.pop(context,false),
                     ),
                     OutlineButton(
-                      highlightedBorderColor: Theme.of(context).accentColor,
+                      highlightedBorderColor: Theme.of(context).colorScheme.secondary,
                       borderSide: BorderSide(
                         color: Theme.of(context).textTheme.headline6.color,
                       ),
@@ -148,7 +148,7 @@ class PresentationDialog extends StatelessWidget{
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[                    
                     OutlineButton(
-                      highlightedBorderColor: Theme.of(context).accentColor,
+                      highlightedBorderColor: Theme.of(context).colorScheme.secondary,
                       borderSide: BorderSide(
                         color: Theme.of(context).textTheme.headline6.color,
                       ),
@@ -191,7 +191,7 @@ class PresentationDialog extends StatelessWidget{
                       onPressed: ()=> Navigator.pop(context,false),
                     ),
                     OutlineButton(
-                      highlightedBorderColor: Theme.of(context).accentColor,
+                      highlightedBorderColor: Theme.of(context).colorScheme.secondary,
                       borderSide: BorderSide(
                         color: Theme.of(context).textTheme.headline6.color,
                       ),
@@ -209,7 +209,7 @@ class PresentationDialog extends StatelessWidget{
                       onPressed: ()=> Navigator.pop(context,false),
                     ),
                     OutlineButton(
-                      highlightedBorderColor: Theme.of(context).accentColor,
+                      highlightedBorderColor: Theme.of(context).colorScheme.secondary,
                       borderSide: BorderSide(
                         color: Theme.of(context).textTheme.headline6.color,
                       ),

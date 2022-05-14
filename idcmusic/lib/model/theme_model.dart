@@ -80,21 +80,35 @@ class ThemeModel with ChangeNotifier{
     Brightness brightness = isDark ? Brightness.dark : Brightness.light;
 
     var themeColor = _themeColor;
-    var accentColor = isDark ? themeColor[800] : _themeColor;
+    var accentColor = isDark ? themeColor[600] : _themeColor;
+    debugPrint("COLOR");
+    print(accentColor);
     var scaffoldBackgroundColor = isDark ? Color(0xFF373331) : Colors.white;
+    final ThemeData theme = ThemeData();
+    final ColorScheme colorSchemeLight = ColorScheme(
+      primary: themeColor,
+      secondary: accentColor,      
+      surface: scaffoldBackgroundColor,
+      background: scaffoldBackgroundColor,
+      brightness: (isDark)?Brightness.dark:Brightness.light,
+      error: Colors.red,
+      onBackground: scaffoldBackgroundColor,
+      onError: Colors.white,
+      onPrimary: themeColor,
+      onSecondary: accentColor,
+      onSurface:scaffoldBackgroundColor,
+      primaryContainer: themeColor,
+      secondaryContainer: themeColor,
+    );
     var themeData = ThemeData(
-      brightness: brightness, 
-      primaryColorBrightness: Brightness.dark,
-      accentColorBrightness: Brightness.dark, 
-      primarySwatch: themeColor, 
-      accentColor: accentColor, 
+      //brightness: brightness,       
+      colorScheme: colorSchemeLight,
       scaffoldBackgroundColor: scaffoldBackgroundColor, 
       fontFamily: fontValueList[fontIndex],
     );
 
     themeData = themeData.copyWith(
       brightness: brightness, 
-      accentColor: accentColor, 
       cupertinoOverrideTheme: CupertinoThemeData(
         primaryColor: themeColor, 
         brightness: brightness,
@@ -103,20 +117,18 @@ class ThemeModel with ChangeNotifier{
       splashColor: themeColor.withAlpha(50), 
       hintColor: themeData.hintColor.withAlpha(90), 
       errorColor: Colors.red, 
-      cursorColor: accentColor, 
       textTheme: themeData.textTheme.copyWith(
         subtitle1: themeData.textTheme.subtitle1.copyWith(textBaseline: TextBaseline.alphabetic)
       ), 
-      textSelectionColor: accentColor.withAlpha(60), 
-      textSelectionHandleColor: accentColor.withAlpha(60), 
       toggleableActiveColor: accentColor, 
       chipTheme: themeData.chipTheme.copyWith(
         pressElevation: 0, 
         padding: EdgeInsets.symmetric(horizontal: 10), 
         labelStyle: themeData.textTheme.caption, 
-        backgroundColor: themeData.chipTheme.backgroundColor.withOpacity(0.1), 
+        backgroundColor: themeData.chipTheme.backgroundColor, 
       ), 
-      inputDecorationTheme: ThemeHelper.inputDecorationTheme(themeData),
+      inputDecorationTheme: ThemeHelper.inputDecorationTheme(themeData), 
+      colorScheme: themeData.colorScheme.copyWith(secondary: accentColor),
     );
 
     return themeData;
