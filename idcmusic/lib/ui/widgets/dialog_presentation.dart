@@ -5,7 +5,7 @@ import 'package:row_collection/row_collection.dart';
 
 const List<String> _patreons = [
   'Edward Acu',
-  'Nelson Matul',
+  'Jonatán Lux'
 ];
 
 class PresentationDialog extends StatelessWidget{
